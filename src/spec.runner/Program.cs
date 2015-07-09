@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SampleSpecs;
 
-namespace spec
+namespace spec.runner
 {
   /*
    * separar suite registry a ser una clase injectada a test subject main
@@ -19,6 +20,7 @@ namespace spec
    * hacer prueba com threads,
    * separar clase de runner
    * implementar test duration en el runner
+   *      quitar la referencia de los sample specs, estos los tenemos que leer como dll path
    */
 
   public class Program
@@ -28,7 +30,7 @@ namespace spec
       var specs = new Type[] { typeof(TestSubject), typeof(TestSubject2) };
       var registryList = new List<SuiteRegistry>();
       var runableSpecs = new List<Specification>();
-      
+
       foreach (var spec in specs)
       {
         var instance = Activator.CreateInstance(spec) as spec;
@@ -58,6 +60,6 @@ namespace spec
       Console.ReadLine();
     }
 
-    
+
   }
 }
