@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace describe
+namespace spec
 {
   public class SuiteRegistry
   {
     public  Definition currentDeclarationSuite = new Definition() { Description = "Root" };
-    public List<Spec>  runnableLookupTable = new List<Spec>();
+    public List<Specification>  runnableLookupTable = new List<Specification>();
     public int totalSpecsDefined = 0;
 
     public  void AddSpecToSuites(Definition suite, Action specDefinition)
@@ -40,10 +40,10 @@ namespace describe
         Fn = fn
       };
     }
-    public Spec SpecFactory(string description, Action function, Definition suite)
+    public Specification SpecFactory(string description, Action function, Definition suite)
     {
       totalSpecsDefined ++;
-      var spec = new Spec()
+      var spec = new Specification()
       {
         Description = description,
         Fn = function,
@@ -59,6 +59,13 @@ namespace describe
     }
   }
 
+  public enum ExecStatus
+  {
+    NotRun,
+    Running,
+    Completed
+  }
+
   public class Definition
   {
     public Definition Parent { get; set; }
@@ -67,9 +74,12 @@ namespace describe
     public List<Each> BeforeAll { get; private set; }
     public List<Each> AfterAll { get; private set; }
     public List<Definition> Childs { get; set; }
+   
     public string Description { get; set; }
     public Action Fn { get; set; }
     public bool Enabled { get; set; }
+
+    public ExecStatus ExecutionStatus { get; set; }
     public bool RanSuccesfully { get; set; }
     public string ExecutionResult { get; set; }
 
@@ -110,7 +120,7 @@ namespace describe
     }
   }
 
-  public class Spec : Definition
+  public class Specification : Definition
   {
     public override string ToString()
     {
@@ -131,6 +141,7 @@ namespace describe
   public enum SpecType
   {
     describe,
+    context,
     it,
     beforeEach,
     afterEach,

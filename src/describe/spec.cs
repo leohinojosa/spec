@@ -1,14 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
 
-namespace describe
+namespace spec
 {
-  public abstract class Specification
+  public abstract class spec
   {
     public  SuiteRegistry Registry { get; set; }
 
-    protected Specification() 
+    protected spec() 
     {
       Registry = new SuiteRegistry();
     }

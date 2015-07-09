@@ -1,6 +1,6 @@
 using System;
 
-namespace describe
+namespace spec
 {
   public class Runner
   {
@@ -11,14 +11,16 @@ namespace describe
       {
         whitespace = whitespace + " ";
         Console.WriteLine(whitespace + "*" + suite.Description);
-
+        suite.ExecutionStatus = ExecStatus.Running;
         if (suite.BeforeAll.Count > 0)
         {
           whitespace = whitespace + " ";
           suite.BeforeAll.ForEach(x =>
           {
             Console.WriteLine(whitespace + x.Description);
+            x.ExecutionStatus = ExecStatus.Running;
             x.Fn();
+            x.ExecutionStatus = ExecStatus.Completed;
           });
         }
 
@@ -27,20 +29,22 @@ namespace describe
           whitespace = whitespace + " ";
           foreach (var child in suite.Childs)
           {
-            if (child.GetType().IsAssignableFrom(typeof(Suite)))
+            if (child.GetType().IsAssignableFrom(typeof (Suite)))
             {
               run(child);
             }
 
-            if (child.GetType().IsAssignableFrom(typeof(Spec)))
+            if (child.GetType().IsAssignableFrom(typeof (Specification)))
             {
               if (suite.BeforeEach.Count > 0)
               {
                 whitespace = whitespace + " ";
                 suite.BeforeEach.ForEach(x =>
                 {
+                  x.ExecutionStatus = ExecStatus.Running;
                   Console.WriteLine(whitespace + x.Description);
                   x.Fn();
+                  x.ExecutionStatus = ExecStatus.Completed;
                 });
               }
 
@@ -50,6 +54,7 @@ namespace describe
                 Console.Write(whitespace + child.Description);
                 if (child.Enabled)
                 {
+                  child.ExecutionStatus = ExecStatus.Running;
                   child.Fn();
                   child.RanSuccesfully = true;
                 }
@@ -67,13 +72,17 @@ namespace describe
                 child.RanSuccesfully = false;
                 child.Parent.RanSuccesfully = false;
               }
+              finally
+              {
+                child.ExecutionStatus = ExecStatus.Completed;
+              }
 
               if (child.RanSuccesfully && child.Enabled)
               {
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write( "\u2713 ");
+                Console.Write("\u2713 ");
               }
-              else  if(!child.RanSuccesfully && child.Enabled)
+              else if (!child.RanSuccesfully && child.Enabled)
               {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.Write(" \uFF58" + whitespace + child.ExecutionResult);
@@ -85,8 +94,10 @@ namespace describe
               {
                 suite.AfterEach.ForEach(x =>
                 {
+                  x.ExecutionStatus = ExecStatus.Running;
                   Console.WriteLine(whitespace + x.Description);
                   x.Fn();
+                  x.ExecutionStatus = ExecStatus.Completed;
                 });
 
               }
@@ -101,9 +112,11 @@ namespace describe
           suite.AfterAll.ForEach(x =>
           {
             Console.WriteLine(whitespace + x.Description);
+            x.ExecutionStatus = ExecStatus.Running;
             x.Fn();
+            x.ExecutionStatus = ExecStatus.Completed;
           });
-          
+
         }
 
         whitespace = whitespace.Substring(0, whitespace.Length > 0 ? whitespace.Length - 1 : whitespace.Length);
@@ -112,6 +125,10 @@ namespace describe
       {
         Console.WriteLine("General Error" + ex.Message);
         throw;
+      }
+      finally
+      {
+        suite.ExecutionStatus = ExecStatus.Completed;
       }
     }
   }

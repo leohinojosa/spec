@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
-using describe;
 
-namespace describe
+namespace spec
 {
   /*
    * separar suite registry a ser una clase injectada a test subject main
@@ -33,11 +27,11 @@ namespace describe
     {
       var specs = new Type[] { typeof(TestSubject), typeof(TestSubject2) };
       var registryList = new List<SuiteRegistry>();
-      var runableSpecs = new List<Spec>();
+      var runableSpecs = new List<Specification>();
       
       foreach (var spec in specs)
       {
-        var instance = Activator.CreateInstance(spec) as Specification;
+        var instance = Activator.CreateInstance(spec) as spec;
         registryList.Add(instance.Registry);
         runableSpecs.AddRange(instance.Registry.runnableLookupTable);
       }

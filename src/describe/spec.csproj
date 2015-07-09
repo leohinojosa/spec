@@ -7,8 +7,8 @@
     <ProjectGuid>{B8E5CEB4-1C07-406D-BB93-1798ABF0374C}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>describe</RootNamespace>
-    <AssemblyName>describe</AssemblyName>
+    <RootNamespace>spec</RootNamespace>
+    <AssemblyName>spec</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -48,7 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Runner.cs" />
-    <Compile Include="Specification.cs" />
+    <Compile Include="spec.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpecContainer.cs" />

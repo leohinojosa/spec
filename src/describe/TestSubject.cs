@@ -1,19 +1,14 @@
-using System;
-using System.Runtime.InteropServices;
 using FluentAssertions;
 
-namespace describe
+namespace spec
 {
-  public class TestSubject : Specification
+  public class TestSubject : spec
   {
     public TestSubject()
     {
       describe("describe with fancy lambda expression", _ =>
       {
-        it("fancy", () =>
-        {
-          true.Should().BeTrue();
-        });
+        it("fancy", () => { true.Should().BeTrue(); });
       });
 
       describe("describe 1", () =>
@@ -92,7 +87,7 @@ namespace describe
     }
   }
 
-  public class TestSubject2 : Specification
+  public class TestSubject2 : spec
   {
     public TestSubject2()
     {
