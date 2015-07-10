@@ -42,18 +42,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DomainProxy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sandbox.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\describe\spec.csproj">
       <Project>{b8e5ceb4-1c07-406d-bb93-1798abf0374c}</Project>
       <Name>spec</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SampleSpecs\SampleSpecs.csproj">
-      <Project>{fb216490-cb87-4657-9aca-41dcc5fe8068}</Project>
-      <Name>SampleSpecs</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

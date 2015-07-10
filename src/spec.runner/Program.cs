@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SampleSpecs;
+using System.Reflection;
 
 namespace spec.runner
 {
@@ -27,7 +27,51 @@ namespace spec.runner
   {
     private static void Main(string[] args)
     {
-      var specs = new Type[] { typeof(TestSubject), typeof(TestSubject2) };
+      //MainExec();
+
+      string[] sources =
+      {
+        @"C:\Personal\proyectos\speck\src\SampleSpecs\bin\debug\SampleSpecs.dll",
+        @"C:\Personal\proyectos\speck\src\SampleSpecs\bin\debug\SampleSpecs.dll"
+      };
+
+      SecondaryExec(sources);
+      Console.ReadLine();
+    }
+
+    private static void SecondaryExec(IEnumerable<string> sources)
+    {
+      var discoveredTypes = sources.
+        Select(Assembly.LoadFile)
+        .SelectMany(x => x.GetTypes())
+        .Where(t=>t.IsSubclassOf(typeof(spec)));
+
+
+      foreach (var source in sources)
+      {
+        using (var sandbox = new Sandbox<Executor>(source))
+        {
+          sandbox.Content.Execute();  
+        }
+      }
+    }
+
+    public class Executor : DomainProxy
+    {
+      public void Execute()
+      {
+        var discoveredTypes = SandboxedAssembly.GetTypes()
+                              .Where(t => t.IsSubclassOf(typeof(spec)));
+        var runner = new TestRunner();
+        runner.MainExec(discoveredTypes);
+      }
+    }
+  }
+
+  public class TestRunner
+  {
+    public TestSummary MainExec(IEnumerable<Type> specs)
+    {
       var registryList = new List<SuiteRegistry>();
       var runableSpecs = new List<Specification>();
 
@@ -49,17 +93,27 @@ namespace spec.runner
         });*/
       }
 
-      var results = new
+      var results = new TestSummary
       {
         total = runableSpecs.Count(),
         passed = runableSpecs.Count(x => x.Enabled && x.RanSuccesfully),
         failed = runableSpecs.Count(x => x.Enabled && !x.RanSuccesfully),
         pending = runableSpecs.Count(x => !x.Enabled)
       };
-      Console.WriteLine("\n{0} Total {1} Passed {2} Failed {3} Pending", results.total, results.passed, results.failed, results.pending);
-      Console.ReadLine();
+
+      
+      Console.WriteLine("\n{0} Total {1} Passed {2} Failed {3} Pending", results.total, results.passed, results.failed,
+        results.pending);
+
+      return results;
     }
+  }
 
-
+  public class TestSummary
+  {
+    public int total { get; set; }
+    public int passed { get; set; }
+    public int failed { get; set; }
+    public int pending { get; set; }
   }
 }
