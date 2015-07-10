@@ -1,6 +1,6 @@
 using System;
 
-namespace spec
+namespace spec.runner
 {
   public class Runner
   {
@@ -80,7 +80,7 @@ namespace spec
               if (child.RanSuccesfully && child.Enabled)
               {
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write("\u2713 ");
+                Console.Write(" \u2713 ");
               }
               else if (!child.RanSuccesfully && child.Enabled)
               {

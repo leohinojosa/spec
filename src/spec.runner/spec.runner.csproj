@@ -45,6 +45,7 @@
     <Compile Include="DomainProxy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Runner.cs" />
     <Compile Include="Sandbox.cs" />
   </ItemGroup>
   <ItemGroup>

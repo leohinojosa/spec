@@ -27,50 +27,44 @@ namespace spec.runner
   {
     private static void Main(string[] args)
     {
-      //MainExec();
-
+      Console.WriteLine("Speck runner.\n Running Specs ...");
       string[] sources =
       {
         @"C:\Personal\proyectos\speck\src\SampleSpecs\bin\debug\SampleSpecs.dll",
         @"C:\Personal\proyectos\speck\src\SampleSpecs\bin\debug\SampleSpecs.dll"
       };
 
-      SecondaryExec(sources);
+      SpecExecutor(sources);
       Console.ReadLine();
     }
 
-    private static void SecondaryExec(IEnumerable<string> sources)
+    private static void SpecExecutor(IEnumerable<string> sources)
     {
-      var discoveredTypes = sources.
-        Select(Assembly.LoadFile)
-        .SelectMany(x => x.GetTypes())
-        .Where(t=>t.IsSubclassOf(typeof(spec)));
-
-
       foreach (var source in sources)
       {
         using (var sandbox = new Sandbox<Executor>(source))
         {
-          sandbox.Content.Execute();  
+          sandbox.Content.Execute();
         }
       }
     }
 
-    public class Executor : DomainProxy
-    {
-      public void Execute()
-      {
-        var discoveredTypes = SandboxedAssembly.GetTypes()
-                              .Where(t => t.IsSubclassOf(typeof(spec)));
-        var runner = new TestRunner();
-        runner.MainExec(discoveredTypes);
-      }
-    }
   }
 
-  public class TestRunner
+  public class Executor : DomainProxy
   {
-    public TestSummary MainExec(IEnumerable<Type> specs)
+    public void Execute()
+    {
+      var discoveredTypes = SandboxedAssembly.GetTypes()
+                            .Where(t => t.IsSubclassOf(typeof(spec)));
+      var runner = new SuiteRunner();
+      runner.RunSpecs(discoveredTypes);
+    }
+  }
+  public class SuiteRunner
+  {
+    //Maybe we can split discovery and execution into two separate clases ?
+    public TestSummary RunSpecs(IEnumerable<Type> specs)
     {
       var registryList = new List<SuiteRegistry>();
       var runableSpecs = new List<Specification>();
@@ -101,8 +95,8 @@ namespace spec.runner
         pending = runableSpecs.Count(x => !x.Enabled)
       };
 
-      
-      Console.WriteLine("\n{0} Total {1} Passed {2} Failed {3} Pending", results.total, results.passed, results.failed,
+
+      Console.WriteLine("\n{0} Total {1} Passed {2} Failed {3} Pending\n", results.total, results.passed, results.failed,
         results.pending);
 
       return results;
