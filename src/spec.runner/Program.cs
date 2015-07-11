@@ -74,7 +74,8 @@ namespace spec.runner
     public TestSummary Execute()
     {
       var discoveredTypes = SandboxedAssembly.GetTypes()
-                            .Where(t => t.IsSubclassOf(typeof(spec)));
+                            .Where(t => t.IsSubclassOf(typeof(spec)))
+                            .Select(t=> new TestSourceMap{Source = this.Source, Type = t });
 
       var runner = new SuiteRunner();
       return runner.RunSpecs(discoveredTypes);
@@ -84,7 +85,7 @@ namespace spec.runner
   public class SuiteRunner
   {
     //Maybe we can split discovery and execution into two separate clases ?
-    public TestSummary RunSpecs(IEnumerable<Type> specs)
+    public TestSummary RunSpecs(IEnumerable<TestSourceMap> specs)
     {
       var testUnit = SuiteDiscovery.GetSpecs(specs);
 

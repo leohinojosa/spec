@@ -8,6 +8,7 @@ namespace spec
     public  Definition currentDeclarationSuite = new Definition() { Description = "Root" };
     public List<Specification>  runnableLookupTable = new List<Specification>();
     public int totalSpecsDefined = 0;
+    public string Source { get; set; }
 
     public  void AddSpecToSuites(Definition suite, Action specDefinition)
     {

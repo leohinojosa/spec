@@ -22,22 +22,25 @@ namespace spec.runner
 
     public static IEnumerable<TestCase>  Discover(IEnumerable<string> sources, ITestCaseDiscoverySink discoverySink)
     {
+      System.Diagnostics.Debugger.Launch();
       List<TestCase> result = new List<TestCase>();
       // System.Diagnostics.Debugger.Launch();
       var t = new SuiteDiscovery(sources).Discover();
-      var tt = sources.First();
 
-      foreach (var it in t.SelectMany(x => x.runnableLookupTable))
+      foreach (var suiteRegistry in t)
       {
-        var testCase = new TestCase(String.Format("{0} @ {1}", it.Parent.Description, it.Description), specTestExecutor.ExecutorUri, tt);
-        // testCase.SetPropertyValue(TestResultProperties.Outcome, "Passed");
-        testCase.SetPropertyValue(TestResultProperties.ErrorMessage, "No error");
-        result.Add(testCase);
-        if (discoverySink != null)
+        //TODO Consider Refactor  
+        suiteRegistry.runnableLookupTable.ForEach(it =>
         {
-          discoverySink.SendTestCase(testCase);
-        }
-
+          var testCase = new TestCase(String.Format("{0} @ {1}", it.Parent.Description, it.Description), specTestExecutor.ExecutorUri, suiteRegistry.Source);
+          testCase.SetPropertyValue(TestResultProperties.ErrorMessage, "No error");
+          result.Add(testCase);
+          if (discoverySink != null)
+          {
+            discoverySink.SendTestCase(testCase);
+          }
+        });
+          
       }
 
       return result;
@@ -53,9 +56,15 @@ namespace spec.runner
 
     public void RunTests(IEnumerable<TestCase> tests, IRunContext runContext, IFrameworkHandle frameworkHandle)
     {
-      System.Diagnostics.Debugger.Launch();
-     
-      Console.WriteLine("cake");
+      foreach (var testCase in tests)
+      {
+
+        var testResult = new TestResult(testCase);
+        testResult.Outcome = TestOutcome.Passed;
+        testResult.ErrorMessage = "lots of information for " + testCase.DisplayName;
+
+         frameworkHandle.RecordResult(testResult);
+      }
       /*var t = new SuiteDiscovery.Discover();
 
       List<TestSummary> testResults;
@@ -81,6 +90,7 @@ namespace spec.runner
 
     public void RunTests(IEnumerable<string> sources, IRunContext runContext, IFrameworkHandle frameworkHandle)
     {
+      System.Diagnostics.Debugger.Launch();
       IEnumerable<TestCase> tests = specTestDiscoverer.Discover(sources, null);
 
       RunTests(tests, runContext, frameworkHandle);

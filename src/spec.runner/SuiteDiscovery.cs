@@ -18,14 +18,15 @@ namespace spec.runner
       _sources = sources;
     }
 
-    public static TestUnit GetSpecs(IEnumerable<Type> specs)
+    public static TestUnit GetSpecs(IEnumerable<TestSourceMap> specs)
     {
       var registryList = new List<SuiteRegistry>();
       var runableSpecs = new List<Specification>();
 
       foreach (var spec in specs)
       {
-        var instance = Activator.CreateInstance(spec) as spec;
+        var instance = Activator.CreateInstance(spec.Type) as spec;
+        instance.Registry.Source = spec.Source;
         registryList.Add(instance.Registry);
         runableSpecs.AddRange(instance.Registry.runnableLookupTable);
       }
@@ -37,14 +38,25 @@ namespace spec.runner
       };
     }
 
-    public IEnumerable<SuiteRegistry>  Discover()
+    public IEnumerable<SuiteRegistry> Discover()
     {
-      var specs = _sources.Select(Assembly.LoadFile)
-        .SelectMany(x => x.GetTypes())
-        .Where(t => t.IsSubclassOf(typeof (spec)));
-      
+      //var specs = _sources.SelectMany( a => new TestSourceMap{Source = a, Types=Assembly.LoadFile(a).GetTypes()})
+      var specs = _sources.SelectMany(a =>
+        {
+          var source = a;
+          var types = Assembly.LoadFile(a).GetTypes();
+          return types.Select(t => new TestSourceMap { Source = source, Type = t });
+        })
+        .Where(t => t.Type.IsSubclassOf(typeof(spec)));
+
       return GetSpecs(specs).SuiteRegistry;
     }
+  }
+
+  public class TestSourceMap
+  {
+    public string Source { get; set; }
+    public Type Type { get; set; }
   }
 
   public class TestUnit
