@@ -30,10 +30,10 @@ namespace spec.runner
       string[] sources =
       {
         @"C:\Personal\proyectos\speck\src\SampleSpecs\bin\debug\SampleSpecs.dll",
-        @"C:\Personal\proyectos\speck\src\SampleSpecs\bin\debug\SampleSpecs.dll"
+        //@"C:\Personal\proyectos\speck\src\SampleSpecs\bin\debug\SampleSpecs.dll"
       };
 
-      //var t = new SuiteDiscovery(sources).Discover();
+      var t = new SuiteDiscovery(sources).Discover();
      
       SpecExecutor(sources);
       Console.ReadLine();
@@ -60,7 +60,6 @@ namespace spec.runner
         failed = testResults.Sum(x => x.failed),
         pending = testResults.Sum(x => x.pending)
       };
-
 
       Console.WriteLine("\n{0} Total {1} Passed {2} Failed {3} Pending\n", results.total, results.passed, results.failed,
         results.pending);

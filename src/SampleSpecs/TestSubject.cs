@@ -1,5 +1,5 @@
 using FluentAssertions;
-
+/*
 namespace SampleSpecs
 {
   public class TestSubject : spec.spec
@@ -86,4 +86,4 @@ namespace SampleSpecs
       });
     }
   }
-}
+}*/
