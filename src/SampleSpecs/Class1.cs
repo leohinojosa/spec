@@ -46,6 +46,12 @@ namespace SampleSpecs
               test.Should().BeFalse();
             });
 
+            it("should fails", () =>
+            { 
+              test = false;
+              test.Should().BeTrue();
+            });
+
             afterEach("nested teardown for each it", () =>
             {
 
