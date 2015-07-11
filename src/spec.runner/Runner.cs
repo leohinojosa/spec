@@ -5,6 +5,13 @@ namespace spec.runner
   public class Runner
   {
     private string whitespace = "";
+    private string _id;
+    public void run(Definition suite, string id)
+    {
+      _id = id;
+      run(suite);
+    }
+
     public void run(Definition suite)
     {
       try
@@ -36,6 +43,11 @@ namespace spec.runner
 
             if (child.GetType().IsAssignableFrom(typeof (Specification)))
             {
+              if (!String.IsNullOrEmpty(_id) && child.Id != _id)
+              {
+                return;
+              }
+
               if (suite.BeforeEach.Count > 0)
               {
                 whitespace = whitespace + " ";
@@ -52,7 +64,7 @@ namespace spec.runner
               {
                 Console.ForegroundColor = ConsoleColor.DarkBlue;
                 Console.Write(whitespace + child.Description);
-                if (child.Enabled)
+                if (child.Enabled )
                 {
                   child.ExecutionStatus = ExecStatus.Running;
                   child.Fn();

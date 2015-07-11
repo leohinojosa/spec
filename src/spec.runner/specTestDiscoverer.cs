@@ -23,7 +23,7 @@ namespace spec.runner
     public static IEnumerable<TestCase>  Discover(IEnumerable<string> sources, ITestCaseDiscoverySink discoverySink)
     {
       List<TestCase> result = new List<TestCase>();
-       System.Diagnostics.Debugger.Launch();
+    //   System.Diagnostics.Debugger.Launch();
       var t = new SuiteDiscovery(sources).Discover();
 
       foreach (var suiteRegistry in t)
@@ -31,10 +31,10 @@ namespace spec.runner
         //TODO Consider Refactor  
         suiteRegistry.runnableLookupTable.ForEach(it =>
         {
-          var testCase = new TestCase(String.Format("{0} @ {1}", it.Parent.Description, it.Description), specTestExecutor.ExecutorUri, suiteRegistry.Source);
+          var testCase = new TestCase(it.Id, specTestExecutor.ExecutorUri, suiteRegistry.Source);
           testCase.CodeFilePath = it.CodeBase;
           testCase.LineNumber = it.LineNumber;
-          testCase.LocalExtensionData = it.Guid;
+          testCase.DisplayName = String.Format("{0} @ {1}", it.Parent.Description, it.Description);
           testCase.SetPropertyValue(TestResultProperties.ErrorMessage, "No error");
           result.Add(testCase);
           if (discoverySink != null)
@@ -66,6 +66,13 @@ namespace spec.runner
         var testResult = new TestResult(testCase);
         testResult.Outcome = TestOutcome.Passed;
         testResult.ErrorMessage = "lots of information for " + testCase.DisplayName;
+
+        TestSummary result;
+        using (var sandbox = new Sandbox<Executor>(testCase.Source))
+        {
+          result = sandbox.Content.Execute(testCase.FullyQualifiedName);
+          
+        }
 
          frameworkHandle.RecordResult(testResult);
       }

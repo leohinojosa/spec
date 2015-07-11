@@ -41,12 +41,12 @@ namespace spec
         Fn = fn
       };
     }
-    public Specification SpecFactory(string description, Action function, Definition suite, string  codeBase, int lineNumber)
+    public Specification SpecFactory(string description, Action function, Definition suite, string  codeBase, int lineNumber, int column, string fileName)
     {
       totalSpecsDefined ++;
       var spec = new Specification()
       {
-        Guid = Guid.NewGuid(),
+        Id = String.Format("spec://{0}/{1}:{2}", fileName, lineNumber, column),
         Description = description,
         Fn = function,
         Parent = suite,
@@ -78,7 +78,8 @@ namespace spec
     public List<Each> BeforeAll { get; private set; }
     public List<Each> AfterAll { get; private set; }
     public List<Definition> Childs { get; set; }
-   
+
+    public string Id { get; set; }
     public string Description { get; set; }
     public Action Fn { get; set; }
     public bool Enabled { get; set; }
@@ -126,7 +127,7 @@ namespace spec
 
   public class Specification : Definition
   {
-    public Guid Guid { get; set; }
+    
     public string CodeBase { get; set; }
     public int LineNumber { get; set; }
     public override string ToString()

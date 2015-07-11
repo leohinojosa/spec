@@ -80,23 +80,45 @@ namespace spec.runner
       var runner = new SuiteRunner();
       return runner.RunSpecs(discoveredTypes);
     }
+
+    public TestSummary Execute( string specId)
+    {
+      var discoveredTypes = SandboxedAssembly.GetTypes()
+                           .Where(t => t.IsSubclassOf(typeof(spec)))
+                           .Select(t => new TestSourceMap { Source = this.Source, Type = t });
+
+      var runner = new SuiteRunner();
+      return runner.RunSpecs(discoveredTypes, specId);
+    }
   }
 
   public class SuiteRunner
   {
     //Maybe we can split discovery and execution into two separate clases ?
-    public TestSummary RunSpecs(IEnumerable<TestSourceMap> specs)
+    public TestSummary RunSpecs(IEnumerable<TestSourceMap> specs, string filter = null)
     {
       var testUnit = SuiteDiscovery.GetSpecs(specs);
 
-      foreach (var suiteRegistry in testUnit.SuiteRegistry)
+      if (String.IsNullOrEmpty(filter))
       {
-        new Runner().run(suiteRegistry.currentDeclarationSuite);
-
-        /*Task.Run(() =>
+        foreach (var suiteRegistry in testUnit.SuiteRegistry)
         {
           new Runner().run(suiteRegistry.currentDeclarationSuite);
-        });*/
+
+          /*Task.Run(() =>
+          {
+            new Runner().run(suiteRegistry.currentDeclarationSuite);
+          });*/
+        }
+      }
+      else
+      {
+        var singleSuite =
+          testUnit.SuiteRegistry.SelectMany(x => x.runnableLookupTable).SingleOrDefault(x => x.Id == filter);
+
+        new Runner().run(testUnit.SuiteRegistry.FirstOrDefault().currentDeclarationSuite, filter);
+        // analizar como obtener un it especifico, pero se debe de correr desde el primer describe
+        //quiza armar una tablita jerarquica de que se debe de executar?
       }
 
       var results = new TestSummary
@@ -109,6 +131,7 @@ namespace spec.runner
 
       return results;
     }
+
   }
   [Serializable]
   public class TestSummary 

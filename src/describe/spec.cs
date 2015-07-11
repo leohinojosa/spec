@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 
 namespace spec
 {
@@ -90,8 +91,10 @@ namespace spec
     {
       var codeBase = new System.Diagnostics.StackTrace(true).GetFrame(2).GetFileName();
       var lineNumber = new System.Diagnostics.StackTrace(true).GetFrame(2).GetFileLineNumber();
+      var columnNumber = new System.Diagnostics.StackTrace(true).GetFrame(2).GetFileColumnNumber();
+      var fileName = Path.GetFileNameWithoutExtension(codeBase);
 
-      var spec = Registry.SpecFactory(name, operation, Registry.currentDeclarationSuite, codeBase, lineNumber);
+      var spec = Registry.SpecFactory(name, operation, Registry.currentDeclarationSuite, codeBase, lineNumber, columnNumber, fileName);
       spec.Enabled = enabled && spec.Parent.Enabled;
       Registry.currentDeclarationSuite.AddChild(spec);
     }
