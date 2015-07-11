@@ -88,7 +88,10 @@ namespace spec
 
     private void addSpec(string name, Action operation, bool enabled, SpecType specType)
     {
-      var spec = Registry.SpecFactory(name, operation, Registry.currentDeclarationSuite);
+      var codeBase = new System.Diagnostics.StackTrace(true).GetFrame(2).GetFileName();
+      var lineNumber = new System.Diagnostics.StackTrace(true).GetFrame(2).GetFileLineNumber();
+
+      var spec = Registry.SpecFactory(name, operation, Registry.currentDeclarationSuite, codeBase, lineNumber);
       spec.Enabled = enabled && spec.Parent.Enabled;
       Registry.currentDeclarationSuite.AddChild(spec);
     }

@@ -40,7 +40,6 @@ namespace spec.runner
 
     public IEnumerable<SuiteRegistry> Discover()
     {
-      //var specs = _sources.SelectMany( a => new TestSourceMap{Source = a, Types=Assembly.LoadFile(a).GetTypes()})
       var specs = _sources.SelectMany(a =>
         {
           var source = a;

@@ -22,9 +22,8 @@ namespace spec.runner
 
     public static IEnumerable<TestCase>  Discover(IEnumerable<string> sources, ITestCaseDiscoverySink discoverySink)
     {
-      System.Diagnostics.Debugger.Launch();
       List<TestCase> result = new List<TestCase>();
-      // System.Diagnostics.Debugger.Launch();
+       System.Diagnostics.Debugger.Launch();
       var t = new SuiteDiscovery(sources).Discover();
 
       foreach (var suiteRegistry in t)
@@ -33,6 +32,9 @@ namespace spec.runner
         suiteRegistry.runnableLookupTable.ForEach(it =>
         {
           var testCase = new TestCase(String.Format("{0} @ {1}", it.Parent.Description, it.Description), specTestExecutor.ExecutorUri, suiteRegistry.Source);
+          testCase.CodeFilePath = it.CodeBase;
+          testCase.LineNumber = it.LineNumber;
+          testCase.LocalExtensionData = it.Guid;
           testCase.SetPropertyValue(TestResultProperties.ErrorMessage, "No error");
           result.Add(testCase);
           if (discoverySink != null)
@@ -56,6 +58,8 @@ namespace spec.runner
 
     public void RunTests(IEnumerable<TestCase> tests, IRunContext runContext, IFrameworkHandle frameworkHandle)
     {
+      System.Diagnostics.Debugger.Launch();
+
       foreach (var testCase in tests)
       {
 
@@ -88,9 +92,15 @@ namespace spec.runner
       };*/
     }
 
+    /// <summary>
+    /// Entry point for Run All
+    /// </summary>
+    /// <param name="sources"></param>
+    /// <param name="runContext"></param>
+    /// <param name="frameworkHandle"></param>
     public void RunTests(IEnumerable<string> sources, IRunContext runContext, IFrameworkHandle frameworkHandle)
     {
-      System.Diagnostics.Debugger.Launch();
+      //System.Diagnostics.Debugger.Launch();
       IEnumerable<TestCase> tests = specTestDiscoverer.Discover(sources, null);
 
       RunTests(tests, runContext, frameworkHandle);

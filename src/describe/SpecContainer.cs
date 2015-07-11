@@ -41,14 +41,17 @@ namespace spec
         Fn = fn
       };
     }
-    public Specification SpecFactory(string description, Action function, Definition suite)
+    public Specification SpecFactory(string description, Action function, Definition suite, string  codeBase, int lineNumber)
     {
       totalSpecsDefined ++;
       var spec = new Specification()
       {
+        Guid = Guid.NewGuid(),
         Description = description,
         Fn = function,
-        Parent = suite
+        Parent = suite,
+        CodeBase = codeBase,
+        LineNumber = lineNumber
       };
 
       runnableLookupTable.Add(spec);
@@ -123,6 +126,9 @@ namespace spec
 
   public class Specification : Definition
   {
+    public Guid Guid { get; set; }
+    public string CodeBase { get; set; }
+    public int LineNumber { get; set; }
     public override string ToString()
     {
       return Description + " " + Parent.Description;
