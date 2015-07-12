@@ -81,58 +81,68 @@ namespace spec.runner
       return runner.RunSpecs(discoveredTypes);
     }
 
-    public TestSummary Execute( string specId)
+    //asi podemos solo ejecutar las que nos pidieron y no todas las clases que existen
+    public TestSummary Execute(IEnumerable<string> targetTypes)
     {
       var discoveredTypes = SandboxedAssembly.GetTypes()
-                           .Where(t => t.IsSubclassOf(typeof(Spec)))
-                           .Select(t => new TestSourceMap { Source = this.Source, Type = t });
+                            .Where(t => t.IsSubclassOf(typeof(Spec)))
+                            .Where(t => targetTypes.Contains(t.FullName.ToLower()))
+                            .Select(t => new TestSourceMap { Source = this.Source, Type = t });
 
       var runner = new SuiteRunner();
-      return runner.RunSpecs(discoveredTypes, specId);
+      return runner.RunSpecs(discoveredTypes);
     }
+
   }
 
   public class SuiteRunner
   {
     //Maybe we can split discovery and execution into two separate clases ?
-    public TestSummary RunSpecs(IEnumerable<TestSourceMap> specs, string filter = null)
+    public TestSummary RunSpecs(IEnumerable<TestSourceMap> specs)
     {
       var testUnit = SuiteDiscovery.GetSpecs(specs);
 
-      if (String.IsNullOrEmpty(filter))
+     
+     //foreach (var suiteRegistry in testUnit.SuiteRegistry.SelectMany(x=>x.currentDeclarationSuite))
+       foreach (var suiteRegistry in testUnit.SuiteRegistry.Select(x => x.currentDeclarationSuite))
       {
-        foreach (var suiteRegistry in testUnit.SuiteRegistry)
+        new Runner().run(suiteRegistry);
+
+        /*Task.Run(() =>
         {
-          new Runner().run(suiteRegistry.currentDeclarationSuite.Childs.FirstOrDefault());
-
-          /*Task.Run(() =>
-          {
-            new Runner().run(suiteRegistry.currentDeclarationSuite);
-          });*/
-        }
+          new Runner().run(suiteRegistry.currentDeclarationSuite);
+        });*/
       }
-      else
-      {
-        var singleSuite =
-          testUnit.SuiteRegistry.SelectMany(x => x.runnableLookupTable).SingleOrDefault(x => x.Id == filter);
-
-        new Runner().run(testUnit.SuiteRegistry.FirstOrDefault().currentDeclarationSuite, filter);
-        // analizar como obtener un it especifico, pero se debe de correr desde el primer describe
-        //quiza armar una tablita jerarquica de que se debe de executar?
-      }
-
+      
       var results = new TestSummary
       {
         total = testUnit.Specs.Count(),
         passed = testUnit.Specs.Count(x => x.Enabled && x.RanSuccesfully),
         failed = testUnit.Specs.Count(x => x.Enabled && !x.RanSuccesfully),
-        pending = testUnit.Specs.Count(x => !x.Enabled)
+        pending = testUnit.Specs.Count(x => !x.Enabled),
+        specs = testUnit.Specs.Select(x => new SpecSummary { Id = x.Id, ExecutionResult = x.ExecutionResult, RanSuccesfully = x.RanSuccesfully, ExecutionStatus = x.ExecutionStatus, Enabled = x.Enabled }).ToList()
       };
 
       return results;
     }
 
   }
+
+  [Serializable]
+  public class SpecSummary
+  {
+    public void Add(string id)
+    {
+      throw new NotImplementedException();
+    }
+
+    public ExecStatus ExecutionStatus { get; set; }
+    public bool RanSuccesfully { get; set; }
+    public string ExecutionResult { get; set; }
+    public string Id { get; set; }
+    public bool Enabled { get; set; }
+  }
+
   [Serializable]
   public class TestSummary 
   {
@@ -140,5 +150,8 @@ namespace spec.runner
     public int passed { get; set; }
     public int failed { get; set; }
     public int pending { get; set; }
+    public List<SpecSummary> specs { get; set; }
+
+    // public List<Specification> specs { get; set; }
   }
 }

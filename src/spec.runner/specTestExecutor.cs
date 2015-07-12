@@ -1,0 +1,81 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
+
+namespace spec.runner
+{
+  [ExtensionUri(specTestExecutor.ExecutorUriString)]
+  public class specTestExecutor : ITestExecutor
+  {
+    public const string ExecutorUriString = "executor://specTestExecutor";
+    public static readonly Uri ExecutorUri = new Uri(specTestExecutor.ExecutorUriString);
+
+    public void RunTests(IEnumerable<TestCase> tests, IRunContext runContext, IFrameworkHandle frameworkHandle)
+    {
+        System.Diagnostics.Debugger.Launch();
+      // agrupar por source, ejecutar esos sources,
+      // luego con los resultados hacer match con los test cases
+      // y cambiar el estatus
+      var groups = tests.GroupBy(x => x.Source, x => x, (x, y) => new
+      {
+        Source = x,
+        TestCases = y
+      }).ToList();
+
+      var results = new List<TestSummary>();
+      foreach (var groupedItem in groups)
+      {
+        using (var sandbox = new Sandbox<Executor>(groupedItem.Source))
+        {
+
+          var targetTypes = groupedItem.TestCases.Select(x => new Uri(x.FullyQualifiedName).Host).ToArray();
+          var result = sandbox.Content.Execute(targetTypes); 
+          results.Add(result);
+        }
+      }
+
+      var joinedList = from r in results.SelectMany(x => x.specs)
+        join tc in groups.SelectMany(x => x.TestCases) on r.Id equals tc.FullyQualifiedName
+        select new {TestResult = r, TestCase = tc};
+
+      foreach (var resultItem in joinedList)
+      {
+
+        var testResult = new TestResult(resultItem.TestCase);
+        if (resultItem.TestResult.Enabled)
+        {
+          testResult.Outcome = resultItem.TestResult.RanSuccesfully ? TestOutcome.Passed : TestOutcome.Failed;
+        }
+        else
+        {
+          testResult.Outcome = TestOutcome.Skipped;
+        }
+        
+        testResult.ErrorMessage = resultItem.TestResult.ExecutionResult; ;
+        frameworkHandle.RecordResult(testResult);
+      }
+
+    }
+
+    /// <summary>
+    /// Entry point for Run All
+    /// </summary>
+    /// <param name="sources"></param>
+    /// <param name="runContext"></param>
+    /// <param name="frameworkHandle"></param>
+    public void RunTests(IEnumerable<string> sources, IRunContext runContext, IFrameworkHandle frameworkHandle)
+    {
+      //    System.Diagnostics.Debugger.Launch();
+      IEnumerable<TestCase> tests = specTestDiscoverer.Discover(sources, null);
+
+      RunTests(tests, runContext, frameworkHandle);
+    }
+
+    public void Cancel()
+    {
+      
+    }
+  }
+}

@@ -5,12 +5,6 @@ namespace spec.runner
   public class Runner
   {
     private string whitespace = "";
-    private string _id;
-    public void run(Definition suite, string id)
-    {
-      _id = id;
-      run(suite);
-    }
 
     public void run(Definition suite)
     {
@@ -43,10 +37,6 @@ namespace spec.runner
 
             if (child.GetType().IsAssignableFrom(typeof (Specification)))
             {
-              if (!String.IsNullOrEmpty(_id) && child.Id != _id)
-              {
-                return;
-              }
 
               if (suite.BeforeEach.Count > 0)
               {

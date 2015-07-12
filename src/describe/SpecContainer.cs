@@ -74,6 +74,7 @@ namespace spec
     Completed
   }
 
+  [Serializable]
   public class Definition
   {
     public Definition Parent { get; set; }
@@ -129,6 +130,7 @@ namespace spec
     }
   }
 
+  [Serializable]
   public class Specification : Definition
   {
     
@@ -144,11 +146,13 @@ namespace spec
     }
   }
 
+  [Serializable]
   public class Suite : Definition
   {
    
   }
 
+  [Serializable]
   public class Each : Definition
   {
 
