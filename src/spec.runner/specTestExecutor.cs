@@ -9,12 +9,19 @@ namespace spec.runner
   [ExtensionUri(specTestExecutor.ExecutorUriString)]
   public class specTestExecutor : ITestExecutor
   {
+    
     public const string ExecutorUriString = "executor://specTestExecutor";
     public static readonly Uri ExecutorUri = new Uri(specTestExecutor.ExecutorUriString);
 
+    /// <summary>
+    /// Entry point for run single
+    /// </summary>
+    /// <param name="tests"></param>
+    /// <param name="runContext"></param>
+    /// <param name="frameworkHandle"></param>
     public void RunTests(IEnumerable<TestCase> tests, IRunContext runContext, IFrameworkHandle frameworkHandle)
     {
-        System.Diagnostics.Debugger.Launch();
+       // System.Diagnostics.Debugger.Launch();
       // agrupar por source, ejecutar esos sources,
       // luego con los resultados hacer match con los test cases
       // y cambiar el estatus

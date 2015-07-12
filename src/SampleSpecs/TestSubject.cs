@@ -1,8 +1,9 @@
 using FluentAssertions;
-/*
+using spec;
+
 namespace SampleSpecs
 {
-  public class TestSubject : spec.spec
+  public class TestSubject : Spec
   {
     public TestSubject()
     {
@@ -69,6 +70,7 @@ namespace SampleSpecs
 
       describe("describe 2", () =>
       {
+        var t = true;
         beforeEach("before each", () =>
         {
 
@@ -86,4 +88,4 @@ namespace SampleSpecs
       });
     }
   }
-}*/
+}

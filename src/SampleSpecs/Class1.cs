@@ -3,7 +3,7 @@ using spec;
 
 namespace SampleSpecs
 {
-  class TestSubject2 : xSpec
+  class TestSubject2 : Spec
   {
     public TestSubject2()
     {
