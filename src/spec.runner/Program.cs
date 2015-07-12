@@ -74,7 +74,7 @@ namespace spec.runner
     public TestSummary Execute()
     {
       var discoveredTypes = SandboxedAssembly.GetTypes()
-                            .Where(t => t.IsSubclassOf(typeof(spec)))
+                            .Where(t => t.IsSubclassOf(typeof(Spec)))
                             .Select(t=> new TestSourceMap{Source = this.Source, Type = t });
 
       var runner = new SuiteRunner();
@@ -84,7 +84,7 @@ namespace spec.runner
     public TestSummary Execute( string specId)
     {
       var discoveredTypes = SandboxedAssembly.GetTypes()
-                           .Where(t => t.IsSubclassOf(typeof(spec)))
+                           .Where(t => t.IsSubclassOf(typeof(Spec)))
                            .Select(t => new TestSourceMap { Source = this.Source, Type = t });
 
       var runner = new SuiteRunner();
@@ -103,7 +103,7 @@ namespace spec.runner
       {
         foreach (var suiteRegistry in testUnit.SuiteRegistry)
         {
-          new Runner().run(suiteRegistry.currentDeclarationSuite);
+          new Runner().run(suiteRegistry.currentDeclarationSuite.Childs.FirstOrDefault());
 
           /*Task.Run(() =>
           {

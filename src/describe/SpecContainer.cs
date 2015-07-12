@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace spec
 {
@@ -41,17 +42,20 @@ namespace spec
         Fn = fn
       };
     }
-    public Specification SpecFactory(string description, Action function, Definition suite, string  codeBase, int lineNumber, int column, string fileName)
+    public Specification SpecFactory(string description, Action function, Definition suite, string  codeBase, int lineNumber, int column, string fileName, string className)
     {
       totalSpecsDefined ++;
       var spec = new Specification()
       {
-        Id = String.Format("spec://{0}/{1}:{2}", fileName, lineNumber, column),
+        Id = String.Format("spec://{0}/{1}:{2}", className, lineNumber, column),
         Description = description,
         Fn = function,
         Parent = suite,
         CodeBase = codeBase,
-        LineNumber = lineNumber
+        LineNumber = lineNumber,
+        Column = column,
+        FileName = fileName,
+        ClassName = className
       };
 
       runnableLookupTable.Add(spec);
@@ -130,6 +134,10 @@ namespace spec
     
     public string CodeBase { get; set; }
     public int LineNumber { get; set; }
+    public int Column { get; set; }
+    public string FileName { get; set; }
+    public string ClassName { get; set; }
+
     public override string ToString()
     {
       return Description + " " + Parent.Description;

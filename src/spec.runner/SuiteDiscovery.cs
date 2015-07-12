@@ -25,7 +25,7 @@ namespace spec.runner
 
       foreach (var spec in specs)
       {
-        var instance = Activator.CreateInstance(spec.Type) as spec;
+        var instance = Activator.CreateInstance(spec.Type) as Spec;
         instance.Registry.Source = spec.Source;
         registryList.Add(instance.Registry);
         runableSpecs.AddRange(instance.Registry.runnableLookupTable);
@@ -46,7 +46,7 @@ namespace spec.runner
           var types = Assembly.LoadFile(a).GetTypes();
           return types.Select(t => new TestSourceMap { Source = source, Type = t });
         })
-        .Where(t => t.Type.IsSubclassOf(typeof(spec)));
+        .Where(t => t.Type.IsSubclassOf(typeof(Spec)));
 
       return GetSpecs(specs).SuiteRegistry;
     }

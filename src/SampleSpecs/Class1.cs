@@ -1,8 +1,9 @@
 ﻿using FluentAssertions;
+using spec;
 
 namespace SampleSpecs
 {
-  public class TestSubject2 : spec.spec
+  class TestSubject2 : xSpec
   {
     public TestSubject2()
     {
@@ -11,6 +12,7 @@ namespace SampleSpecs
         context("Create Functionality", () =>
         {
           bool? test = null;
+
           beforeAll("setup for All it", () =>
           {
             test = null;
@@ -25,6 +27,7 @@ namespace SampleSpecs
           {
             test.Should().BeTrue();
           });
+
 
           it("display when clicking button 2", () =>
           {

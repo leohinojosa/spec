@@ -23,7 +23,7 @@ namespace spec.runner
     public static IEnumerable<TestCase>  Discover(IEnumerable<string> sources, ITestCaseDiscoverySink discoverySink)
     {
       List<TestCase> result = new List<TestCase>();
-    //   System.Diagnostics.Debugger.Launch();
+   //    System.Diagnostics.Debugger.Launch();
       var t = new SuiteDiscovery(sources).Discover();
 
       foreach (var suiteRegistry in t)
@@ -58,14 +58,14 @@ namespace spec.runner
 
     public void RunTests(IEnumerable<TestCase> tests, IRunContext runContext, IFrameworkHandle frameworkHandle)
     {
-      System.Diagnostics.Debugger.Launch();
+  //    System.Diagnostics.Debugger.Launch();
 
       foreach (var testCase in tests)
       {
 
         var testResult = new TestResult(testCase);
         testResult.Outcome = TestOutcome.Passed;
-        testResult.ErrorMessage = "lots of information for " + testCase.DisplayName;
+        testResult.ErrorMessage = testCase.DisplayName;
 
         TestSummary result;
         using (var sandbox = new Sandbox<Executor>(testCase.Source))
@@ -107,7 +107,7 @@ namespace spec.runner
     /// <param name="frameworkHandle"></param>
     public void RunTests(IEnumerable<string> sources, IRunContext runContext, IFrameworkHandle frameworkHandle)
     {
-      //System.Diagnostics.Debugger.Launch();
+      System.Diagnostics.Debugger.Launch();
       IEnumerable<TestCase> tests = specTestDiscoverer.Discover(sources, null);
 
       RunTests(tests, runContext, frameworkHandle);
