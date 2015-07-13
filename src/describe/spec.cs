@@ -1,17 +1,18 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using spec.Model;
 
 namespace spec
 {
   public abstract class Spec : ISpec
   {
-    public  SuiteRegistry Registry { get; set; }
+    public  Registry Registry { get; set; }
     public SpecType Type { get; set; }
 
     protected Spec() 
     {
-      Registry = new SuiteRegistry();
+      Registry = new Registry();
     }
 
     public void afterAll(string description, Action operation)

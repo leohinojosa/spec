@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using spec.Model;
 
 namespace spec.runner
 {
@@ -20,7 +21,7 @@ namespace spec.runner
 
     public static TestUnit GetSpecs(IEnumerable<TestSourceMap> specs)
     {
-      var registryList = new List<SuiteRegistry>();
+      var registryList = new List<Registry>();
       var runableSpecs = new List<Specification>();
 
       foreach (var spec in specs)
@@ -38,7 +39,7 @@ namespace spec.runner
       };
     }
 
-    public IEnumerable<SuiteRegistry> Discover()
+    public IEnumerable<Registry> Discover()
     {
       var specs = _sources.SelectMany(a =>
         {
@@ -60,7 +61,7 @@ namespace spec.runner
 
   public class TestUnit
   {
-    public List<SuiteRegistry> SuiteRegistry { get; set; }
+    public List<Registry> SuiteRegistry { get; set; }
     public List<Specification> Specs { get; set; }
   }
 }
