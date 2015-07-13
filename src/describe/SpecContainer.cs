@@ -92,6 +92,8 @@ namespace spec
     public ExecStatus ExecutionStatus { get; set; }
     public bool RanSuccesfully { get; set; }
     public string ExecutionResult { get; set; }
+    public DateTime EndTime { get; set; }
+    public DateTime StartTime { get; set; }
 
     public Definition ()
     {

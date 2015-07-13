@@ -1,4 +1,5 @@
 using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace spec.runner
 {
@@ -54,6 +55,9 @@ namespace spec.runner
               {
                 Console.ForegroundColor = ConsoleColor.DarkBlue;
                 Console.Write(whitespace + child.Description);
+
+                child.StartTime = DateTime.Now;
+
                 if (child.Enabled )
                 {
                   child.ExecutionStatus = ExecStatus.Running;
@@ -76,6 +80,7 @@ namespace spec.runner
               }
               finally
               {
+                child.EndTime = DateTime.Now;
                 child.ExecutionStatus = ExecStatus.Completed;
               }
 
@@ -106,7 +111,7 @@ namespace spec.runner
               whitespace = whitespace.Substring(0, whitespace.Length - 1);
             }
           }
-          whitespace = whitespace.Substring(0, whitespace.Length - 1);
+          whitespace = whitespace.Substring(0, whitespace.Length==0?whitespace.Length:whitespace.Length - 1);
         }
 
         if (suite.AfterAll.Count > 0)

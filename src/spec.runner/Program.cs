@@ -11,15 +11,9 @@ namespace spec.runner
    *    entonces tuve que hacer que la clase base, pudiera generar una instancia para si mismo en el constructor
    * }
    * preparar un spec de prueba con nunit
-   * [0] implementar context exactamente como describe
-   * implementar The TDD interface provides suite(), test(), suiteSetup(), suiteTeardown(), setup(), and teardown(): para TDD
-   * implementar before and after each
-   * implementar before and after all
-   * implementar context
    * hacer prueba com threads,
    * separar clase de runner
    * implementar test duration en el runner
-   *      quitar la referencia de los sample specs, estos los tenemos que leer como dll path
    */
 
   public class Program
@@ -120,7 +114,7 @@ namespace spec.runner
         passed = testUnit.Specs.Count(x => x.Enabled && x.RanSuccesfully),
         failed = testUnit.Specs.Count(x => x.Enabled && !x.RanSuccesfully),
         pending = testUnit.Specs.Count(x => !x.Enabled),
-        specs = testUnit.Specs.Select(x => new SpecSummary { Id = x.Id, ExecutionResult = x.ExecutionResult, RanSuccesfully = x.RanSuccesfully, ExecutionStatus = x.ExecutionStatus, Enabled = x.Enabled }).ToList()
+        specs = testUnit.Specs.Select(x => new SpecSummary { Id = x.Id, ExecutionResult = x.ExecutionResult, RanSuccesfully = x.RanSuccesfully, ExecutionStatus = x.ExecutionStatus, Enabled = x.Enabled, Duration = x.EndTime - x.StartTime,  }).ToList()
       };
 
       return results;
@@ -141,6 +135,7 @@ namespace spec.runner
     public string ExecutionResult { get; set; }
     public string Id { get; set; }
     public bool Enabled { get; set; }
+    public TimeSpan Duration { get; set; }
   }
 
   [Serializable]

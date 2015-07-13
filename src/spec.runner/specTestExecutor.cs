@@ -54,6 +54,7 @@ namespace spec.runner
         if (resultItem.TestResult.Enabled)
         {
           testResult.Outcome = resultItem.TestResult.RanSuccesfully ? TestOutcome.Passed : TestOutcome.Failed;
+          testResult.Duration = resultItem.TestResult.Duration;
         }
         else
         {
