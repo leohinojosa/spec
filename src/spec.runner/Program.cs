@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using spec.runner.Model;
 
 namespace spec.runner
 {
@@ -27,7 +28,7 @@ namespace spec.runner
         //@"C:\Personal\proyectos\speck\src\SampleSpecs\bin\debug\SampleSpecs.dll"
       };
 
-      var t = new SuiteDiscovery(sources).Discover();
+   //   var t = new SuiteDiscovery(sources).Discover();
      
       SpecExecutor(sources);
       Console.ReadLine();
@@ -61,92 +62,5 @@ namespace spec.runner
 
     }
 
-  }
-
-  public class Executor : DomainProxy
-  {
-    public TestSummary Execute()
-    {
-      var discoveredTypes = SandboxedAssembly.GetTypes()
-                            .Where(t => t.IsSubclassOf(typeof(Spec)))
-                            .Select(t=> new TestSourceMap{Source = this.Source, Type = t });
-
-      var runner = new SuiteRunner();
-      return runner.RunSpecs(discoveredTypes);
-    }
-
-    //asi podemos solo ejecutar las que nos pidieron y no todas las clases que existen
-    public TestSummary Execute(IEnumerable<string> targetTypes)
-    {
-      var discoveredTypes = SandboxedAssembly.GetTypes()
-                            .Where(t => t.IsSubclassOf(typeof(Spec)))
-                            .Where(t => targetTypes.Contains(t.FullName.ToLower()))
-                            .Select(t => new TestSourceMap { Source = this.Source, Type = t });
-
-      var runner = new SuiteRunner();
-      return runner.RunSpecs(discoveredTypes);
-    }
-
-  }
-
-  public class SuiteRunner
-  {
-    //Maybe we can split discovery and execution into two separate clases ?
-    public TestSummary RunSpecs(IEnumerable<TestSourceMap> specs)
-    {
-      var testUnit = SuiteDiscovery.GetSpecs(specs);
-
-     
-     //foreach (var suiteRegistry in testUnit.SuiteRegistry.SelectMany(x=>x.currentDeclarationSuite))
-       foreach (var suiteRegistry in testUnit.SuiteRegistry.Select(x => x.currentDeclarationSuite))
-      {
-        new Runner().run(suiteRegistry);
-
-        /*Task.Run(() =>
-        {
-          new Runner().run(suiteRegistry.currentDeclarationSuite);
-        });*/
-      }
-      
-      var results = new TestSummary
-      {
-        total = testUnit.Specs.Count(),
-        passed = testUnit.Specs.Count(x => x.Enabled && x.RanSuccesfully),
-        failed = testUnit.Specs.Count(x => x.Enabled && !x.RanSuccesfully),
-        pending = testUnit.Specs.Count(x => !x.Enabled),
-        specs = testUnit.Specs.Select(x => new SpecSummary { Id = x.Id, ExecutionResult = x.ExecutionResult, RanSuccesfully = x.RanSuccesfully, ExecutionStatus = x.ExecutionStatus, Enabled = x.Enabled, Duration = x.EndTime - x.StartTime,  }).ToList()
-      };
-
-      return results;
-    }
-
-  }
-
-  [Serializable]
-  public class SpecSummary
-  {
-    public void Add(string id)
-    {
-      throw new NotImplementedException();
-    }
-
-    public ExecStatus ExecutionStatus { get; set; }
-    public bool RanSuccesfully { get; set; }
-    public string ExecutionResult { get; set; }
-    public string Id { get; set; }
-    public bool Enabled { get; set; }
-    public TimeSpan Duration { get; set; }
-  }
-
-  [Serializable]
-  public class TestSummary 
-  {
-    public int total { get; set; }
-    public int passed { get; set; }
-    public int failed { get; set; }
-    public int pending { get; set; }
-    public List<SpecSummary> specs { get; set; }
-
-    // public List<Specification> specs { get; set; }
   }
 }

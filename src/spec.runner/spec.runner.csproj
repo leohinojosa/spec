@@ -47,13 +47,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DomainProxy.cs" />
+    <Compile Include="Executor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Runner.cs" />
     <Compile Include="Sandbox.cs" />
-    <Compile Include="specTestDiscoverer.cs" />
-    <Compile Include="specTestExecutor.cs" />
+    <Compile Include="Adapter\specTestDiscoverer.cs" />
+    <Compile Include="Adapter\specTestExecutor.cs" />
+    <Compile Include="Model\SpecSummary.cs" />
     <Compile Include="SuiteDiscovery.cs" />
+    <Compile Include="SuiteRunner.cs" />
+    <Compile Include="Model\TestSummary.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\describe\spec.csproj">

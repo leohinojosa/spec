@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ISpec.cs" />
+    <Compile Include="Runner.cs" />
     <Compile Include="spec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpecContainer.cs" />

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
+using spec.runner.Model;
 
-namespace spec.runner
+namespace spec.runner.Adapter
 {
   [ExtensionUri(specTestExecutor.ExecutorUriString)]
   public class specTestExecutor : ITestExecutor
