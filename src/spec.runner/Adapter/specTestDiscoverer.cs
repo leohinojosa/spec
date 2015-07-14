@@ -37,7 +37,6 @@ namespace spec.runner.Adapter
           testCase.SetPropertyValue(TestResultProperties.ErrorMessage, "No error");
           testCase.Traits.Add("suite", it.Parent.Description);
           
-          
           result.Add(testCase);
           if (discoverySink != null)
           {
