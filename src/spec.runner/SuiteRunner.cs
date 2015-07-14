@@ -10,10 +10,11 @@ namespace spec.runner
     //Maybe we can split discovery and execution into two separate clases ?
     public TestSummary RunSpecs(IEnumerable<TestSourceMap> specs)
     {
+      //we call twice the get specs method, 
+      // the first time in the SuiteDiscovery, to get a list of all existing types
       var testUnit = SuiteDiscovery.GetSpecs(specs);
 
      
-      //foreach (var suiteRegistry in testUnit.SuiteRegistry.SelectMany(x=>x.currentDeclarationSuite))
       foreach (var suiteRegistry in testUnit.SuiteRegistry.Select(x => x.currentDeclarationSuite))
       {
         new Runner().run(suiteRegistry);

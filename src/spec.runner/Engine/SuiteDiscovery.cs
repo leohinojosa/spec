@@ -19,6 +19,23 @@ namespace spec.runner.Engine
       _sources = sources;
     }
 
+    public IEnumerable<Registry> Discover()
+    {
+      var specs = _sources.SelectMany(a =>
+      {
+        var source = a;
+        var types = Assembly.LoadFile(a).GetTypes();
+        return types.Select(t => new TestSourceMap { Source = source, Type = t });
+      }).Where(t => t.Type.IsSubclassOf(typeof(Spec)));
+
+      return GetSpecs(specs).SuiteRegistry;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="specs"></param>
+    /// <returns></returns>
     public static TestUnit GetSpecs(IEnumerable<TestSourceMap> specs)
     {
       var registryList = new List<Registry>();
@@ -37,19 +54,6 @@ namespace spec.runner.Engine
         SuiteRegistry = registryList,
         Specs = runableSpecs
       };
-    }
-
-    public IEnumerable<Registry> Discover()
-    {
-      var specs = _sources.SelectMany(a =>
-        {
-          var source = a;
-          var types = Assembly.LoadFile(a).GetTypes();
-          return types.Select(t => new TestSourceMap { Source = source, Type = t });
-        })
-        .Where(t => t.Type.IsSubclassOf(typeof(Spec)));
-
-      return GetSpecs(specs).SuiteRegistry;
     }
   }
 
