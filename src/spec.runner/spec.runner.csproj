@@ -54,7 +54,8 @@
     <Compile Include="Adapter\specTestDiscoverer.cs" />
     <Compile Include="Adapter\specTestExecutor.cs" />
     <Compile Include="Model\SpecSummary.cs" />
-    <Compile Include="SuiteDiscovery.cs" />
+    <Compile Include="Engine\SuiteDiscovery.cs" />
+    <Compile Include="Engine\SuiteExecutor.cs" />
     <Compile Include="SuiteRunner.cs" />
     <Compile Include="Model\TestSummary.cs" />
   </ItemGroup>

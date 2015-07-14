@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using spec.Model;
 
-namespace spec.runner
+namespace spec.runner.Engine
 {
   /// <summary>
   /// Class that loads list of SuiteRegistry types
