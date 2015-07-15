@@ -27,7 +27,7 @@ namespace spec.runner.Adapter
       foreach (var suiteRegistry in t)
       {
         //TODO Consider Refactor  
-        suiteRegistry.runnableLookupTable.ForEach(it =>
+        suiteRegistry.executableLookupTable.ForEach(it =>
         {
           var testCase = new TestCase(it.Id, specTestExecutor.ExecutorUri, suiteRegistry.Source);
           testCase.CodeFilePath = it.CodeBase;

@@ -37,7 +37,7 @@ namespace spec.runner
       summary = r.Execute(specRegistries);
 
       //vamos a recorrer
-      foreach (var spec in specRegistries.SelectMany(x => x.currentDeclarationSuite.Childs))
+      foreach (var spec in specRegistries.SelectMany(x => x.currentSuite.Childs))
       {
         whitespace = String.Empty;
         Console.WriteLine("");

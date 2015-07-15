@@ -46,7 +46,7 @@ namespace spec.runner.Engine
         var instance = Activator.CreateInstance(spec.Type) as Spec;
         instance.Registry.Source = spec.Source;
         registryList.Add(instance.Registry);
-        runableSpecs.AddRange(instance.Registry.runnableLookupTable);
+        runableSpecs.AddRange(instance.Registry.executableLookupTable);
       }
 
       return new TestUnit

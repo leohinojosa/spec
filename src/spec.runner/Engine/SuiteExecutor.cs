@@ -13,7 +13,7 @@ namespace spec.runner.Engine
       var groups = sources.GroupBy(x => x.Source, x => x, (x, y) => new
       {
         Source = x,
-        TestCases = y.SelectMany(a => a.runnableLookupTable)
+        TestCases = y.SelectMany(a => a.executableLookupTable)
       }).ToList();
 
       var results = new List<TestSummary>();

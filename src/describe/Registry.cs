@@ -6,18 +6,18 @@ namespace spec
 {
   public class Registry
   {
-    public  Definition currentDeclarationSuite = new Definition() { Description = "Root" };
-    public List<Specification>  runnableLookupTable = new List<Specification>();
+    public  Definition currentSuite = new Definition() { Description = "Root" };
+    public List<Specification>  executableLookupTable = new List<Specification>();
     public int totalSpecsDefined = 0;
     public string Source { get; set; }
 
     public  void AddSpecToSuites(Definition suite, Action specDefinition)
     {
-      var parentSuite = currentDeclarationSuite;
-      currentDeclarationSuite = suite;
-      parentSuite.AddChild(currentDeclarationSuite);
+      var parentSuite = currentSuite;
+      currentSuite = suite;
+      parentSuite.AddChild(currentSuite);
       SafeExecute(specDefinition);
-      currentDeclarationSuite = parentSuite;
+      currentSuite = parentSuite;
     }
 
     private void SafeExecute(Action specDefinition)
@@ -28,8 +28,7 @@ namespace spec
       }
       catch (Exception ex)
       {
-        Console.WriteLine(ex.Message);
-        throw new Exception("Cannot build specification");
+        throw new Exception(String.Format("Cannot build specification\n {0}",ex.Message) );
       }
     }
 
@@ -38,7 +37,7 @@ namespace spec
       return new Suite()
       {
         Description = description,
-        Parent = currentDeclarationSuite,
+        Parent = currentSuite,
         Fn = fn
       };
     }
@@ -58,7 +57,7 @@ namespace spec
         ClassName = className
       };
 
-      runnableLookupTable.Add(spec);
+      executableLookupTable.Add(spec);
       return spec;
     }
     public Each EachFactory(string description, Action fnAction)

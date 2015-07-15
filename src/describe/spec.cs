@@ -18,7 +18,7 @@ namespace spec
     public void afterAll(string description, Action operation)
     {
       var before = Registry.EachFactory(description, operation);
-      Registry.currentDeclarationSuite.AddAfterAll(before);
+      Registry.currentSuite.AddAfterAll(before);
     }
 
     public void afterEach(Action operation)
@@ -29,13 +29,13 @@ namespace spec
     public void afterEach(string description, Action operation)
     {
       var after = Registry.EachFactory(description, operation);
-      Registry.currentDeclarationSuite.AddAfterEach(after);
+      Registry.currentSuite.AddAfterEach(after);
     }
 
     public void beforeAll(string description, Action operation)
     {
       var before = Registry.EachFactory(description, operation);
-      Registry.currentDeclarationSuite.AddBeforeAll(before);
+      Registry.currentSuite.AddBeforeAll(before);
     }
 
     public void beforeEach(Action operation)
@@ -46,7 +46,7 @@ namespace spec
     public void beforeEach(string description, Action operation)
     {
       var before = Registry.EachFactory(description, operation);
-      Registry.currentDeclarationSuite.AddBeforeEach(before);
+      Registry.currentSuite.AddBeforeEach(before);
     }
 
     public void context(string name, Action operation)
@@ -106,9 +106,9 @@ namespace spec
       var fileName = Path.GetFileName(codeBase);
       var className = this.GetType().FullName;
 
-      var spec = Registry.SpecFactory(name, operation, Registry.currentDeclarationSuite, codeBase, lineNumber, columnNumber, fileName, className);
+      var spec = Registry.SpecFactory(name, operation, Registry.currentSuite, codeBase, lineNumber, columnNumber, fileName, className);
       spec.Enabled = enabled && spec.Parent.Enabled;
-      Registry.currentDeclarationSuite.AddChild(spec);
+      Registry.currentSuite.AddChild(spec);
     }
   }
 }
