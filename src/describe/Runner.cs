@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using spec.Model;
 
 namespace spec
@@ -10,15 +11,7 @@ namespace spec
       try
       {
         suite.ExecutionStatus = ExecStatus.Running;
-        if (suite.BeforeAll.Count > 0)
-        {
-          suite.BeforeAll.ForEach(x =>
-          {
-            x.ExecutionStatus = ExecStatus.Running;
-            x.Fn();
-            x.ExecutionStatus = ExecStatus.Completed;
-          });
-        }
+        SetupSpec(suite.BeforeAll);
 
         if (suite.Childs.Count > 0)
         {
@@ -31,16 +24,7 @@ namespace spec
 
             if (child.GetType().IsAssignableFrom(typeof (Specification)))
             {
-
-              if (suite.BeforeEach.Count > 0)
-              {
-                suite.BeforeEach.ForEach(x =>
-                {
-                  x.ExecutionStatus = ExecStatus.Running;
-                  x.Fn();
-                  x.ExecutionStatus = ExecStatus.Completed;
-                });
-              }
+              SetupSpec(suite.BeforeEach);
 
               try
               {
@@ -70,34 +54,29 @@ namespace spec
                 child.ExecutionStatus = ExecStatus.Completed;
               }
 
-              if (suite.AfterEach.Count > 0)
-              {
-                suite.AfterEach.ForEach(x =>
-                {
-                  x.ExecutionStatus = ExecStatus.Running;
-                  x.Fn();
-                  x.ExecutionStatus = ExecStatus.Completed;
-                });
-
-              }
+              SetupSpec(suite.AfterEach);
             }
           }
         }
 
-        if (suite.AfterAll.Count > 0)
-        {
-          suite.AfterAll.ForEach(x =>
-          {
-            x.ExecutionStatus = ExecStatus.Running;
-            x.Fn();
-            x.ExecutionStatus = ExecStatus.Completed;
-          });
-
-        }
+        SetupSpec(suite.AfterAll);
       }
       finally
       {
         suite.ExecutionStatus = ExecStatus.Completed;
+      }
+    }
+
+    private void SetupSpec(List<Each> setUp)
+    {
+      if (setUp.Count > 0)
+      {
+        setUp.ForEach(x =>
+        {
+          x.ExecutionStatus = ExecStatus.Running;
+          x.Fn();
+          x.ExecutionStatus = ExecStatus.Completed;
+        });
       }
     }
   }
