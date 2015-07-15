@@ -54,7 +54,7 @@
     <Compile Include="Model\Each.cs" />
     <Compile Include="ISpec.cs" />
     <Compile Include="Runner.cs" />
-    <Compile Include="spec.cs" />
+    <Compile Include="Spec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\Enums.cs" />
     <Compile Include="Model\Suite.cs" />

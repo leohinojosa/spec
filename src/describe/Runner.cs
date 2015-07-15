@@ -70,23 +70,6 @@ namespace spec
                 child.ExecutionStatus = ExecStatus.Completed;
               }
 
-              #region Printout
-
-              //if (child.RanSuccesfully && child.Enabled)
-              //{
-              //  Console.ForegroundColor = ConsoleColor.Green;
-              //  Console.Write(" \u2713 ");
-              //}
-              //else if (!child.RanSuccesfully && child.Enabled)
-              //{
-              //  Console.ForegroundColor = ConsoleColor.DarkRed;
-              //  Console.Write(" \uFF58" + whitespace + child.ExecutionResult);
-              //}
-              //Console.ForegroundColor = ConsoleColor.Gray;
-              //Console.WriteLine();
-
-              #endregion
-
               if (suite.AfterEach.Count > 0)
               {
                 suite.AfterEach.ForEach(x =>
@@ -111,11 +94,6 @@ namespace spec
           });
 
         }
-      }
-      catch (Exception ex)
-      {
-        Console.WriteLine("General Error" + ex.Message);
-        throw;
       }
       finally
       {

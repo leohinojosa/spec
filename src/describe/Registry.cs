@@ -6,18 +6,27 @@ namespace spec
 {
   public class Registry
   {
-    public  Definition currentSuite = new Definition() { Description = "Root" };
-    public List<Specification>  executableLookupTable = new List<Specification>();
-    public int totalSpecsDefined = 0;
+    private Definition _currentSuite = new Definition() { Description = "Root" };
+    private readonly List<Specification>  _executableLookupTable = new List<Specification>();
+    
     public string Source { get; set; }
+    public Definition CurrentSuite
+    {
+      get { return _currentSuite; }
+    }
+
+    public List<Specification> ExecutableLookupTable
+    {
+      get { return _executableLookupTable; }
+    }
 
     public  void AddSpecToSuites(Definition suite, Action specDefinition)
     {
-      var parentSuite = currentSuite;
-      currentSuite = suite;
-      parentSuite.AddChild(currentSuite);
+      var parentSuite = _currentSuite;
+      _currentSuite = suite;
+      parentSuite.AddChild(_currentSuite);
       SafeExecute(specDefinition);
-      currentSuite = parentSuite;
+      _currentSuite = parentSuite;
     }
 
     private void SafeExecute(Action specDefinition)
@@ -37,13 +46,12 @@ namespace spec
       return new Suite()
       {
         Description = description,
-        Parent = currentSuite,
+        Parent = _currentSuite,
         Fn = fn
       };
     }
     public Specification SpecFactory(string description, Action function, Definition suite, string  codeBase, int lineNumber, int column, string fileName, string className)
     {
-      totalSpecsDefined ++;
       var spec = new Specification()
       {
         Id = String.Format("spec://{0}/{1}:{2}", className, lineNumber, column),
@@ -57,7 +65,7 @@ namespace spec
         ClassName = className
       };
 
-      executableLookupTable.Add(spec);
+      _executableLookupTable.Add(spec);
       return spec;
     }
     public Each EachFactory(string description, Action fnAction)

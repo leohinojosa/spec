@@ -15,7 +15,7 @@ namespace spec.runner
       var testUnit = SuiteDiscovery.GetSpecs(specs);
 
      
-      foreach (var suiteRegistry in testUnit.SuiteRegistry.Select(x => x.currentSuite))
+      foreach (var suiteRegistry in testUnit.SuiteRegistry.Select(x => x.CurrentSuite))
       {
         new Runner().run(suiteRegistry);
 

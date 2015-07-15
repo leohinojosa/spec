@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.IO;
 using spec.Model;
 
@@ -18,7 +17,7 @@ namespace spec
     public void afterAll(string description, Action operation)
     {
       var before = Registry.EachFactory(description, operation);
-      Registry.currentSuite.AddAfterAll(before);
+      Registry.CurrentSuite.AddAfterAll(before);
     }
 
     public void afterEach(Action operation)
@@ -29,13 +28,13 @@ namespace spec
     public void afterEach(string description, Action operation)
     {
       var after = Registry.EachFactory(description, operation);
-      Registry.currentSuite.AddAfterEach(after);
+      Registry.CurrentSuite.AddAfterEach(after);
     }
 
     public void beforeAll(string description, Action operation)
     {
       var before = Registry.EachFactory(description, operation);
-      Registry.currentSuite.AddBeforeAll(before);
+      Registry.CurrentSuite.AddBeforeAll(before);
     }
 
     public void beforeEach(Action operation)
@@ -46,7 +45,7 @@ namespace spec
     public void beforeEach(string description, Action operation)
     {
       var before = Registry.EachFactory(description, operation);
-      Registry.currentSuite.AddBeforeEach(before);
+      Registry.CurrentSuite.AddBeforeEach(before);
     }
 
     public void context(string name, Action operation)
@@ -102,13 +101,12 @@ namespace spec
       var codeBase = stackFrame.GetFileName();
       var lineNumber = stackFrame.GetFileLineNumber();
       var columnNumber = stackFrame.GetFileColumnNumber();
-     // var fileName = Path.GetFileNameWithoutExtension(codeBase);
       var fileName = Path.GetFileName(codeBase);
       var className = this.GetType().FullName;
 
-      var spec = Registry.SpecFactory(name, operation, Registry.currentSuite, codeBase, lineNumber, columnNumber, fileName, className);
+      var spec = Registry.SpecFactory(name, operation, Registry.CurrentSuite, codeBase, lineNumber, columnNumber, fileName, className);
       spec.Enabled = enabled && spec.Parent.Enabled;
-      Registry.currentSuite.AddChild(spec);
+      Registry.CurrentSuite.AddChild(spec);
     }
   }
 }
