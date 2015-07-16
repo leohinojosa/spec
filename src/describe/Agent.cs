@@ -6,7 +6,7 @@ namespace spec
 {
   public class Agent
   {
-    public void RunSuite(Definition suite)
+    async public void RunSuite(Definition suite)
     {
       try
       {

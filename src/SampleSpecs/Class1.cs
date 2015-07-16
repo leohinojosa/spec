@@ -49,7 +49,7 @@ namespace SampleSpecs
               test.Should().BeFalse();
             });
 
-            it("should fails", () =>
+            it("should fail", () =>
             { 
               test = false;
               test.Should().BeTrue();

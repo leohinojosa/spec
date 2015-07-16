@@ -53,15 +53,17 @@ namespace spec.runner
     private static string whitespace = ".";
     public static void PrintOut(Definition spec)
     {
-      whitespace = whitespace + ".";
+      Console.ForegroundColor = ConsoleColor.Gray;
       if (spec.GetType() == typeof(Specification))
       {
         var specResult = summary.specs.SingleOrDefault(x => x.Id == spec.Id);
-        print(specResult.RanSuccesfully, spec.Enabled);
-        Console.WriteLine( spec.Description.Trim());
+        printSpecStatus(specResult.RanSuccesfully, spec.Enabled);
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.WriteLine( "{it} " + spec.Description.Trim());
       }
       else
       {
+        whitespace = whitespace + ".";
         Console.WriteLine(whitespace + spec.Description.Trim());
       }
 
@@ -74,10 +76,9 @@ namespace spec.runner
         }
         whitespace = whitespace.TrimEnd('.');
       }
-      whitespace = whitespace.TrimEnd('.');
     }
 
-    public static void print(bool ranSuccesful, bool enabled)
+    public static void printSpecStatus(bool ranSuccesful, bool enabled)
     {
       var label = String.Empty;
       if (enabled)

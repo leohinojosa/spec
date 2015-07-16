@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using spec.Model;
 using spec.runner.Engine;
 using spec.runner.Model;
 
@@ -13,17 +16,16 @@ namespace spec.runner
       //we call twice the get specs method, 
       // the first time in the SuiteDiscovery, to get a list of all existing types
       var testUnit = SuiteDiscovery.GetSpecs(specs);
-
-     
+      
+      List<Task> tasks = new List<Task>();
       foreach (var suiteRegistry in testUnit.SuiteRegistry.Select(x => x.CurrentSuite))
       {
-        new Agent().RunSuite(suiteRegistry);
-
-        /*Task.Run(() =>
-        {
-          new Runner().run(suiteRegistry.currentDeclarationSuite);
-        });*/
+        Task t = Task.Factory.StartNew(()=>new Agent().RunSuite(suiteRegistry));
+        tasks.Add(t);
+        //new Agent().RunSuite(suiteRegistry);
       }
+
+      Task.WaitAll(tasks.ToArray());
       
       var results = new TestSummary
       {
@@ -36,6 +38,5 @@ namespace spec.runner
 
       return results;
     }
-
   }
 }
