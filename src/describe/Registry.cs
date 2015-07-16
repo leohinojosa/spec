@@ -68,9 +68,9 @@ namespace spec
       _executableLookupTable.Add(spec);
       return spec;
     }
-    public Each EachFactory(string description, Action fnAction)
+    public Hook EachFactory(string description, Action fnAction)
     {
-      return new Each() {Description = description, Fn = fnAction};
+      return new Hook() {Description = description, Fn = fnAction};
     }
   }
 }

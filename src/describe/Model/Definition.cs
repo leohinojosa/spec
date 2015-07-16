@@ -7,10 +7,10 @@ namespace spec.Model
   public class Definition
   {
     public Definition Parent { get; set; }
-    public List<Each> BeforeEach { get; private set; }
-    public List<Each> AfterEach { get; private set; }
-    public List<Each> BeforeAll { get; private set; }
-    public List<Each> AfterAll { get; private set; }
+    public List<Hook> BeforeEach { get; private set; }
+    public List<Hook> AfterEach { get; private set; }
+    public List<Hook> BeforeAll { get; private set; }
+    public List<Hook> AfterAll { get; private set; }
     public List<Definition> Children { get; set; }
 
     public string Id { get; set; }
@@ -27,32 +27,32 @@ namespace spec.Model
     public Definition ()
     {
       Children = new List<Definition>();
-      BeforeEach = new List<Each>();
-      AfterEach = new List<Each>();
+      BeforeEach = new List<Hook>();
+      AfterEach = new List<Hook>();
 
-      BeforeAll = new List<Each>();
-      AfterAll = new List<Each>();
+      BeforeAll = new List<Hook>();
+      AfterAll = new List<Hook>();
     }
     public void AddChild(Definition spec)
     {
       Children.Add(spec);
     }
 
-    public void AddBeforeEach(Each each)
+    public void AddBeforeEach(Hook hook)
     {
-      this.BeforeEach.Add(each);
+      this.BeforeEach.Add(hook);
     }
-    public void AddAfterEach(Each each)
+    public void AddAfterEach(Hook hook)
     {
-      this.AfterEach.Add(each);
+      this.AfterEach.Add(hook);
     }
-    public void AddBeforeAll(Each each)
+    public void AddBeforeAll(Hook hook)
     {
-      this.BeforeAll.Add(each);
+      this.BeforeAll.Add(hook);
     }
-    public void AddAfterAll(Each each)
+    public void AddAfterAll(Hook hook)
     {
-      this.AfterAll.Add(each);
+      this.AfterAll.Add(hook);
     }
 
     public override string ToString()

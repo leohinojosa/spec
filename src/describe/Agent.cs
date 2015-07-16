@@ -11,9 +11,9 @@ namespace spec
       try
       {
         suite.ExecutionStatus = ExecStatus.Running;
-        SetupSpec(suite.BeforeAll);
+        SetupHooks(suite.BeforeAll);
         RunChildDefinitions(suite);
-        SetupSpec(suite.AfterAll);
+        SetupHooks(suite.AfterAll);
       }
       finally
       {
@@ -42,11 +42,11 @@ namespace spec
 
     private void RunSpec(Definition suite, Definition child)
     {
-      SetupSpec(suite.BeforeEach);
+      SetupHooks(suite.BeforeEach);
 
       SafeExecute(child);
 
-      SetupSpec(suite.AfterEach);
+      SetupHooks(suite.AfterEach);
     }
 
     private void SafeExecute(Definition child)
@@ -78,7 +78,7 @@ namespace spec
       }
     }
 
-    private void SetupSpec(List<Each> setUp)
+    private void SetupHooks(List<Hook> setUp)
     {
       if (setUp.Count > 0)
       {

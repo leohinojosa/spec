@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Definition.cs" />
-    <Compile Include="Model\Each.cs" />
+    <Compile Include="Model\Hook.cs" />
     <Compile Include="ISpec.cs" />
     <Compile Include="Agent.cs" />
     <Compile Include="Spec.cs" />
