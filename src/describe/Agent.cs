@@ -4,17 +4,15 @@ using spec.Model;
 
 namespace spec
 {
-  public class Runner
+  public class Agent
   {
-    public void run(Definition suite)
+    public void RunSuite(Definition suite)
     {
       try
       {
         suite.ExecutionStatus = ExecStatus.Running;
         SetupSpec(suite.BeforeAll);
-
-        RunChildren(suite);
-
+        RunChildDefinitions(suite);
         SetupSpec(suite.AfterAll);
       }
       finally
@@ -23,26 +21,26 @@ namespace spec
       }
     }
 
-    private void RunChildren(Definition suite)
+    private void RunChildDefinitions(Definition definition)
     {
-      if (suite.Childs.Count > 0)
+      if (definition.Children.Count > 0)
       {
-        foreach (var child in suite.Childs)
+        foreach (var child in definition.Children)
         {
           if (child.GetType().IsAssignableFrom(typeof (Suite)))
           {
-            run(child);
+            RunSuite(child);
           }
 
           if (child.GetType().IsAssignableFrom(typeof (Specification)))
           {
-            runSpec(suite, child);
+            RunSpec(definition, child);
           }
         }
       }
     }
 
-    private void runSpec(Definition suite, Definition child)
+    private void RunSpec(Definition suite, Definition child)
     {
       SetupSpec(suite.BeforeEach);
 
@@ -56,7 +54,6 @@ namespace spec
       try
       {
         child.StartTime = DateTime.Now;
-
         if (child.Enabled)
         {
           child.ExecutionStatus = ExecStatus.Running;

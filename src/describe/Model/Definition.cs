@@ -11,7 +11,7 @@ namespace spec.Model
     public List<Each> AfterEach { get; private set; }
     public List<Each> BeforeAll { get; private set; }
     public List<Each> AfterAll { get; private set; }
-    public List<Definition> Childs { get; set; }
+    public List<Definition> Children { get; set; }
 
     public string Id { get; set; }
     public string Description { get; set; }
@@ -26,7 +26,7 @@ namespace spec.Model
 
     public Definition ()
     {
-      Childs = new List<Definition>();
+      Children = new List<Definition>();
       BeforeEach = new List<Each>();
       AfterEach = new List<Each>();
 
@@ -35,7 +35,7 @@ namespace spec.Model
     }
     public void AddChild(Definition spec)
     {
-      Childs.Add(spec);
+      Children.Add(spec);
     }
 
     public void AddBeforeEach(Each each)

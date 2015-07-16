@@ -37,7 +37,7 @@ namespace spec.runner
       summary = r.Execute(specRegistries);
 
       //vamos a recorrer
-      foreach (var spec in specRegistries.SelectMany(x => x.CurrentSuite.Childs))
+      foreach (var spec in specRegistries.SelectMany(x => x.CurrentSuite.Children))
       {
         whitespace = String.Empty;
         Console.WriteLine("");
@@ -65,10 +65,10 @@ namespace spec.runner
         Console.WriteLine(whitespace + spec.Description.Trim());
       }
 
-      if (spec.Childs.Count > 0)
+      if (spec.Children.Count > 0)
       {
         whitespace = whitespace + ".";
-        foreach (var definition in spec.Childs)
+        foreach (var definition in spec.Children)
         {
           PrintOut(definition);
         }

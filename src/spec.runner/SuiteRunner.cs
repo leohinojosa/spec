@@ -17,7 +17,7 @@ namespace spec.runner
      
       foreach (var suiteRegistry in testUnit.SuiteRegistry.Select(x => x.CurrentSuite))
       {
-        new Runner().run(suiteRegistry);
+        new Agent().RunSuite(suiteRegistry);
 
         /*Task.Run(() =>
         {
