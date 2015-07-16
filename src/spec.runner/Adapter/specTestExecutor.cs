@@ -23,9 +23,6 @@ namespace spec.runner.Adapter
     public void RunTests(IEnumerable<TestCase> tests, IRunContext runContext, IFrameworkHandle frameworkHandle)
     {
        // System.Diagnostics.Debugger.Launch();
-      // agrupar por source, ejecutar esos sources,
-      // luego con los resultados hacer match con los test cases
-      // y cambiar el estatus
       var groups = tests.GroupBy(x => x.Source, x => x, (x, y) => new
       {
         Source = x,

@@ -26,7 +26,6 @@ namespace spec.runner.Adapter
 
       foreach (var suiteRegistry in t)
       {
-        //TODO Consider Refactor  
         suiteRegistry.ExecutableLookupTable.ForEach(it =>
         {
           var testCase = new TestCase(it.Id, specTestExecutor.ExecutorUri, suiteRegistry.Source);
@@ -36,6 +35,7 @@ namespace spec.runner.Adapter
           testCase.DisplayName = it.Description;
           testCase.SetPropertyValue(TestResultProperties.ErrorMessage, "No error");
           testCase.Traits.Add("suite", it.Parent.Description);
+          testCase.Traits.Add("source", it.FileName);
           
           result.Add(testCase);
           if (discoverySink != null)
