@@ -41,6 +41,32 @@ namespace SampleSpecs
         });
       });
 
+
+      describe("A spec using a beforeach and aftereach", () =>
+      {
+        var foo = 0;
+        beforeEach(() =>
+        {
+          foo += 1;
+        });
+
+        afterEach(() =>
+        {
+          foo = 0;
+        });
+
+        it("is just a function, so it can contain any code", () =>
+        {
+          foo.Should().Be(1);
+        });
+
+        it("can have more than one expectation", () =>
+        {
+          foo.Should().Be(1);
+        });
+
+      }
+    );
     }
   }
 }

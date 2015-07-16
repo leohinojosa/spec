@@ -22,7 +22,7 @@ namespace spec
 
     public void afterEach(Action operation)
     {
-      beforeEach("after Each", operation);
+      afterEach("after Each", operation);
     }
 
     public void afterEach(string description, Action operation)
