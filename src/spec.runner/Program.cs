@@ -10,15 +10,7 @@ using spec.runner.Model;
 namespace spec.runner
 {
   /*
-   * separar suite registry a ser una clase injectada a test subject main
-   * { 
-   *    debido a que, la forma de usar la clase es en el constructor, no puedo crear una instancia e inyectar el registry class
-   *    entonces tuve que hacer que la clase base, pudiera generar una instancia para si mismo en el constructor
-   * }
    * preparar un spec de prueba con nunit
-   * hacer prueba com threads,
-   * separar clase de runner
-   * implementar test duration en el runner
    */
 
   public class Program
@@ -36,7 +28,16 @@ namespace spec.runner
       var r = new SuiteExecutor();
       summary = r.Execute(specRegistries);
 
-      //vamos a recorrer
+      PrintSummary(specRegistries);
+
+      Console.ReadLine();
+    }
+
+    private static TestSummary summary;
+    private static string whitespace = ".";
+    
+    private static void PrintSummary(IEnumerable<Registry> specRegistries)
+    {
       foreach (var spec in specRegistries.SelectMany(x => x.CurrentSuite.Children))
       {
         whitespace = String.Empty;
@@ -45,25 +46,19 @@ namespace spec.runner
       }
       Console.WriteLine("\n{0} Total {1} Passed {2} Failed {3} Pending\n", summary.total, summary.passed, summary.failed,
         summary.pending);
-
-      Console.ReadLine();
     }
-
-    private static TestSummary summary;
-    private static string whitespace = ".";
     public static void PrintOut(Definition spec)
     {
       Console.ForegroundColor = ConsoleColor.Gray;
       if (spec.GetType() == typeof(Specification))
       {
         var specResult = summary.specs.SingleOrDefault(x => x.Id == spec.Id);
-        printSpecStatus(specResult.RanSuccesfully, spec.Enabled);
+        PrintSpecStatus(specResult.RanSuccesfully, spec.Enabled);
         Console.ForegroundColor = ConsoleColor.White;
         Console.WriteLine( "{it} " + spec.Description.Trim());
       }
       else
       {
-        whitespace = whitespace + ".";
         Console.WriteLine(whitespace + spec.Description.Trim());
       }
 
@@ -77,8 +72,7 @@ namespace spec.runner
         whitespace = whitespace.TrimEnd('.');
       }
     }
-
-    public static void printSpecStatus(bool ranSuccesful, bool enabled)
+    public static void PrintSpecStatus(bool ranSuccesful, bool enabled)
     {
       var label = String.Empty;
       if (enabled)
