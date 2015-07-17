@@ -7,7 +7,6 @@ namespace spec.runner
 {
   public class Executor : DomainProxy
   {
-    //asi podemos solo ejecutar las que nos pidieron y no todas las clases que existen
     public TestSummary Execute(IEnumerable<string> targetTypes)
     {
       var discoveredTypes = SandboxedAssembly.GetTypes()

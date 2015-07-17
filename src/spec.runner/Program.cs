@@ -55,7 +55,7 @@ namespace spec.runner
         var specResult = summary.specs.SingleOrDefault(x => x.Id == spec.Id);
         PrintSpecStatus(specResult.RanSuccesfully, spec.Enabled);
         Console.ForegroundColor = ConsoleColor.White;
-        Console.WriteLine( "{it} " + spec.Description.Trim());
+        Console.WriteLine( "{it} " + spec.Description.Trim() + spec.ExecutionResult);
       }
       else
       {

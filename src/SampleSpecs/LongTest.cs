@@ -3,9 +3,9 @@ using spec;
 
 namespace SampleSpecs
 {
-  public class TestSubject : Spec
+  public class LongTest : Spec
   {
-    public TestSubject()
+    public LongTest()
     {
       describe("describe with fancy lambda expression", _ =>
       {
@@ -53,7 +53,7 @@ namespace SampleSpecs
 
         it("it 3", () =>
         {
-          t.Should().BeTrue();
+          t.Should().BeTrue("Should be true, but previous describe changed scoped value");
         });
 
         xit("it 4 - disabled", () =>
@@ -73,20 +73,17 @@ namespace SampleSpecs
         var t = true;
         beforeEach("before each", () =>
         {
-
+          t = false;
         });
 
-        //for (int i = 0; i < 5; i++)
-        //{
-        it("it 1 ---- " , () => //TODO add some support for dynamic
+        it("it 1 ---- " , () => 
         {
-          true.Should().BeFalse();
+          t.Should().BeFalse();
         });
-        //}
 
         afterEach("afterEach", () =>
         {
-
+          t = true;
         });
       });
     }

@@ -47,10 +47,10 @@
   <ItemGroup>
     <Compile Include="AfterEachSubjectTest.cs" />
     <Compile Include="BeforeAllSubjectTest.cs" />
-    <Compile Include="Class1.cs" />
+    <Compile Include="Simple.cs" />
     <Compile Include="pivotal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestSubject.cs" />
+    <Compile Include="LongTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\describe\spec.csproj">
