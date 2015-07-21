@@ -6,7 +6,7 @@ namespace spec
 {
   public class Registry
   {
-    private Definition _currentSuite = new Definition() { Description = "Root" };
+    private Definition _currentSuite = new Definition() { Description = "Root", Enabled = true};
     private readonly List<Specification>  _executableLookupTable = new List<Specification>();
     
     public string Source { get; set; }

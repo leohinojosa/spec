@@ -55,6 +55,10 @@ namespace spec.console
           PrintSpecStatus(definitionSource.RanSuccesfully, definitionSource.Enabled);
           Console.Write("{0}",  definitionSource.Description);
           Console.WriteLine();
+          if (!String.IsNullOrEmpty(definitionSource.ExecutionResult) )
+          {
+            Console.WriteLine("  - {0}",definitionSource.ExecutionResult);
+          }
         }
       }
 

@@ -90,7 +90,7 @@ namespace spec
     private Suite addSuite(string name, Action specDefinition, bool enabled, SpecType specType)
     {
       var suite = Registry.SuiteFactory(name, specDefinition);
-      suite.Enabled = enabled;
+      suite.Enabled = enabled && suite.Parent.Enabled;
       Registry.AddSpecToSuites(suite, specDefinition);
       return suite;
     }
