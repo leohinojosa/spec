@@ -69,9 +69,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\spec.runner\spec.runner.csproj">
-      <Project>{38436096-7BBE-4FF5-AE8D-C0B1A58FB47F}</Project>
-      <Name>spec.runner</Name>
+    <ProjectReference Include="..\spec.console\spec.console.csproj">
+      <Project>{46C2A71D-6105-474D-90B0-85C1E24699CB}</Project>
+      <Name>spec.console</Name>
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
     </ProjectReference>
   </ItemGroup>
