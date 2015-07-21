@@ -57,7 +57,7 @@ namespace spec.console
           Console.WriteLine();
           if (!String.IsNullOrEmpty(definitionSource.ExecutionResult) )
           {
-            Console.WriteLine("  - {0}",definitionSource.ExecutionResult);
+            Console.WriteLine("  - {0}",definitionSource.ExecutionResult.Replace('\n',' ').Replace('\t',' '));
           }
         }
       }

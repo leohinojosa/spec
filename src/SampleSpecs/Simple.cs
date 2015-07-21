@@ -2,7 +2,9 @@
 using ExpectBetter;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NFluent;
 using spec;
+using Shouldly;
 
 namespace SampleSpecs
 {
@@ -10,9 +12,9 @@ namespace SampleSpecs
   {
     public Simple()
     {
-      describe("Array", () =>
+      describe("Assertions", () =>
       {
-        describe("IndexOf", () =>
+        xdescribe("IndexOf", () =>
         {
           it("should be false when the value is not present", () =>
           {
@@ -21,14 +23,13 @@ namespace SampleSpecs
           });
         });
 
-        xdescribe("IndexOf - Disabled", () =>
+        describe("Multiple Assertion Libraries", () =>
         {
-          context("disabled context", ()=>
+          context("There are many assertion libraries out there:", ()=>
           {
-            it("Should be false when the value is not present", () =>
+            it("Fluent Assertions", () =>
             {
-              new[] { 1, 5, 3 }.Any(x => x == 0).Should().BeFalse();
-              new[] { 5, 9, 10 }.Any(x => x == 8).Should().BeFalse();
+              new[] { 1, 5, 3 }.Any(x => x == 1).Should().BeFalse("Because it should fail");
             });
 
             it("Assert", () =>
@@ -39,6 +40,16 @@ namespace SampleSpecs
             it("Expect", () =>
             {
               Expect.The(true).ToBeFalse();
+            });
+
+            it("Shouldy", () =>
+            {
+              true.ShouldBe(false);
+            });
+
+            it("NFluent", () =>
+            {
+              Check.That(true).IsFalse();
             });
 
           }
