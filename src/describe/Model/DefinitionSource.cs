@@ -21,6 +21,7 @@ namespace spec.Model
     public string FileName { get; set; }
     public string ClassName { get; set; }
     public string ParentDescription { get; set; }
+    public string StackTrace { get; set; }
 
     public static DefinitionSource CreateSource(Specification Specification)
     {
@@ -39,6 +40,7 @@ namespace spec.Model
       result.Column = Specification.Column;
       result.FileName = Specification.FileName;
       result.ClassName = Specification.ClassName;
+      result.StackTrace = Specification.StackTrace;
 
       return result;
     }

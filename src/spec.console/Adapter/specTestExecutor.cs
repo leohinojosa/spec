@@ -36,14 +36,14 @@ namespace spec.runner.Adapter
         using (var sandbox = new Sandbox<Executor>(groupedItem.Source))
         {
           var targetTypes = groupedItem.TestCases
-                          .Select(x => new DefinitionSource() { ClassName = new Uri(x.Traits.Single(y=>y.Name == "FullName").Value).Host }).ToArray();
+                          .Select(x => new DefinitionSource() { ClassName = new Uri(GetSpecID(x)).Host }).ToArray();
           var result = sandbox.Content.Execute(targetTypes);
           results.AddRange(result);
         }
       }
 
       var joinedList = from r in results
-                       join tc in groups.SelectMany(x => x.TestCases) on r.Id equals tc.Traits.Single(y => y.Name == "FullName").Value
+                       join tc in groups.SelectMany(x => x.TestCases) on r.Id equals GetSpecID(tc)
                        select new { TestResult = r, TestCase = tc };
 
       foreach (var resultItem in joinedList)
@@ -54,6 +54,7 @@ namespace spec.runner.Adapter
         {
           testResult.Outcome = resultItem.TestResult.RanSuccesfully ? TestOutcome.Passed : TestOutcome.Failed;
           testResult.Duration = resultItem.TestResult.EndTime - resultItem.TestResult.StartTime;
+          testResult.ErrorStackTrace = resultItem.TestResult.StackTrace;
         }
         else
         {
@@ -64,6 +65,11 @@ namespace spec.runner.Adapter
         frameworkHandle.RecordResult(testResult);
       }
 
+    }
+
+    private string GetSpecID(TestCase testcase)
+    {
+      return testcase.Traits.Single(y => y.Name == "SpecId").Value;
     }
 
     /// <summary>

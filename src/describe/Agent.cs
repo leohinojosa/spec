@@ -70,6 +70,7 @@ namespace spec
         child.ExecutionResult = e.Message;
         child.RanSuccesfully = false;
         child.Parent.RanSuccesfully = false;
+        child.StackTrace = e.StackTrace;
       }
       finally
       {

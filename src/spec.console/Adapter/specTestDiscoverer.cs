@@ -54,9 +54,8 @@ namespace spec.runner.Adapter
         testCase.LineNumber = it.LineNumber;
         testCase.DisplayName = it.Description;
         testCase.SetPropertyValue(TestResultProperties.ErrorMessage, "No error");
-        testCase.Traits.Add("suite", it.ParentDescription);
-        testCase.Traits.Add("source", it.FileName);
-        testCase.Traits.Add("FullName", it.Id);
+        testCase.Traits.Add("File", it.FileName);
+        testCase.Traits.Add("SpecId", it.Id);
 
         result.Add(testCase);
         if (discoverySink != null)

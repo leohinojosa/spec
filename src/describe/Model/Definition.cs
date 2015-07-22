@@ -23,6 +23,7 @@ namespace spec.Model
     public string ExecutionResult { get; set; }
     public DateTime EndTime { get; set; }
     public DateTime StartTime { get; set; }
+    public string StackTrace { get; set; }
 
     public Definition ()
     {
