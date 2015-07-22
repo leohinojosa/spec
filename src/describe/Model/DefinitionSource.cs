@@ -27,7 +27,6 @@ namespace spec.Model
       var result = new DefinitionSource();
       result.Id = Specification.Id;
 
-      result.Id = Specification.Id;
       result.ParentDescription = Specification.Parent.Description;
       result.Description = Specification.Description;
       result.Enabled = Specification.Enabled;

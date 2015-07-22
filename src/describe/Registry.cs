@@ -55,6 +55,7 @@ namespace spec
       var spec = new Specification()
       {
         Id = String.Format("spec://{0}/{1}:{2}", className, lineNumber, column),
+       // Id = suite.Parent.Description + ".spec" + string.Format("{0}x{1}", lineNumber, column),  /* it.Id*/
         Description = description,
         Fn = function,
         Parent = suite,

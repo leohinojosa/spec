@@ -103,6 +103,7 @@ namespace spec
       var columnNumber = stackFrame.GetFileColumnNumber();
       var fileName = Path.GetFileName(codeBase);
       var className = this.GetType().FullName;
+      //var className = this.GetType().Name;
 
       var spec = Registry.SpecFactory(name, operation, Registry.CurrentSuite, codeBase, lineNumber, columnNumber, fileName, className);
       spec.Enabled = enabled && spec.Parent.Enabled;
