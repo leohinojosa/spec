@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using spec.console.Model;
-using spec.Model;
+using spec.core;
+using spec.core.Model;
 
 namespace spec.runner
 {
@@ -11,7 +12,7 @@ namespace spec.runner
     public List<DefinitionSource> Execute(IEnumerable<DefinitionSource> typesSources)
     {
       var targetTypesToRun = SandboxedAssembly.GetTypes()
-        .Where(t => t.BaseType == typeof(spec.Spec))
+        .Where(t => t.BaseType == typeof(Spec))
         .Where(t => typesSources.Select(x => x.ClassName).Distinct().Contains(t.FullName, StringComparer.OrdinalIgnoreCase))
         .Select(t => t)
         .ToArray();
@@ -21,7 +22,7 @@ namespace spec.runner
       
       foreach (var specTypes in targetTypesToRun)
       {
-        var currentRunninType = SandboxedAssembly.CreateInstance(specTypes.FullName) as spec.Spec;
+        var currentRunninType = SandboxedAssembly.CreateInstance(specTypes.FullName) as Spec;
         agent.RunSuite(currentRunninType.Registry.CurrentSuite);
 
 

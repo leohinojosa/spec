@@ -7,8 +7,8 @@
     <ProjectGuid>{B8E5CEB4-1C07-406D-BB93-1798ABF0374C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>spec</RootNamespace>
-    <AssemblyName>spec</AssemblyName>
+    <RootNamespace>spec.core</RootNamespace>
+    <AssemblyName>spec.core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

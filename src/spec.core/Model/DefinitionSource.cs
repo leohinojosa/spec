@@ -1,7 +1,6 @@
 using System;
-using System.Reflection;
 
-namespace spec.Model
+namespace spec.core.Model
 {
   [Serializable]
   public class DefinitionSource

@@ -1,6 +1,6 @@
 using System;
 
-namespace spec
+namespace spec.core
 {
   public abstract class xSpec : ISpec
   {

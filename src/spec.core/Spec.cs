@@ -1,15 +1,15 @@
 using System;
 using System.IO;
-using spec.Model;
+using spec.core.Model;
 
-namespace spec
+namespace spec.core
 {
   public abstract class Spec : ISpec
   {
-    public  Registry Registry { get; set; }
+    public Registry Registry { get; set; }
     public SpecType Type { get; set; }
 
-    protected Spec() 
+    protected Spec()
     {
       Registry = new Registry();
     }
@@ -105,7 +105,8 @@ namespace spec
       var className = this.GetType().FullName;
       //var className = this.GetType().Name;
 
-      var spec = Registry.SpecFactory(name, operation, Registry.CurrentSuite, codeBase, lineNumber, columnNumber, fileName, className);
+      var spec = Registry.SpecFactory(name, operation, Registry.CurrentSuite, codeBase, lineNumber, columnNumber,
+        fileName, className);
       spec.Enabled = enabled && spec.Parent.Enabled;
       Registry.CurrentSuite.AddChild(spec);
     }

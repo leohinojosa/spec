@@ -1,5 +1,5 @@
 ﻿// ReSharper disable InconsistentNaming
-namespace spec.Model
+namespace spec.core.Model
 {
   public enum ExecStatus
   {

@@ -1,6 +1,6 @@
 using System;
 
-namespace spec.Model
+namespace spec.core.Model
 {
   [Serializable]
   public class Suite : Definition

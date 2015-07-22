@@ -1,5 +1,5 @@
 using System;
-using spec.Model;
+using spec.core.Model;
 
 namespace spec.console.Model
 {

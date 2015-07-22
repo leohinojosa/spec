@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace spec.Model
+namespace spec.core.Model
 {
   [Serializable]
   public class Definition

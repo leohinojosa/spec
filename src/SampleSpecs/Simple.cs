@@ -4,6 +4,7 @@ using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NFluent;
 using spec;
+using spec.core;
 using Shouldly;
 
 namespace SampleSpecs

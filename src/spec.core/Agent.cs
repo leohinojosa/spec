@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using spec.Model;
+using spec.core.Model;
 
-namespace spec
+namespace spec.core
 {
   public class Agent
   {

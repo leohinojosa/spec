@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using spec.Model;
+using spec.core.Model;
 using spec.runner;
 
 namespace spec.console
