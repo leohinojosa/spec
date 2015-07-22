@@ -60,9 +60,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\describe\spec.csproj">
+    <ProjectReference Include="..\spec.core\spec.core.csproj">
       <Project>{b8e5ceb4-1c07-406d-bb93-1798abf0374c}</Project>
-      <Name>spec</Name>
+      <Name>spec.core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
