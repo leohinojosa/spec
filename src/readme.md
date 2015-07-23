@@ -1,15 +1,63 @@
 
 #Spec#
-Spec is a small testing framework that implements **bdd** style testing for .net. inspired by mochajs and jasmine.
+Spec is a small testing framework that implements **bdd** style testing for .net. inspired by [mochajs](http://mochajs.org/) and [jasmine](http://jasmine.github.io/).
 
 The library takes a minimal approach to define your tests and aligns to the same structure that *mochajs* and *jasmine* use; Allowing you to have a unified perspective in how you write and structure your tests.
 
-The Spec TDD library works by creating any class that inherits from the Spec base type. Then create in the class constructor start describing the behavior and expectations for your tests.
+The Spec TDD library works by creating any class that inherits from the `Spec` base type. Create a constructor, start describing the behavior and expectations for your tests.
 You can have *describe* blocks, *context* blocks, and *it* specifications.
+
+```csharp
+public class SimpleTest : Spec
+{
+  public SimpleTest()
+  {
+      describe("A describe suite", ()=>{
+          var scopeVariable = false;
+          it("can have multiple specs", () =>
+          {
+            Assert.IsTrue(true);
+          });
+
+          xit("or disabled specs", () =>
+          {
+            Assert.IsFalse(true);
+          });
+      });
+  }
+}
+```
 
 Also you can use hooks for **BeforeAll, BeforeEach, AfterAll **&** AfterEach**.
 
-The library includes an integrated Test Runner for Visual Studio and a standalone Console Runner as well.
+
+```csharp
+public class SimpleTest : Spec
+{
+  public SimpleTest()
+  {
+      describe("A describe suite", ()=>{
+          var scopeVariable = false;
+          beforeEach(() =>
+          {
+            scopeVariable = true;
+          });
+
+          it("can have multiple specs", () =>
+          {
+            Assert.IsTrue(true);
+          });
+
+          afterEach(() =>
+          {
+            scopeVariable = false;
+          });
+      });
+  }
+}
+```
+BeforeAll and AfterAll hooks will be run once per **describe**, while beforeEach and AfterEach will run once per every **it**. Also you can have multiple hooks per spec, which will be appended and executed as discovered.
+
 
 ```csharp
 namespace SampleSpecs
@@ -49,15 +97,16 @@ namespace SampleSpecs
         {
           testList.Should().BeNull();
         });
-      }
-        );
+      });
     }
   }
 }
 ```
 
+The library includes an integrated Test Runner for Visual Studio and a standalone Console Runner as well.
+
 ##Assertion Libraries ##
-Spec does not include an assertion library, you can use whatever assertion library you feel more comfortable with,
+Spec does **not** include an assertion library, you can use whatever assertion library you feel more comfortable with.
 
 * Assert Library
 * Fluent Assertions
