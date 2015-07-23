@@ -20,6 +20,11 @@ namespace spec.core
       Registry.CurrentSuite.AddAfterAll(before);
     }
 
+    public void afterAll(Action operation)
+    {
+      afterAll("after all", operation);
+    }
+
     public void afterEach(Action operation)
     {
       afterEach("after Each", operation);
@@ -35,6 +40,11 @@ namespace spec.core
     {
       var before = Registry.EachFactory(description, operation);
       Registry.CurrentSuite.AddBeforeAll(before);
+    }
+
+    public void beforeAll(Action operation)
+    {
+      beforeAll("before All", operation);
     }
 
     public void beforeEach(Action operation)

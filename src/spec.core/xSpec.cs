@@ -4,6 +4,10 @@ namespace spec.core
 {
   public abstract class xSpec : ISpec
   {
+    public void beforeAll(Action operation)
+    {
+    }
+
     public void beforeEach(Action operation)
     {
     }
@@ -13,6 +17,10 @@ namespace spec.core
     }
 
     public void afterAll(string description, Action operation)
+    {
+    }
+
+    public void afterAll(Action operation)
     {
     }
 

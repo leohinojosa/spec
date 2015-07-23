@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="AfterEachSubjectTest.cs" />
     <Compile Include="BeforeAllSubjectTest.cs" />
+    <Compile Include="calculatorSpec.cs" />
     <Compile Include="Simple.cs" />
     <Compile Include="pivotal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

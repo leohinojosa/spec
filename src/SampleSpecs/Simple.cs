@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using ExpectBetter;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -9,7 +10,7 @@ using Shouldly;
 
 namespace SampleSpecs
 {
-  class Simple : Spec
+  public class Simple : Spec
   {
     public Simple()
     {
