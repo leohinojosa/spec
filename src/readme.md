@@ -1,8 +1,7 @@
 
 #Spec#
 Spec is a small testing framework that implements **bdd** style testing for .net. inspired by [mochajs](http://mochajs.org/) and [jasmine](http://jasmine.github.io/).
-
-The library takes a minimal approach to define your tests and aligns to the same structure that *mochajs* and *jasmine* use; Allowing you to have a unified perspective in how you write and structure your tests.
+The library takes a minimal approach to define your tests and allows for using a *Arrange-Act-Assert* pattern in your unit testing;
 
 The Spec TDD library works by creating any class that inherits from the `Spec` base type. Create a constructor, start describing the behavior and expectations for your tests.
 You can have *describe* blocks, *context* blocks, and *it* specifications.
@@ -43,7 +42,7 @@ public class SimpleTest : Spec
             scopeVariable = true;
           });
 
-          it("can have multiple specs", () =>
+          it("scope variable should be set en each run", () =>
           {
             Assert.IsTrue(true);
           });
@@ -71,13 +70,13 @@ namespace SampleSpecs
         List<int> testList = null;
         context("The beforeEach suite should consider being called for every spec", () =>
         {
-          beforeAll("[before all] - List should be initialized", () =>
+          beforeAll(() =>
           {
             testList = new List<int>();
             testList.Add(1);
           });
 
-          beforeEach("[before each]- Add Item to list", () =>
+          beforeEach(() =>
           {
             testList.Add(2);
           });
@@ -87,7 +86,7 @@ namespace SampleSpecs
             testList.Count.Should().Be(2);
           });
 
-         afterEach("[after each] - Remove item from the list", () =>
+         afterEach(() =>
          {
            testList = null;
          });
@@ -103,7 +102,7 @@ namespace SampleSpecs
 }
 ```
 
-The library includes an integrated Test Runner for Visual Studio and a standalone Console Runner as well.
+The library includes an integrated Test Runner for Visual Studio in a visx package and a standalone Console Runner exe as well.
 
 ##Assertion Libraries ##
 Spec does **not** include an assertion library, you can use whatever assertion library you feel more comfortable with.
@@ -149,7 +148,7 @@ describe("Multiple Assertion Libraries", () =>
 ```
 
 ## Visual Studio Extensions that Help spec look better ##
-Because the spec framework uses Action<> to define the tests, the following extensions allow for an easier IDE experience to outline describes and its, plus providing better visual support for indentation.
+Because the spec framework uses Action<> to define the tests, the following extensions allow for an better IDE experience to outline *describes* and *its*, plus providing better visual support for indentation.
 
 * C# outline 2013
 * Indent Guides

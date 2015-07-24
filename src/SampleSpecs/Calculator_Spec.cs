@@ -30,7 +30,7 @@ namespace SampleSpecs
       describe("Parent Describe block", () =>
       {
         Calculator calc = null;
-        beforeAll("", () =>
+        beforeAll(() =>
         {
           calc = new Calculator();
         });
@@ -62,7 +62,7 @@ namespace SampleSpecs
             Assert.AreEqual(calc.Value, -10, "Should be zero");
           });
 
-          afterEach("Setup at -10", () =>
+          afterEach(() =>
           {
             calc.reset();
           });
@@ -76,7 +76,7 @@ namespace SampleSpecs
           }));
         });
 
-        afterAll("", () =>
+        afterAll(() =>
         {
           calc = null;
         });
