@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace spec.runner
+namespace spec.console
 {
 	/// <summary>
 	/// A base class for any piece of code that should run in a Sandbox.

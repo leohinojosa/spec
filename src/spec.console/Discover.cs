@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using spec.console.Adapter;
 using spec.core;
 using spec.core.Model;
-using spec.runner;
 
 namespace spec.console
 {

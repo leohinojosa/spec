@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using spec.core.Model;
 
-namespace spec.runner.Adapter
+namespace spec.console.Adapter
 {
   [ExtensionUri(specTestExecutor.ExecutorUriString)]
   public class specTestExecutor : ITestExecutor

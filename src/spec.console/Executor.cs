@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using spec.console.Model;
 using spec.core;
 using spec.core.Model;
 
-namespace spec.runner
+namespace spec.console
 {
   public class Executor : DomainProxy
   {

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Xml.Linq;
 
-namespace spec.runner
+namespace spec.console
 {
 	/// <summary>
 	/// Isolates code execution into separate AppDomain.

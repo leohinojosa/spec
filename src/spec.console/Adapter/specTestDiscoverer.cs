@@ -4,10 +4,9 @@ using System.Linq;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
-using spec.console;
 using spec.core.Model;
 
-namespace spec.runner.Adapter
+namespace spec.console.Adapter
 {
   [FileExtension(".exe")]
   [FileExtension(".dll")]
@@ -24,7 +23,7 @@ namespace spec.runner.Adapter
     public static IEnumerable<TestCase>  Discover(IEnumerable<string> sources, ITestCaseDiscoverySink discoverySink)
     {
       List<TestCase> result = new List<TestCase>();
-      //System.Diagnostics.Debugger.Launch();
+     // System.Diagnostics.Debugger.Launch();
       var specList = new List<dynamic>();
       foreach (var source in sources)
       {
@@ -40,32 +39,32 @@ namespace spec.runner.Adapter
             Console.WriteLine(a.Message);
           }
 
-          specList.AddRange( discoveredDefinitions.Select(x => new { source, It= x }));
-         
+          discoveredDefinitions
+            .Select(x => AddToSink(source, x, discoverySink))
+            .ToList()
+            .ForEach(x => result.Add(x));
         }
-      }
-
-      foreach (var its in specList)
-      {
-        var it = its.It;
-        var testCase = new TestCase(it.ParentDescription + ".spec" + it.LineNumber, specTestExecutor.ExecutorUri, its.source);
-        //var testCase = new TestCase(it.Id, specTestExecutor.ExecutorUri, its.source);
-        testCase.CodeFilePath = it.CodeBase;
-        testCase.LineNumber = it.LineNumber;
-        testCase.DisplayName = it.Description;
-        testCase.SetPropertyValue(TestResultProperties.ErrorMessage, "No error");
-        testCase.Traits.Add("File", it.FileName);
-        testCase.Traits.Add("SpecId", it.Id);
-
-        result.Add(testCase);
-        if (discoverySink != null)
-        {
-          discoverySink.SendTestCase(testCase);
-        }
-          
       }
 
       return result;
+    }
+
+    public static TestCase AddToSink(string source, DefinitionSource definitionSources, ITestCaseDiscoverySink discoverySink)
+    {
+      var it = definitionSources;
+      var testCase = new TestCase(it.ParentDescription + ".spec" + it.LineNumber, specTestExecutor.ExecutorUri, source);
+      testCase.CodeFilePath = it.CodeBase;
+      testCase.LineNumber = it.LineNumber;
+      testCase.DisplayName = it.Description;
+      testCase.SetPropertyValue(TestResultProperties.ErrorMessage, "No error");
+      testCase.Traits.Add("File", it.FileName);
+      testCase.Traits.Add("SpecId", it.Id);
+
+      if (discoverySink != null)
+      {
+        discoverySink.SendTestCase(testCase);
+      }
+      return testCase;
     }
 
   }
