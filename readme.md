@@ -27,7 +27,7 @@ public class SimpleTest : Spec
 }
 ```
 
-Also you can use hooks for **BeforeAll, BeforeEach, AfterAll **&** AfterEach**.
+Also you can use hooks for **BeforeAll**, **BeforeEach**, **AfterAll**& **AfterEach**.
 
 
 ```csharp
@@ -148,7 +148,7 @@ describe("Multiple Assertion Libraries", () =>
 ```
 
 ## Visual Studio Extensions that Help spec look better ##
-Because the spec framework uses Action<> to define the tests, the following extensions allow for an better IDE experience to outline *describes* and *its*, plus providing better visual support for indentation.
+Because the spec framework uses ````Action<>```` to define the tests, the following extensions allow for an better IDE experience to outline *describes* and *its*, plus providing better visual support for indentation.
 
 * C# outline 2013
 * Indent Guides
