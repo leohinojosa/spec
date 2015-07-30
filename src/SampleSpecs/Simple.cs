@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using ExpectBetter;
 using FluentAssertions;
@@ -10,6 +11,17 @@ using Shouldly;
 
 namespace SampleSpecs
 {
+  [TestClass]
+  public class Traditional
+  {
+    [TestMethod]
+    public void SimpleAssert()
+    {
+      Assert.IsTrue(false, "Is False");
+
+    }
+  }
+
   public class Simple : Spec
   {
     public Simple()

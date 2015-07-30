@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using spec.core;
@@ -10,11 +9,8 @@ namespace spec.console
   {
     public List<DefinitionSource> Execute(IEnumerable<DefinitionSource> typesSources)
     {
-      var targetTypesToRun = SandboxedAssembly.GetTypes()
-        .Where(t => t.BaseType == typeof(Spec))
-        .Where(t => typesSources.Select(x => x.ClassName).Distinct().Contains(t.FullName, StringComparer.OrdinalIgnoreCase))
-        .Select(t => t)
-        .ToArray();
+      var availableTypes = SandboxedAssembly.GetTypes();
+      var targetTypesToRun = TypeIndex.TargetTypesToRun(typesSources, availableTypes);
 
       var agent = new Agent();
       var specSummary = new List<DefinitionSource>();
@@ -30,6 +26,5 @@ namespace spec.console
 
       return specSummary;
     }
-
   }
 }

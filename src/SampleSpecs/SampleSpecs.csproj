@@ -64,6 +64,7 @@
     <Compile Include="AfterEachSubjectTest.cs" />
     <Compile Include="BeforeAllSubjectTest.cs" />
     <Compile Include="Calculator_Spec.cs" />
+    <Compile Include="InheritedSpec.cs" />
     <Compile Include="Simple.cs" />
     <Compile Include="pivotal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

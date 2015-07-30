@@ -11,11 +11,8 @@ namespace spec.console
   {
     public List<DefinitionSource> DiscoverSpecsFromCurrentAssembly()
     {
-      var discoveredTypes = SandboxedAssembly.GetTypes()
-        .Where(t => t.BaseType == typeof(Spec))
-        .Select(t => t)
-        .ToArray();
-
+      var discoveredTypes = TypeIndex.TargetTypesToRun(SandboxedAssembly.GetTypes());
+      
       var result = new List<DefinitionSource>();
       foreach (var type in discoveredTypes)
       {

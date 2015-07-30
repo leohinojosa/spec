@@ -14,7 +14,7 @@ namespace spec.console
       string[] sources =
       {
         @"C:\Tesla\Everest\PE_Main\Everest\Everest.Api.Tests\bin\Debug\Everest.Api.Tests.dll",
-        @"C:\Personal\proyectos\speck\src\SampleSpecs\bin\debug\SampleSpecs.dll",
+        @"C:\Personal\proyectos\spec\src\SampleSpecs\bin\debug\SampleSpecs.dll",
       };
 
       var specList = new Dictionary<string, IEnumerable<DefinitionSource>>();
