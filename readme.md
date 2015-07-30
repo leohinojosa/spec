@@ -3,8 +3,8 @@
 Spec is a small testing framework that implements **bdd** style testing for .net. inspired by [mochajs](http://mochajs.org/) and [jasmine](http://jasmine.github.io/).
 The library takes a minimal approach to define your tests and allows for using a *Arrange-Act-Assert* pattern in your unit testing;
 
-The Spec TDD library works by creating any class that inherits from the `Spec` base type. Create a constructor, start describing the behavior and expectations for your tests.
-You can have *describe* blocks, *context* blocks, and *it* specifications.
+The Spec TDD library works by creating any class that inherits from the `Spec` base type. Create a constructor and start describing the behavior and expectations for your specs.
+You can have *describe* blocks, *context* blocks, and *it* to define specifications.
 
 ```csharp
 public class SimpleTest : Spec
@@ -148,7 +148,7 @@ describe("Multiple Assertion Libraries", () =>
 ```
 
 ## Visual Studio Extensions that Help spec look better ##
-Because the spec framework uses ````Action<>```` to define the tests, the following extensions allow for an better IDE experience to outline *describes* and *its*, plus providing better visual support for indentation.
+Because the spec framework uses ````Action<>```` to define the tests, the following extensions allow for an better IDE experience to outline *describe*, *context* and *it*, plus providing better visual support for indentation.
 
 * C# outline 2013
 * Indent Guides
