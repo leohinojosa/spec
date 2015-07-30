@@ -58,6 +58,7 @@
     <Compile Include="Model\Suite.cs" />
     <Compile Include="Model\Specification.cs" />
     <Compile Include="Registry.cs" />
+    <Compile Include="Test.cs" />
     <Compile Include="xSpec.cs" />
   </ItemGroup>
   <ItemGroup>
