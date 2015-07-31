@@ -23,27 +23,18 @@ namespace spec.console
         using (var sandbox = new Sandbox<Discover>(source))
         {
           var discoveredDefinitions = sandbox.Content.DiscoverSpecsFromCurrentAssembly();
-
           specList.Add(source, discoveredDefinitions.Select(x => x));
         }
       }
 
-      List<Task> tasks = new List<Task>();
       var executionResult = new List<DefinitionSource>();
-      foreach (var specItem in specList.ToList())
+      Task.WaitAll(specList.ToList().Select(item => Task.Factory.StartNew(() =>
       {
-        var item = specItem;
-        tasks.Add(
-          Task.Factory.StartNew(() =>
-            {
-              using (var sandbox = new Sandbox<Executor>(item.Key))
-              {
-                executionResult.AddRange(sandbox.Content.Execute(item.Value.ToList()));
-              }
-            })
-          );
-      }
-      Task.WaitAll(tasks.ToArray());
+        using (var sandbox = new Sandbox<Executor>(item.Key))
+        {
+          executionResult.AddRange(sandbox.Content.Execute(item.Value.ToList()));
+        }
+      })).ToArray());
 
       foreach (var spec in executionResult.GroupBy(x => x.ParentDescription, x => x))
       {

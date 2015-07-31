@@ -19,12 +19,10 @@ namespace spec.console
       {
         var currentRunninType = SandboxedAssembly.CreateInstance(specTypes.FullName) as Spec;
         agent.RunSuite(currentRunninType.Registry.CurrentSuite);
-
-
         specSummary.AddRange(currentRunninType.Registry.ExecutableLookupTable.Select( DefinitionSource.CreateSource).ToList());
       }
 
-      return specSummary;
+       return specSummary;
     }
   }
 }
