@@ -155,7 +155,7 @@ Because the spec framework uses ````Action<>```` to define the tests, the follow
 * [spec.testAdapter](https://visualstudiogallery.msdn.microsoft.com/c2e17e64-b57f-4065-9b8b-20ea9e8623d7)
 
 ## Integrating spec to your project pipeline ##
-Consider downloading the spec.testAdapter from the [Visual Studio Extensions](https://visualstudiogallery.msdn.microsoft.com/c2e17e64-b57f-4065-9b8b-20ea9e8623d7) site. Once you install the vsix it should be available in the visual studio IDE and on the console.
+Consider downloading the spec.testAdapter from the [Visual Studio Extensions](https://visualstudiogallery.msdn.microsoft.com/c2e17e64-b57f-4065-9b8b-20ea9e8623d7) site. Once you instal the vsix it should be available in the visual studio IDE and on the console.
 
 To run it in console use the following parameters
 ```

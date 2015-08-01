@@ -99,6 +99,11 @@ namespace spec.core
 
     private Suite addSuite(string name, Action specDefinition, bool enabled, SpecType specType)
     {
+      if (Registry.CurrentSuite.ExecutionStatus == ExecStatus.Running)
+      {
+        throw new Exception("Cannot add Suite in Spec block, please push this block to a parent Suite");
+      }
+
       var suite = Registry.SuiteFactory(name, specDefinition);
       suite.Enabled = enabled && suite.Parent.Enabled;
       Registry.AddSpecToSuites(suite, specDefinition);
