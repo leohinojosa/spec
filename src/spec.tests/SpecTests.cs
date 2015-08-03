@@ -75,5 +75,12 @@ namespace spec.tests
       _suite.Registry.CurrentSuite.Children.First().Children.First().Should().NotBeNull();
       _suite.Registry.CurrentSuite.Children.First().Children.First().Description.Should().Be("spec");
     }
+
+    [TestMethod]
+    public void it_specsShouldHaveADescription()
+    {
+      Action action = () => { _suite.describe("new Describe", () => { _suite.it("", () => { }); });};
+      action.ShouldThrow<Exception>();
+    }
   }
 }

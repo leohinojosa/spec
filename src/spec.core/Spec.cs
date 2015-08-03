@@ -112,6 +112,11 @@ namespace spec.core
 
     private void addSpec(string name, Action operation, bool enabled, SpecType specType)
     {
+      if (name == String.Empty)
+      {
+        throw new Exception("Please specify a name for the spec");
+      }
+
       var stackFrame = new System.Diagnostics.StackTrace(true).GetFrame(2);
       var codeBase = stackFrame.GetFileName();
       var lineNumber = stackFrame.GetFileLineNumber();

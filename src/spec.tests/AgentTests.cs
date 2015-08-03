@@ -51,12 +51,12 @@ namespace spec.tests
           i++;
         });
 
-        _suite.it("", () =>
+        _suite.it("spec1", () =>
         {
           i++;
         });
 
-        _suite.it("", () =>
+        _suite.it("spec2", () =>
         {
           i++;
         });
@@ -98,7 +98,7 @@ namespace spec.tests
           i++;
         });
 
-        _suite.it("", () =>
+        _suite.it("spec1", () =>
         {
           //
         });
@@ -140,7 +140,7 @@ namespace spec.tests
           i++;
         });
 
-        _suite.it("", () =>
+        _suite.it("spec1", () =>
         {
           //
         });
@@ -180,7 +180,7 @@ namespace spec.tests
           i++;
         });
 
-        _suite.it("", () =>
+        _suite.it("spec1", () =>
         {
           //
         });
