@@ -9,7 +9,8 @@ namespace spec.tests
   [TestClass]
   public class AgentTests
   {
-    spec_double _suite;
+    private spec_double _suite;
+
     [TestInitialize]
     public void Setup()
     {
@@ -19,19 +20,14 @@ namespace spec.tests
     [TestMethod]
     public void spec_shouldNotAllowAddingNestedSuites()
     {
-
-    _suite = new spec_double();
-      _suite.describe("new Describe", () =>
-      {
-        _suite.it("spec", () =>
-        {
-          _suite.describe("invalid", () => { });
-        });
-      });
+      _suite = new spec_double();
+      _suite.describe("new Describe", () => { _suite.it("spec", () => { _suite.describe("invalid", () => { }); }); });
 
       Agent agent = new Agent();
       agent.RunSuite(_suite.Registry.CurrentSuite);
-      _suite.Registry.ExecutableLookupTable.Any(x => x.RanSuccesfully).Should().BeFalse("describes should not be in specs");
+      _suite.Registry.ExecutableLookupTable.Any(x => x.RanSuccesfully)
+        .Should()
+        .BeFalse("describes should not be in specs");
     }
 
     [TestMethod]
@@ -41,35 +37,17 @@ namespace spec.tests
       _suite.describe("new", () =>
       {
         i = 0;
-        _suite.beforeAll(() =>
-        {
-          i++;
-        });
+        _suite.beforeAll(() => { i++; });
 
-        _suite.beforeEach(() =>
-        {
-          i++;
-        });
+        _suite.beforeEach(() => { i++; });
 
-        _suite.it("spec1", () =>
-        {
-          i++;
-        });
+        _suite.it("spec1", () => { i++; });
 
-        _suite.it("spec2", () =>
-        {
-          i++;
-        });
+        _suite.it("spec2", () => { i++; });
 
-        _suite.afterEach(() =>
-        {
-          i++;
-        });
+        _suite.afterEach(() => { i++; });
 
-        _suite.afterAll(() =>
-        {
-          i++;
-        });
+        _suite.afterAll(() => { i++; });
       });
 
       var agent = new Agent();
@@ -83,40 +61,22 @@ namespace spec.tests
       var i = 0;
       _suite.describe("new", () =>
       {
-        _suite.beforeAll(() =>
-        {
-          i++;
-        });
+        _suite.beforeAll(() => { i++; });
 
-        _suite.beforeEach(() =>
-        {
-          i++;
-        });
-        
-        _suite.beforeEach(() =>
-        {
-          i++;
-        });
+        _suite.beforeEach(() => { i++; });
+
+        _suite.beforeEach(() => { i++; });
 
         _suite.it("spec1", () =>
         {
           //
         });
 
-        _suite.afterEach(() =>
-        {
-          i--;
-        });
+        _suite.afterEach(() => { i--; });
 
-        _suite.afterEach(() =>
-        {
-          i--;
-        });
+        _suite.afterEach(() => { i--; });
 
-        _suite.afterAll(() =>
-        {
-          i--;
-        });
+        _suite.afterAll(() => { i--; });
       });
 
       var agent = new Agent();
@@ -130,30 +90,18 @@ namespace spec.tests
       var i = 0;
       var action = new Action(() =>
       {
-        _suite.beforeAll(() =>
-        {
-          i++;
-        });
+        _suite.beforeAll(() => { i++; });
 
-        _suite.beforeEach(() =>
-        {
-          i++;
-        });
+        _suite.beforeEach(() => { i++; });
 
         _suite.it("spec1", () =>
         {
           //
         });
 
-        _suite.afterEach(() =>
-        {
-          i--;
-        });
+        _suite.afterEach(() => { i--; });
 
-        _suite.afterAll(() =>
-        {
-          i--;
-        });
+        _suite.afterAll(() => { i--; });
       });
 
       _suite.describe("new", action);
@@ -170,30 +118,18 @@ namespace spec.tests
       var i = 0;
       var action = new Action(() =>
       {
-        _suite.beforeAll(() =>
-        {
-          i++;
-        });
+        _suite.beforeAll(() => { i++; });
 
-        _suite.beforeEach(() =>
-        {
-          i++;
-        });
+        _suite.beforeEach(() => { i++; });
 
         _suite.it("spec1", () =>
         {
           //
         });
 
-        _suite.afterEach(() =>
-        {
-          i--;
-        });
+        _suite.afterEach(() => { i--; });
 
-        _suite.afterAll(() =>
-        {
-          i--;
-        });
+        _suite.afterAll(() => { i--; });
       });
 
       _suite.describe("new", () =>

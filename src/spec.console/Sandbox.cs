@@ -8,7 +8,7 @@ namespace spec.console
 	/// Isolates code execution into separate AppDomain.
 	/// </summary>
 	/// <typeparam name="T">A class that contain the code that should run isolated.</typeparam>
-	class Sandbox<T> : IDisposable where T : DomainProxy
+	public class Sandbox<T> : IDisposable where T : DomainProxy
 	{
 		private AppDomain domain;
 
@@ -44,7 +44,6 @@ namespace spec.console
 			this.Content.Load(assemblyPath);
 		}
 
-		
 		/// <summary>
 		/// A sandboxed object.
 		/// </summary>
