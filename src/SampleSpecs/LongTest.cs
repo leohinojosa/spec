@@ -1,3 +1,4 @@
+using System;
 using FluentAssertions;
 using spec;
 using spec.core;
@@ -86,6 +87,18 @@ namespace SampleSpecs
         {
           t = true;
         });
+      });
+
+      describe("dynamic spec creation", () =>
+      {
+        int specCount = 2;
+        for (int i = 0; i < specCount; i++)
+        {
+          it("it should be dynamic" + i.ToString(), () =>
+          {
+            true.Should().Be(true);
+          });
+        }
       });
     }
   }

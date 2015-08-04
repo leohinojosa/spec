@@ -142,5 +142,23 @@ namespace spec.tests
       agent.RunSuite(_suite.Registry.CurrentSuite);
       i.Should().Be(0);
     }
+
+    [TestMethod]
+    public void suite_shouldAddDYnamicSpecs()
+    {
+      var dynamicSpecCount = 10;
+      _suite.describe("test describe", () =>
+      {
+        for (int i = 0; i < dynamicSpecCount; i++)
+        {
+          _suite.it("the int " + i, () =>
+          {
+            Console.Write(i);
+          });
+        }
+      });
+
+      _suite.Registry.ExecutableLookupTable.Count.Should().Be(dynamicSpecCount);
+    }
   }
 }
