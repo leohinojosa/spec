@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using spec;
 using spec.core;
@@ -89,16 +90,17 @@ namespace SampleSpecs
         });
       });
 
-      describe("dynamic spec creation", () =>
+      describe("Dynamic spec creation", () =>
       {
-        int specCount = 2;
-        for (int i = 0; i < specCount; i++)
+        new List<int>(){0,2,4}.ForEach(i =>
         {
           it("it should be dynamic" + i.ToString(), () =>
           {
-            true.Should().Be(true);
+            Console.WriteLine(i);
+            System.Threading.Thread.Sleep(1000);
+            (i%2).Should().Be(0);
           });
-        }
+        });
       });
     }
   }

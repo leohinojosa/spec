@@ -23,7 +23,7 @@ namespace spec.console.Adapter
     public static IEnumerable<TestCase>  Discover(IEnumerable<string> sources, ITestCaseDiscoverySink discoverySink)
     {
       List<TestCase> result = new List<TestCase>();
-     // System.Diagnostics.Debugger.Launch();
+      //System.Diagnostics.Debugger.Launch();
       var specList = new List<dynamic>();
       foreach (var source in sources)
       {
@@ -51,6 +51,9 @@ namespace spec.console.Adapter
 
     public static TestCase AddToSink(string source, DefinitionSource definitionSources, ITestCaseDiscoverySink discoverySink)
     {
+      //TODO, spec id is using the lineNumber, this makes it difficult to add dynamic tests
+      // maybe we should use the hashcode of the spec description, but if the user doesn't really change 
+      // the description we have no way of determining the spec uniqueness
       var it = definitionSources;
       var testCase = new TestCase(it.ParentDescription + ".spec" + it.LineNumber, specTestExecutor.ExecutorUri, source);
       testCase.CodeFilePath = it.CodeBase;

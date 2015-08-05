@@ -52,6 +52,7 @@ namespace spec.console.Adapter
         var testResult = new TestResult(resultItem.TestCase);
         if (resultItem.TestResult.Enabled)
         {
+          testResult.DisplayName = resultItem.TestResult.Description;
           testResult.Outcome = resultItem.TestResult.RanSuccesfully ? TestOutcome.Passed : TestOutcome.Failed;
           testResult.Duration = resultItem.TestResult.EndTime - resultItem.TestResult.StartTime;
           testResult.ErrorStackTrace = resultItem.TestResult.StackTrace;
