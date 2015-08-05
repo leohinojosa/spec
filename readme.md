@@ -27,7 +27,7 @@ public class SimpleTest : Spec
 }
 ```
 
-Also you can use hooks for **BeforeAll**, **BeforeEach**, **AfterAll**& **AfterEach**.
+Also you can use hooks for **BeforeAll**, **BeforeEach**, **AfterAll** & **AfterEach**.
 
 
 ```csharp
@@ -42,7 +42,7 @@ public class SimpleTest : Spec
             scopeVariable = true;
           });
 
-          it("scope variable should be set en each run", () =>
+          it("scope variable should be set in each run", () =>
           {
             Assert.IsTrue(true);
           });
@@ -147,11 +147,29 @@ describe("Multiple Assertion Libraries", () =>
 );
 ```
 
+## Support for dynamic tests ##
+Spec supports creating **it** inside a List<T>, this way you can add different test cases and have them run with fixture data.
+
+```csharp
+describe("Dynamic spec creation", () =>
+{
+  new List<int>(){0,2,4}.ForEach(i =>
+  {
+    it("it should be dynamic " + i.ToString(), () =>
+    {
+      Console.WriteLine(i);
+      System.Threading.Thread.Sleep(1000);
+      (i%2).Should().Be(0);
+    });
+  });
+});
+```
+
 ## Visual Studio Extensions that Help spec look better ##
 Because the spec framework uses ````Action<>```` to define the tests, the following extensions allow for an better IDE experience to outline *describe*, *context* and *it*, plus providing better visual support for indentation.
 
-* C# outline 2013
-* Indent Guides
+* [C# outline 2013](https://visualstudiogallery.msdn.microsoft.com/4d7e74d7-3d71-4ee5-9ac8-04b76e411ea8)
+* [Indent Guides](https://visualstudiogallery.msdn.microsoft.com/e792686d-542b-474a-8c55-630980e72c30)
 * [spec.testAdapter](https://visualstudiogallery.msdn.microsoft.com/c2e17e64-b57f-4065-9b8b-20ea9e8623d7)
 
 ## Integrating spec to your project pipeline ##
