@@ -1,24 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
 using spec.core.Model;
 
 namespace spec.console
 {
-  class Program
+  internal class Program
   {
-    static void Main(string[] args)
+    private static void Main(string[] args)
     {
       Console.WriteLine("Speck runner.\n Running Specs ...");
       string[] sources = args;
 #if DEBUG
-      sources = new []
+      sources = new[]
       {
         @"C:\Personal\proyectos\spec\src\SampleSpecs\bin\debug\SampleSpecs.dll"
       };
 #endif
       var specList = new Dictionary<string, IEnumerable<DefinitionSource>>();
+
       foreach (var source in sources)
       {
         using (var sandbox = new Sandbox<Discover>(source))
@@ -39,16 +42,16 @@ namespace spec.console
 
       foreach (var spec in executionResult.GroupBy(x => x.ParentDescription, x => x))
       {
-        Console.WriteLine(" {0}",spec.Key);
+        Console.WriteLine(" {0}", spec.Key);
         foreach (var definitionSource in spec)
         {
           Console.Write(" ");
           PrintSpecStatus(definitionSource.RanSuccesfully, definitionSource.Enabled);
-          Console.Write("{0}",  definitionSource.Description);
+          Console.Write("{0}", definitionSource.Description);
           Console.WriteLine();
-          if (!String.IsNullOrEmpty(definitionSource.ExecutionResult) )
+          if (!String.IsNullOrEmpty(definitionSource.ExecutionResult))
           {
-            Console.WriteLine("  - {0}",definitionSource.ExecutionResult.Replace('\n',' ').Replace('\t',' '));
+            Console.WriteLine("  - {0}", definitionSource.ExecutionResult.Replace('\n', ' ').Replace('\t', ' '));
           }
         }
       }
@@ -56,13 +59,13 @@ namespace spec.console
       var summary = new
       {
         TotalTests = executionResult.Count(),
-        TotalPassed = executionResult.Count(x=>x.Enabled && x.RanSuccesfully),
-        TotalFailed = executionResult.Count(x=>x.Enabled && !x.RanSuccesfully),
-        TotalPending = executionResult.Count(x=>!x.Enabled)
+        TotalPassed = executionResult.Count(x => x.Enabled && x.RanSuccesfully),
+        TotalFailed = executionResult.Count(x => x.Enabled && !x.RanSuccesfully),
+        TotalPending = executionResult.Count(x => !x.Enabled)
       };
-      Console.WriteLine("{0} Total, {1} Passed, {2} Failed, {3} Pending", summary.TotalTests, summary.TotalPassed, summary.TotalFailed, summary.TotalPending);
+      Console.WriteLine("{0} Total, {1} Passed, {2} Failed, {3} Pending", summary.TotalTests, summary.TotalPassed,
+        summary.TotalFailed, summary.TotalPending);
       Console.ReadLine();
-      
     }
 
     public static void PrintSpecStatus(bool ranSuccesful, bool enabled)
