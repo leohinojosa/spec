@@ -75,6 +75,11 @@ namespace spec.core
       addSuite(name, operation, true, SpecType.describe);
     }
 
+    public void it(string name)
+    {
+      xit(name, null);
+    }
+
     public void it(string name, Action operation)
     {
       addSpec(name, operation, true, SpecType.it);

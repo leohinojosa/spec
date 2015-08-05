@@ -84,6 +84,8 @@ namespace SampleSpecs
           t.Should().BeFalse();
         });
 
+        it("Pending test");
+
         afterEach("afterEach", () =>
         {
           t = true;
