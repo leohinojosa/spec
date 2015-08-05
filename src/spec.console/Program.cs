@@ -11,11 +11,13 @@ namespace spec.console
     static void Main(string[] args)
     {
       Console.WriteLine("Speck runner.\n Running Specs ...");
-      string[] sources =
+      string[] sources = args;
+#if DEBUG
+      sources = new []
       {
         @"C:\Personal\proyectos\spec\src\SampleSpecs\bin\debug\SampleSpecs.dll"
       };
-
+#endif
       var specList = new Dictionary<string, IEnumerable<DefinitionSource>>();
       foreach (var source in sources)
       {

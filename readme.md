@@ -165,6 +165,9 @@ describe("Dynamic spec creation", () =>
 });
 ```
 
+## Base Spec Clases ##
+describe how base spec classes can provide default behavior
+
 ## Visual Studio Extensions that Help spec look better ##
 Because the spec framework uses ````Action<>```` to define the tests, the following extensions allow for an better IDE experience to outline *describe*, *context* and *it*, plus providing better visual support for indentation.
 
