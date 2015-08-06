@@ -36,7 +36,10 @@ namespace spec.console.reporters
         Console.SetCursorPosition(1, Console.CursorTop - 1);
         var result = _execresult.FirstOrDefault(x => x.Id == def.Id);
         PrintSpecStatus(result.RanSuccesfully, result.Enabled);
-        Console.WriteLine(result.ExecutionResult);
+        if (result.Enabled && !result.RanSuccesfully)
+        {
+          Console.WriteLine("{0}{1}", new String(' ', level), CleanUpForConsole(Truncate(result.ExecutionResult.Trim(), 120)));
+        }
       }
     }
 
@@ -75,7 +78,11 @@ namespace spec.console.reporters
       Console.ForegroundColor = ConsoleColor.Gray;
     }
 
-    public string Truncate(string value, int maxChars)
+    private string CleanUpForConsole(string value)
+    {
+      return value.Replace('\n', ' ').Replace('\t', ' ');
+    }
+    private string Truncate(string value, int maxChars)
     {
       return value.Length <= maxChars ? value : value.Substring(0, maxChars) + " ..";
     }
