@@ -16,44 +16,43 @@ namespace spec.console.reporters
       registries.ForEach(x =>
       {
         Console.WriteLine("");
-        printr(x.CurrentSuite);
+        PrintDefinition(x.CurrentSuite);
       });
     }
 
-    private void printr(Definition def, int level = 2)
+    private void PrintDefinition(Definition def, int level = 2)
     {
-      if (def.GetType().IsAssignableFrom(typeof (Specification)))
-      {
-        Console.ForegroundColor = ConsoleColor.White;
-      }
-      else if (def.GetType().IsAssignableFrom(typeof(Suite)))
-      {
-        Console.ForegroundColor = ConsoleColor.Gray;
-      }
+      Console.ForegroundColor = IsDefinitionASpec(def) ? ConsoleColor.White : ConsoleColor.Gray;
 
-      if(def.Parent != null )
+      if (!IsRootDefinition(def))
       {
         Console.WriteLine("{0}{1}", new String(' ', level), Truncate(def.Description, 70));
       }
 
-      def.Children.ForEach(x =>
-      {
-        printr(x, level + 1);        
-      });
+      def.Children.ForEach(x => { PrintDefinition(x, level + 1); });
 
-      if (def.GetType().IsAssignableFrom(typeof(Specification)) && !def.GetType().IsAssignableFrom(typeof(Suite)))
+      if (IsDefinitionASpec(def))
       {
-        Console.SetCursorPosition(1,Console.CursorTop - 1);
+        Console.SetCursorPosition(1, Console.CursorTop - 1);
         var result = _execresult.FirstOrDefault(x => x.Id == def.Id);
         PrintSpecStatus(result.RanSuccesfully, result.Enabled);
-        
+        Console.WriteLine(result.ExecutionResult);
       }
+    }
 
+    private bool IsRootDefinition(Definition def)
+    {
+      return def.Parent == null;
+    }
+
+    private bool IsDefinitionASpec(Definition definition)
+    {
+      return definition.GetType().IsAssignableFrom(typeof (Specification)) && !definition.GetType().IsAssignableFrom(typeof (Suite));
     }
 
     public void PrintSpecStatus(bool ranSuccesful, bool enabled)
     {
-      var label = String.Empty;
+      string label;
       if (enabled)
       {
         if (ranSuccesful)
@@ -76,7 +75,7 @@ namespace spec.console.reporters
       Console.ForegroundColor = ConsoleColor.Gray;
     }
 
-    public string Truncate( string value, int maxChars)
+    public string Truncate(string value, int maxChars)
     {
       return value.Length <= maxChars ? value : value.Substring(0, maxChars) + " ..";
     }
