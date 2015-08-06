@@ -6,6 +6,7 @@ namespace SampleSpecs
   public class Calculator
   {
     public int Value { get; private set; }
+
     public void reset()
     {
       Value = 0;
@@ -27,58 +28,42 @@ namespace SampleSpecs
   {
     public CalculatorSpec()
     {
-      describe("Parent Describe block", () =>
+      describe("Calculator Suite", () =>
       {
         Calculator calc = null;
-        beforeAll(() =>
-        {
-          calc = new Calculator();
-        });
 
-        describe("Test add", () =>
+        context("Testing behavior of a calculator", () =>
         {
-          beforeEach("Setup at 10", () =>
+          beforeAll(() => { calc = new Calculator(); });
+
+          describe("Test add", () =>
           {
-            calc.reset();
+            beforeEach("Setup at 10", () => { calc.reset(); });
+
+            it("Should check correct value", () =>
+            {
+              calc.Add(0, 10);
+              Assert.AreEqual(calc.Value, 10, "Should be greater than zero");
+            });
           });
 
-          it("Should check correct value", () =>
+          describe("Test subtract", () =>
           {
-            calc.Add(0,10);
-            Assert.AreEqual(calc.Value, 10,"Should be greater than zero");
-          });
-        });
+            beforeEach("Setup at -10", () => { calc.reset(); });
 
-        describe("Test subtract", () =>
-        {
-          beforeEach("Setup at -10", () =>
-          {
-            calc.reset();
-          });
+            it("Should check correct value", () =>
+            {
+              calc.Subtract(0, 10);
+              Assert.AreEqual(calc.Value, -10, "Should be zero");
+            });
 
-          it("Should check correct value", () =>
-          {
-            calc.Subtract(0, 10);
-            Assert.AreEqual(calc.Value, -10, "Should be zero");
+            afterEach(() => { calc.reset(); });
           });
 
-          afterEach(() =>
-          {
-            calc.reset();
-          });
-        });
+          describe("at the end the calculator",
+            () => { it("should be re-set", (() => { Assert.AreEqual(calc.Value, 0, "Should be reset"); })); });
 
-        describe("at the end the calculator", () =>
-        {
-          it("should be re-set", (() =>
-          {
-            Assert.AreEqual(calc.Value, 0, "Should be reset");
-          }));
-        });
-
-        afterAll(() =>
-        {
-          calc = null;
+          afterAll(() => { calc = null; });
         });
       });
     }

@@ -10,7 +10,7 @@ namespace SampleSpecs
   {
     public AfterEachSubjectTest()
     {
-      describe("#Test AfterEach being called only once",()=>
+      describe("Test AfterEach being called only once",()=>
       {
         List<int> testList = null;
         context("The beforeEach suite should consider being called for every spec", () =>
@@ -26,7 +26,7 @@ namespace SampleSpecs
             testList.Add(2);
           });
 
-          it(" [it] List should have 2 items", () =>
+          it("[it] List should have 2 items", () =>
           {
             testList.Count.Should().Be(2);
           });
@@ -37,7 +37,7 @@ namespace SampleSpecs
          });            
         });
 
-        it(" [it] should be null", () =>
+        it("[it] should be null", () =>
         {
           testList.Should().BeNull();
         });
