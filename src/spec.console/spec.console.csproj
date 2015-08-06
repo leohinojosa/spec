@@ -54,6 +54,9 @@
     <Compile Include="Model\TestSummary.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="reporters\ConsoleReporter.cs" />
+    <Compile Include="reporters\ITestReporter.cs" />
+    <Compile Include="reporters\SummaryReporter.cs" />
     <Compile Include="Sandbox.cs" />
     <Compile Include="TypeIndex.cs" />
   </ItemGroup>

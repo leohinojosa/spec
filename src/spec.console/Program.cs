@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
+using spec.console.reporters;
+using spec.core;
 using spec.core.Model;
 
 namespace spec.console
@@ -12,7 +13,7 @@ namespace spec.console
   {
     private static void Main(string[] args)
     {
-      Console.WriteLine("Speck runner.\n Running Specs ...");
+      Console.WriteLine(" Spec runner.\n Running Specs ...");
       string[] sources = args;
 #if DEBUG
       sources = new[]
@@ -40,57 +41,32 @@ namespace spec.console
         }
       })).ToArray());
 
-      foreach (var spec in executionResult.GroupBy(x => x.ParentDescription, x => x))
-      {
-        Console.WriteLine(" {0}", spec.Key);
-        foreach (var definitionSource in spec)
-        {
-          Console.Write(" ");
-          PrintSpecStatus(definitionSource.RanSuccesfully, definitionSource.Enabled);
-          Console.Write("{0}", definitionSource.Description);
-          Console.WriteLine();
-          if (!String.IsNullOrEmpty(definitionSource.ExecutionResult))
-          {
-            Console.WriteLine("  - {0}", definitionSource.ExecutionResult.Replace('\n', ' ').Replace('\t', ' '));
-          }
-        }
-      }
 
-      var summary = new
-      {
-        TotalTests = executionResult.Count(),
-        TotalPassed = executionResult.Count(x => x.Enabled && x.RanSuccesfully),
-        TotalFailed = executionResult.Count(x => x.Enabled && !x.RanSuccesfully),
-        TotalPending = executionResult.Count(x => !x.Enabled)
-      };
-      Console.WriteLine("{0} Total, {1} Passed, {2} Failed, {3} Pending", summary.TotalTests, summary.TotalPassed,
-        summary.TotalFailed, summary.TotalPending);
-      Console.ReadLine();
+      var registries = GetRegistriesFromSources(sources);
+
+      var reporters = new List<ITestReporter>() {new ConsoleReporter(), new SummaryReporter()};
+      reporters.ForEach(r => { r.Execute(registries, executionResult); });      
     }
 
-    public static void PrintSpecStatus(bool ranSuccesful, bool enabled)
+    public static List<Registry> GetRegistriesFromSources(string[] sources)
     {
-      var label = String.Empty;
-      if (enabled)
+      List<Registry> result = new List<Registry>();
+      foreach (var source in sources)
       {
-        if (ranSuccesful)
+        var assembly = Assembly.LoadFile(source);
+        var typeIndex = TypeIndex.TargetTypesToRun(assembly.GetTypes());
+        typeIndex.ToList().ForEach(x =>
         {
-          Console.ForegroundColor = ConsoleColor.Green;
-          label = "\u221A";
-        }
-        else
-        {
-          Console.ForegroundColor = ConsoleColor.Red;
-          label = "x";
-        }
+          Spec t = CreateInstance(x);
+          result.Add(t.Registry);
+        });
       }
-      else
-      {
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        label = "\u25A0";
-      }
-      Console.Write(" " + label + " ");
-      Console.ForegroundColor = ConsoleColor.Gray;
+      return result;
+    }
+
+    private static Spec CreateInstance(Type x)
+    {
+      return Activator.CreateInstance(x, new object[] {}) as Spec;
     }
   }
 }
