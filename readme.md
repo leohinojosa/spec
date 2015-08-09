@@ -1,9 +1,23 @@
+# Spec #
+Spec is a small testing framework that implements **bdd** style testing for .net. it is mainly inspired by [mochajs](http://mochajs.org/) and [jasmine](http://jasmine.github.io/).
+The library takes a minimal low ceremony approach to define your tests and allows for using a *Arrange-Act-Assert* pattern in your unit testing;
 
-#Spec#
-Spec is a small testing framework that implements **bdd** style testing for .net. inspired by [mochajs](http://mochajs.org/) and [jasmine](http://jasmine.github.io/).
-The library takes a minimal approach to define your tests and allows for using a *Arrange-Act-Assert* pattern in your unit testing;
+## Set up ##
+Install the nuget package in your project. Open the Package manager console and type:
 
-The Spec TDD library works by creating any class that inherits from the `Spec` base type. Create a constructor and start describing the behavior and expectations for your specs.
+```
+PM> Package-Install spec.core
+```
+
+This will install the ```Spec``` base class that allows you to write your tests.
+
+In order to be able to run the tests you need to install the vsix extension. You can downlad the Spec.TestAdapter [here](https://visualstudiogallery.msdn.microsoft.com/c2e17e64-b57f-4065-9b8b-20ea9e8623d7). After you instal the vsix file, your tests should be discovered by the Visual Studio Test Runner.
+
+## Basics ##
+
+The Spec TDD library works by creating any class that inherits from the `Spec` base type.
+
+Then you define your specs in the class constructor.
 You can have *describe* blocks, *context* blocks, and *it* to define specifications.
 
 ```csharp
@@ -101,17 +115,14 @@ namespace SampleSpecs
   }
 }
 ```
+## Assertion Libraries ##
+Spec does **not** include an assertion library, you can use whatever assertion library you feel more comfortable with,
 
-The library includes an integrated Test Runner for Visual Studio in a visx package and a standalone Console Runner exe as well.
-
-##Assertion Libraries ##
-Spec does **not** include an assertion library, you can use whatever assertion library you feel more comfortable with.
-
-* Assert Library
-* Fluent Assertions
-* Shouldy
-* Expect better
-* NFluent
+* Standard Assert Library
+* [Fluent Assertions](http://www.fluentassertions.com/)
+* [Shouldy](http://docs.shouldly-lib.net/)
+* [Expect better](https://github.com/benjamin-bader/ExpectBetter)
+* [NFluent](http://n-fluent.net/)
 
 ```csharp
 describe("Multiple Assertion Libraries", () =>
@@ -142,13 +153,13 @@ describe("Multiple Assertion Libraries", () =>
     {
       Check.That(true).IsFalse();
     });
-
   }
 );
 ```
+*Note*: Pretty much anything that throws an exception should work.
 
-## Support for dynamic tests ##
-Spec supports creating **it** inside a List<T>, this way you can add different test cases and have them run with fixture data.
+## Support for Dynamic Tests Generation##
+Spec supports creating **it** statements inside a List<T>, this way you can add different test cases and have them run with fixture data.
 
 ```csharp
 describe("Dynamic spec creation", () =>
@@ -157,7 +168,6 @@ describe("Dynamic spec creation", () =>
   {
     it("it should be dynamic " + i.ToString(), () =>
     {
-      Console.WriteLine(i);
       System.Threading.Thread.Sleep(1000);
       (i%2).Should().Be(0);
     });
@@ -166,7 +176,7 @@ describe("Dynamic spec creation", () =>
 ```
 
 ## Base Spec Clases ##
-describe how base spec classes can provide default behavior
+Because the spec runner loads types that inherit the spec type, you can create your own base clases that implement specific behaviors that you want to abstract. You can even write regular hooks in the root class that will be executed as part of the spec.
 
 ## Visual Studio Extensions that Help spec look better ##
 Because the spec framework uses ````Action<>```` to define the tests, the following extensions allow for an better IDE experience to outline *describe*, *context* and *it*, plus providing better visual support for indentation.
@@ -178,9 +188,11 @@ Because the spec framework uses ````Action<>```` to define the tests, the follow
 ## Integrating spec to your project pipeline ##
 Consider downloading the spec.testAdapter from the [Visual Studio Extensions](https://visualstudiogallery.msdn.microsoft.com/c2e17e64-b57f-4065-9b8b-20ea9e8623d7) site. Once you instal the vsix it should be available in the visual studio IDE and on the console.
 
-To run it in console use the following parameters
+To run it in console use the following parameters:
 ```
 "c:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" SampleSpecs.dll /UseVsixExtensions:true /logger:TRX
 ```
 
 This will instruct the test runner to load external runners to execute the test files.
+
+Also included in the visx there is a spec.console test runner that will allow you to run your specs in the command line and display a hierarchical structure of all your tests in the console.
