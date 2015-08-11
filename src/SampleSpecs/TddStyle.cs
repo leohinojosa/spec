@@ -18,8 +18,7 @@ namespace SampleSpecs
         test("test subject is initialized", ()=>
         {
           subject.Should().Be("initialized");
-        }
-          );
+        });
       });
     }
   }

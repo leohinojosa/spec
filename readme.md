@@ -175,8 +175,31 @@ describe("Dynamic spec creation", () =>
 });
 ```
 
-## Base Spec Clases ##
+## Base Spec Classes ##
 Because the spec runner loads types that inherit the spec type, you can create your own base clases that implement specific behaviors that you want to abstract. You can even write regular hooks in the root class that will be executed as part of the spec.
+
+## TDD Interface ##
+Spec also supports a TDD interface by inheriting from the Test base class.The Tdd Interface maps *describe* to *suite*, and *test* to *it*.*Setup* maps to *beforeEach* and *tearDown* to *afterEach*. 
+```csharp
+public class TddStyle : Test
+{
+  public TddStyle()
+  {
+    suite("To create a TDD Suite", () =>
+    {
+      string subject = string.Empty;
+      setup(() =>
+      {
+        subject = "initialized";
+      });
+      test("test subject is initialized", ()=>
+      {
+        subject.Should().Be("initialized");
+      });
+    });
+  }
+}
+```
 
 ## Visual Studio Extensions that Help spec look better ##
 Because the spec framework uses ````Action<>```` to define the tests, the following extensions allow for an better IDE experience to outline *describe*, *context* and *it*, plus providing better visual support for indentation.
