@@ -127,7 +127,7 @@ Spec does **not** include an assertion library, you can use whatever assertion l
 ```csharp
 describe("Multiple Assertion Libraries", () =>
 {
-  context("There are many assertion libraries out there:", ()=>
+  context("There are many assertion libraries out there:", () =>
   {
     it("Fluent Assertions", () =>
     {
@@ -154,12 +154,12 @@ describe("Multiple Assertion Libraries", () =>
       Check.That(true).IsFalse();
     });
   }
-);
+)};
 ```
 *Note*: Pretty much anything that throws an exception should work.
 
-## Support for Dynamic Tests Generation##
-Spec supports creating **it** statements inside a List<T>, this way you can add different test cases and have them run with fixture data.
+## Support for Dynamic Tests Generation ##
+Spec supports creating **it** statements inside a List, this way you can add different test cases and have them run with fixture data.
 
 ```csharp
 describe("Dynamic spec creation", () =>
@@ -179,7 +179,7 @@ describe("Dynamic spec creation", () =>
 Because the spec runner loads types that inherit the spec type, you can create your own base clases that implement specific behaviors that you want to abstract. You can even write regular hooks in the root class that will be executed as part of the spec.
 
 ## TDD Interface ##
-Spec also supports a TDD interface by inheriting from the Test base class.The Tdd Interface maps *describe* to *suite*, and *test* to *it*.*Setup* maps to *beforeEach* and *tearDown* to *afterEach*. 
+Spec also supports a TDD interface by inheriting from the Test base class.The Tdd Interface maps *describe* to *suite*, and *test* to *it*.*Setup* maps to *beforeEach* and *tearDown* to *afterEach*.
 ```csharp
 public class TddStyle : Test
 {
