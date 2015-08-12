@@ -11,7 +11,7 @@ namespace spec.tests
     [TestMethod]
     public void Discover_LoadSpecs()
     {
-      var sampleDll = @"C:\Personal\proyectos\spec\src\SampleSpecs\bin\debug\SampleSpecs.dll";
+      var sampleDll = @"..\..\..\SampleSpecs\bin\debug\SampleSpecs.dll";
       using (var sandbox = new Sandbox<Discover>(sampleDll))
       {
         var discoveredDefinitions = sandbox.Content.DiscoverSpecsFromCurrentAssembly();

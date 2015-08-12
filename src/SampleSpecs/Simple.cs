@@ -11,17 +11,6 @@ using Shouldly;
 
 namespace SampleSpecs
 {
-  [TestClass]
-  public class Traditional
-  {
-    [TestMethod]
-    public void SimpleAssert()
-    {
-      Assert.IsTrue(false, "Is False");
-
-    }
-  }
-
   public class Simple : Spec
   {
     public Simple()
