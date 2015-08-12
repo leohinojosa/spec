@@ -1,0 +1,4 @@
+#os: SharePoint 2013
+
+build:
+  project:spec.core.sln
