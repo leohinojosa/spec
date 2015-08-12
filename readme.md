@@ -2,6 +2,8 @@
 Spec is a small testing framework that implements **bdd** style testing for .net. it is mainly inspired by [mochajs](http://mochajs.org/) and [jasmine](http://jasmine.github.io/).
 The library takes a minimal low ceremony approach to define your tests and allows for using a *Arrange-Act-Assert* pattern in your unit testing;
 
+[![Build status](https://ci.appveyor.com/api/projects/status/a65uirokpr22l75d?svg=true)](https://ci.appveyor.com/project/leohinojosa/spec)
+
 ## Set up ##
 Install the nuget package in your project. Open the Package manager console and type:
 
