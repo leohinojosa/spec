@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C73FE5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spec.tests", "spec.tests\spec.tests.csproj", "{CA136744-F79E-4044-91C0-3753C41A82C1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spec.TestAdapter", "spec.TestAdapter\spec.TestAdapter.csproj", "{CA028ED3-6431-48C9-B170-00A3D2AFFFAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,9 @@ Global
 		{CA136744-F79E-4044-91C0-3753C41A82C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA136744-F79E-4044-91C0-3753C41A82C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA136744-F79E-4044-91C0-3753C41A82C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA028ED3-6431-48C9-B170-00A3D2AFFFAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA028ED3-6431-48C9-B170-00A3D2AFFFAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA028ED3-6431-48C9-B170-00A3D2AFFFAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
