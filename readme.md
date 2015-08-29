@@ -221,3 +221,7 @@ To run it in console use the following parameters:
 This will instruct the test runner to load external runners to execute the test files.
 
 Also included in the visx there is a spec.console test runner that will allow you to run your specs in the command line and display a hierarchical structure of all your tests in the console.
+
+![test_console](https://cloud.githubusercontent.com/assets/1530791/9564848/79636124-4e68-11e5-97ee-8f5743df6291.png)
+![test_runner](https://cloud.githubusercontent.com/assets/1530791/9564849/7965421e-4e68-11e5-8f1e-1068c3bf1266.png)
+
