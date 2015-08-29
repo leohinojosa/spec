@@ -56,6 +56,10 @@ namespace spec.core
     {
     }
 
+    public void it(string name)
+    {
+    }
+
     public void xit(string name, Action operation)
     {
     }
