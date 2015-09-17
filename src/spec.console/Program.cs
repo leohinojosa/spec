@@ -45,7 +45,11 @@ namespace spec.console
       var registries = GetRegistriesFromSources(sources);
 
       var reporters = new List<ITestReporter>() {new ConsoleReporter(), new SummaryReporter()};
-      reporters.ForEach(r => { r.Execute(registries, executionResult); });      
+      reporters.ForEach(r => { r.Execute(registries, executionResult); });
+      
+#if DEBUG
+      Console.ReadLine();
+#endif
     }
 
     public static List<Registry> GetRegistriesFromSources(string[] sources)

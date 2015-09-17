@@ -78,7 +78,7 @@ namespace spec.console.reporters
       Console.ForegroundColor = ConsoleColor.Gray;
     }
 
-    private string CleanUpForConsole(string value)
+    public static string CleanUpForConsole(string value)
     {
       return value.Replace('\n', ' ').Replace('\t', ' ');
     }

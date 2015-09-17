@@ -26,6 +26,14 @@ namespace spec.console.reporters
         Console.ForegroundColor = ConsoleColor.Gray;
       }
 
+      Console.WriteLine("");
+      executionResult.Where(x=>x.Enabled && !x.RanSuccesfully).Select((exception, index)=>new {exception=exception, index = index+1}).ToList().ForEach(x =>
+      {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine(" {0}) {1}, {2}",x.index, x.exception.Description, ConsoleReporter.CleanUpForConsole(x.exception.ExecutionResult.ToLower()));
+      });
+
+      Console.ForegroundColor = ConsoleColor.Gray;
       Console.WriteLine("\n {0} Total, {1} Passed, {2} Failed, {3} Pending ({4} secs)", summary.TotalTests, summary.TotalPassed,
         summary.TotalFailed, summary.TotalPending, summary.TotalSeconds);
     }
