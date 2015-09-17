@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AfterEachSubjectTest.cs" />
+    <Compile Include="AsyncSpec.cs" />
     <Compile Include="BeforeAllSubjectTest.cs" />
     <Compile Include="Calculator_Spec.cs" />
     <Compile Include="InheritedSpec.cs" />

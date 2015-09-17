@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using spec.core.Model;
 
 namespace spec.core
@@ -48,6 +51,21 @@ namespace spec.core
 
       SetupHooks(suite.AfterEach);
     }
+    
+    private static bool IsAsyncAppliedToDelegate(Delegate d)
+    {
+      return d.Method.GetCustomAttribute(typeof(AsyncStateMachineAttribute)) != null;
+    }
+
+    private void execute(Definition child)
+    {
+      child.Fn();
+    }
+
+    private async void asyncExecute(Definition child)
+    {
+      await child.Fn1();
+    }
 
     private void SafeExecute(Definition child)
     {
@@ -57,7 +75,15 @@ namespace spec.core
         if (child.Enabled)
         {
           child.ExecutionStatus = ExecStatus.Running;
-          child.Fn();
+          if (IsAsyncAppliedToDelegate(child.Fn))
+          {
+            child.Fn1 =  async () =>{child.Fn();};
+            asyncExecute(child);  
+          }
+          else
+          {
+            execute(child);
+          }
           child.RanSuccesfully = true;
         }
         else

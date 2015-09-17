@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace spec.core.Model
 {
@@ -24,6 +25,7 @@ namespace spec.core.Model
     public DateTime EndTime { get; set; }
     public DateTime StartTime { get; set; }
     public string StackTrace { get; set; }
+    public Func<Task> Fn1 { get; set; }
 
     public Definition ()
     {
