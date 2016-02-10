@@ -18,7 +18,7 @@ namespace spec.console
 #if DEBUG
       sources = new[]
       {
-        @"C:\Personal\proyectos\spec\src\SampleSpecs\bin\debug\SampleSpecs.dll"
+        @"E:\Personal\proyectos\spec\src\SampleSpecs\bin\debug\SampleSpecs.dll"
       };
 #endif
       var specList = new Dictionary<string, IEnumerable<DefinitionSource>>();

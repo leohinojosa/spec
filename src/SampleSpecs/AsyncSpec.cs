@@ -4,84 +4,49 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using FluentAssertions;
 using spec.core;
+using Shouldly;
 
 namespace SampleSpecs
 {
-  public class AsyncSpec : Spec
-  {
-    public AsyncSpec()
+    public class AsyncSpec : Spec
     {
-      describe("A async spec", () =>
-      {
-        AsyncObject sut = null;
-        var resultValue = 1000;
-
-        beforeEach(() =>
+        public AsyncSpec()
         {
-          sut = new AsyncObject();
-        });
+            describe("A async spec", () =>
+            {
+                AsyncObject sut = null;
+                var resultValue = 1000;
 
-        it("when calling directly Result from Async task it should return value", () =>
-        {
-          var result = sut.RunAsync(10,resultValue).Result;
-          result.Should().Be(resultValue);
-        });
+                beforeEach(() => { sut = new AsyncObject(); });
 
-        it("async should assert incorrect value",  () =>
-        {
-          Func<Task<int>> act = async () => await sut.RunAsync(10, resultValue);
-          act().Result.Should().Be(resultValue+15);
-        });
 
-        it("async should return correct value, faking async", () =>
-        {
-          //correct syntax
-          Func<Task<int>> act = async () => await sut.RunAsync(10, resultValue);
-          act().Result.Should().Be(resultValue);
-           
-       /*   //incorrect syntax
-          var result = sut.RunAsync(10, resultValue);
-          result.Should().Be(resultValue);*/
-        });
+                it("An async metod can be called and waited with the async keyword in the spec lambda", async () =>
+                {
+                    var result = await sut.RunAsync(1000, 1);
+                    result.ShouldBe(1);
+                });
 
-        ///async keyword is not supported
-        it("async should return correct value, with real async", (async () => 
-        {
-          var result = await sut.RunAsync(10, resultValue);
-          result.Should().Be(resultValue );
-          //problem with this is when we get an exception, it breaks the runner because the exception originates in a separate thread pool
-        }));
-
-        it("should throw exception", () =>
-        {
-          Func<Task> act = async () => { await sut.RunAsyncException(10, resultValue); };
-          act.ShouldThrow<Exception>("because its expected");
-        });
-
-        it("it should display an incorrect spec that throws an exception", () =>
-        {
-          Func<Task> act = async () => { await sut.RunAsync(10, resultValue); };
-          act.ShouldThrow<Exception>("because its expected");
-        });
-
-      });
-    }
-  }
-
-  public class AsyncObject
-  {
-    
-    public async Task<int> RunAsync(int milliseconds, int resultValue)
-    {
-      await Task.Delay(milliseconds);
-      return resultValue;
+                it("An async exception has to be catched with a special idiom", () =>
+                {
+                    Func<Task> a = async () => { await sut.RunAsyncException(10, resultValue); };
+                    a.ShouldThrow<Exception>();
+                });
+            });
+        }
     }
 
-    public async Task<int> RunAsyncException(int milliseconds, int resultValue)
+    public class AsyncObject
     {
-      await Task.Delay(milliseconds);
-      throw new Exception("It should explode");
-      return resultValue;
+        public async Task<int> RunAsync(int milliseconds, int resultValue)
+        {
+            await Task.Delay(milliseconds);
+            return resultValue;
+        }
+
+        public async Task<int> RunAsyncException(int milliseconds, int resultValue)
+        {
+            await Task.Delay(milliseconds);
+            throw new Exception("It should explode");
+        }
     }
-  }
 }
