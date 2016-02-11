@@ -160,6 +160,27 @@ describe("Multiple Assertion Libraries", () =>
 ```
 *Note*: Pretty much anything that throws an exception should work.
 
+## Support for async/await ##
+Async/Await methods can be tested by making the it lamba async, and awaiting on the applicable method.
+```csharp
+    it("it should be async ", () => async
+    {
+        var sut = new Class();
+        var result = await sut.asyncMethod();
+        result.Should().BeTrue();
+    });
+```
+
+In async/await, exceptions are a bit harder to catch because they run in a separate application pool. In order to catch them you must wrap them in a Func and then execute it, otherwise the test runner fails and exits.
+```csharp
+    it("An async exception has to be catched with a special idiom", () =>
+    {
+        var sut = new Class();
+        Func<Task> a = async () => { await sut.asyncMethodException(); };
+        a.ShouldThrow<Exception>();
+    });
+```
+
 ## Support for Dynamic Tests Generation ##
 Spec supports creating **it** statements inside a List, this way you can add different test cases and have them run with fixture data.
 
