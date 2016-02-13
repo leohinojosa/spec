@@ -49,11 +49,11 @@ namespace spec.core.Model
     {
       this.AfterEach.Add(hook);
     }
-    public void AddBeforeAll(Hook hook)
+    public void AddBeforeAll(GlobalHook hook)
     {
       this.BeforeAll.Add(hook);
     }
-    public void AddAfterAll(Hook hook)
+    public void AddAfterAll(GlobalHook hook)
     {
       this.AfterAll.Add(hook);
     }

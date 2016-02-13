@@ -16,8 +16,9 @@ namespace spec.core
 
     public void afterAll(string description, Action operation)
     {
-      var before = Registry.EachFactory(description, operation);
-      Registry.CurrentSuite.AddAfterAll(before);
+      var before = Registry.AllFactory(description, operation);
+            before.Kind = GlobalHookKind.AfterAll;
+            Registry.CurrentSuite.AddAfterAll(before);
     }
 
     public void afterAll(Action operation)
@@ -38,7 +39,8 @@ namespace spec.core
 
     public void beforeAll(string description, Action operation)
     {
-      var before = Registry.EachFactory(description, operation);
+      var before = Registry.AllFactory(description, operation);
+            before.Kind = GlobalHookKind.BeforeAll;
       Registry.CurrentSuite.AddBeforeAll(before);
     }
 

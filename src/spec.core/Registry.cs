@@ -71,7 +71,11 @@ namespace spec.core
     }
     public Hook EachFactory(string description, Action fnAction)
     {
-      return new Hook() {Description = description, Fn = fnAction};
+      return new Hook() {Description = description, Fn = fnAction, Enabled = true};
+    }
+    public GlobalHook AllFactory(string description, Action fnAction)
+    {
+      return new GlobalHook() {Description = description, Fn = fnAction, Enabled = true};
     }
   }
 }

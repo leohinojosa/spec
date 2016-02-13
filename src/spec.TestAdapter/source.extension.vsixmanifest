@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="spec.TestAdapter.LeoHinojosa.466cabb2-c359-41fa-b4c9-a8b5a3e88f07" Version="0.1" Language="en-US" Publisher="Leo Hinojosa" />
+    <Identity Id="spec.TestAdapter.LeoHinojosa.466cabb2-c359-41fa-b4c9-a8b5a3e88f07" Version="0.2" Language="en-US" Publisher="Leo Hinojosa" />
     <DisplayName>spec.TestAdapter</DisplayName>
     <Description xml:space="preserve">Allows running bdd specs on Visual Studio</Description>
   </Metadata>
   <Installation>
     <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[12.0]" />
+    <InstallationTarget Version="[14.0,15.0)" Id="Microsoft.VisualStudio.Pro" />
   </Installation>
   <Dependencies>
     <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
