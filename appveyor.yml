@@ -2,3 +2,15 @@
 
 build:
   project:src\spec.sln
+
+#---------------------------------#
+#       build configuration       #
+#---------------------------------#
+
+before_build:
+  - nuget restore %solutionFile%
+
+build:
+  project: spec.sln
+  parallel: false
+  verbosity: minimal
