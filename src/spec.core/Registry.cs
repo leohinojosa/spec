@@ -69,13 +69,13 @@ namespace spec.core
       _executableLookupTable.Add(spec);
       return spec;
     }
-    public Hook EachFactory(string description, Action fnAction)
+    public Hook EachFactory(string description, Action fnAction, Definition suite)
     {
-      return new Hook() {Description = description, Fn = fnAction, Enabled = true};
+      return new Hook() {Description = description, Fn = fnAction, Enabled = true, Parent = suite};
     }
-    public GlobalHook AllFactory(string description, Action fnAction)
+    public GlobalHook AllFactory(string description, Action fnAction, Definition suite)
     {
-      return new GlobalHook() {Description = description, Fn = fnAction, Enabled = true};
+      return new GlobalHook() {Description = description, Fn = fnAction, Enabled = true, Parent = suite};
     }
   }
 }

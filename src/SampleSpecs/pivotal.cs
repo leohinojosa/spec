@@ -66,8 +66,74 @@ namespace SampleSpecs
           foo.Should().Be(1);
         });
 
-      }
-    );
-    }
+      });
+
+        describe("A spec using a beforeach and aftereach", () =>
+        {
+            var foo = 0;
+            beforeAll(() => { foo = 1; });
+
+            afterAll(() => { foo = 0; });
+
+            it("sets the initial value of foo before specs run", ()=> {
+                foo.Should().Be(1);
+                foo += 1;
+            });
+
+            it("does not reset foo between specs", ()=> {
+                foo.Should().Be(2);
+            });
+        });
+
+
+
+        describe("A spec", () =>{
+            int? foo = null;
+
+            beforeEach(()=> {
+                foo = 0;
+                foo += 1;
+            });
+
+            afterEach(()=> {
+                foo = 0;
+            });
+
+            it("is just a function, so it can contain any code", () => {
+                foo.Should().Be(1);
+            });
+
+            it("can have more than one expectation", ()=> {
+                foo.Should().Be(1);
+                true.Should().BeTrue();
+            });
+
+            describe("nested inside a second describe", ()=> {
+                int? bar = null;
+
+                beforeEach(()=> {
+                    bar = 1;
+                });
+
+                it("can reference both scopes as needed", ()=> {
+                    foo.Should().Be(bar);
+                });
+            });
+        });
+
+        xdescribe("A spec", () => {
+            int? foo = null;
+
+            beforeEach(() => {
+                foo = 0;
+                foo += 1;
+            });
+
+            it("is just a function, so it can contain any code", () => {
+                foo.Should().Be(1);
+            });
+        });
+
+        }
   }
 }
