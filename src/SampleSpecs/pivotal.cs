@@ -133,7 +133,15 @@ namespace SampleSpecs
                 foo.Should().Be(1);
             });
         });
+        
+        describe("Pending specs", () =>
+        {
+            xit("can be declared 'xit'", () =>{
+                true.Should().Be(false);
+            });
 
-        }
+            it("can be declared with 'it' but without a function");
+        });
+    }
   }
 }
