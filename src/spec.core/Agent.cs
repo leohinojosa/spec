@@ -27,8 +27,6 @@ namespace spec.core
             {
                 foreach (var definition in executionPlan.Value)
                 {
-                    //Si es un before all, que no se ha executado continua,
-                    //si es un beforeall que ya se executo, no lo corras
                     if(definition.GetType() == typeof(GlobalHook))
                     {
                         var globalHook = (GlobalHook) definition;
@@ -40,7 +38,6 @@ namespace spec.core
 
                         if (globalHook.Kind == GlobalHookKind.AfterAll)
                         {
-                            //If its not the Last AFter all of the spec, skip execution until it is.
                             var max = mainSuiteExecutionPlan.SelectMany(x => x.Value, (x, y) => new
                             {
                                 x.Key,
@@ -112,49 +109,6 @@ namespace spec.core
             }
         }
 
-        public void RunSuite(Definition suite)
-        {
-            try
-            {
-                suite.ExecutionStatus = ExecStatus.Running;
-                SetupHooks(suite.BeforeAll);
-                RunChildDefinitions(suite);
-                SetupHooks(suite.AfterAll);
-            }
-            finally
-            {
-                suite.ExecutionStatus = ExecStatus.Completed;
-            }
-        }
-
-        private void RunChildDefinitions(Definition definition)
-        {
-            if (definition.Children.Count > 0)
-            {
-                foreach (var child in definition.Children)
-                {
-                    if (child.GetType().IsAssignableFrom(typeof (Suite)))
-                    {
-                        RunSuite(child);
-                    }
-
-                    if (child.GetType().IsAssignableFrom(typeof (Specification)))
-                    {
-                        RunSpec(definition, child);
-                    }
-                }
-            }
-        }
-
-        private void RunSpec(Definition suite, Definition child)
-        {
-            SetupHooks(suite.BeforeEach);
-
-            SafeExecute(child);
-
-            SetupHooks(suite.AfterEach);
-        }
-
         private static bool IsAsyncAppliedToDelegate(Delegate d)
         {
             return d.Method.GetCustomAttribute(typeof (AsyncStateMachineAttribute)) != null;
@@ -205,19 +159,6 @@ namespace spec.core
             {
                 child.EndTime = DateTime.Now;
                 child.ExecutionStatus = ExecStatus.Completed;
-            }
-        }
-
-        private void SetupHooks(List<Hook> setUp)
-        {
-            if (setUp.Count > 0)
-            {
-                setUp.ForEach(x =>
-                {
-                    x.ExecutionStatus = ExecStatus.Running;
-                    x.Fn();
-                    x.ExecutionStatus = ExecStatus.Completed;
-                });
             }
         }
     }

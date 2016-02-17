@@ -84,7 +84,7 @@ namespace SampleSpecs
           t.Should().BeFalse();
         });
 
-        it("Pending test");
+        it("Pending test2");
 
         afterEach("afterEach", () =>
         {
@@ -92,18 +92,18 @@ namespace SampleSpecs
         });
       });
 
-      describe("Dynamic spec creation", () =>
-      {
-        new List<int>(){0,2,4}.ForEach(i =>
-        {
-          it("it should be dynamic" + i.ToString(), () =>
-          {
-            Console.WriteLine(i);
-            System.Threading.Thread.Sleep(1000);
-            (i%2).Should().Be(0);
-          });
-        });
-      });
+      //describe("Dynamic spec creation", () =>
+      //{
+        //new List<int>(){0,2,4}.ForEach(i =>
+        //{
+        //  it("it should be dynamic" + i.ToString(), () =>
+        //  {
+        //    Console.WriteLine(i);
+        ///    System.Threading.Thread.Sleep(1000);
+          //  (i%2).Should().Be(0);
+      //    });
+        //});
+     // });
     }
   }
 }

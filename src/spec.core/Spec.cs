@@ -77,12 +77,20 @@ namespace spec.core
       addSuite(name, operation, true, SpecType.describe);
     }
 
+     /// <summary>
+     /// It currently fails in the visual studio unit test client.
+     /// </summary>
+     /// <param name="name"></param>
     public void it(string name)
     {
-      xit(name, null);
+        xit(name, () =>
+            {
+                //Disabled by default
+                Console.WriteLine("no");
+            });
     }
 
-    public void it(string name, Action operation)
+        public void it(string name, Action operation)
     {
       addSpec(name, operation, true, SpecType.it);
     }
