@@ -1,8 +1,5 @@
 #os: SharePoint 2013
 
-build:
-  project:src\spec.sln
-
 #---------------------------------#
 #       build configuration       #
 #---------------------------------#
