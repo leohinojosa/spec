@@ -5,9 +5,9 @@
 #---------------------------------#
 
 before_build:
-  - nuget restore %solutionFile%
+  - nuget restore src\spec.sln
 
 build:
-  project: spec.sln
+  project: src\spec.sln
   parallel: false
   verbosity: minimal
