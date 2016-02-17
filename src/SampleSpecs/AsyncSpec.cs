@@ -19,8 +19,8 @@ namespace SampleSpecs
 
                 beforeEach(() => { sut = new AsyncObject(); });
 
-
-                it("An async metod can be called and waited with the async keyword in the spec lambda", async () =>
+                it("An async metod can be called and waited with " +
+                   "the async keyword in the spec lambda", async () =>
                 {
                     var result = await sut.RunAsync(1000, 1);
                     result.ShouldBe(1);
@@ -39,8 +39,10 @@ namespace SampleSpecs
     {
         public async Task<int> RunAsync(int milliseconds, int resultValue)
         {
+            var result = 0;
             await Task.Delay(milliseconds);
-            return resultValue;
+            result = resultValue;
+            return result;
         }
 
         public async Task<int> RunAsyncException(int milliseconds, int resultValue)
