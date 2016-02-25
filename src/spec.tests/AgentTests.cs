@@ -62,6 +62,30 @@ namespace spec.tests
       agent.RunSuite(_suite);
       i.Should().Be(8);
     }
+        [TestMethod]
+      public void agent_executesASpecHooksEvenAfterErrors()
+      {
+            int i = 0,
+                j = 0;
+            _suite.describe("new", () =>
+            {
+                i = 0;
+                _suite.beforeAll(() => { i++; });
+
+                _suite.beforeEach(() => { i++; j++;});
+
+                _suite.it("spec1", () => { throw new Exception("im breaking the flow"); });
+
+                _suite.afterEach(() => { i++; ; j++; });
+
+                _suite.afterAll(() => { i++; });
+            });
+
+            var agent = new Agent();
+            agent.RunSuite(_suite);
+            i.Should().Be(4);
+            j.Should().Be(2);
+      }
 
         [TestMethod]
         public void agent_executesASpecAnd()
