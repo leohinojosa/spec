@@ -87,11 +87,7 @@ namespace spec.core
      /// <param name="name"></param>
     public void it(string name)
     {
-        xit(name, () =>
-            {
-                //Disabled by default
-                Console.WriteLine("no");
-            });
+        addSpec(name, null, false, SpecType.xit);
     }
 
         public void it(string name, Action operation)
@@ -129,25 +125,25 @@ namespace spec.core
       return suite;
     }
 
-    private void addSpec(string name, Action operation, bool enabled, SpecType specType)
-    {
-      if (name == String.Empty)
+      private void addSpec(string name, Action operation, bool enabled, SpecType specType)
       {
-        throw new Exception("Please specify a name for the spec");
+          if (name == String.Empty)
+          {
+              throw new Exception("Please specify a name for the spec");
+          }
+          var index = 2;
+          var stackFrame = new System.Diagnostics.StackTrace(true).GetFrame(index);
+          var codeBase = stackFrame.GetFileName();
+          var lineNumber = stackFrame.GetFileLineNumber();
+          var columnNumber = stackFrame.GetFileColumnNumber();
+          var fileName = Path.GetFileName(codeBase);
+          var className = this.GetType().FullName;
+          //var className = this.GetType().Name;
+
+          var spec = Registry.SpecFactory(name, operation, Registry.CurrentSuite, codeBase, lineNumber, columnNumber,
+              fileName, className);
+          spec.Enabled = enabled && spec.Parent.Enabled;
+          Registry.CurrentSuite.AddChild(spec);
       }
-
-      var stackFrame = new System.Diagnostics.StackTrace(true).GetFrame(2);
-      var codeBase = stackFrame.GetFileName();
-      var lineNumber = stackFrame.GetFileLineNumber();
-      var columnNumber = stackFrame.GetFileColumnNumber();
-      var fileName = Path.GetFileName(codeBase);
-      var className = this.GetType().FullName;
-      //var className = this.GetType().Name;
-
-      var spec = Registry.SpecFactory(name, operation, Registry.CurrentSuite, codeBase, lineNumber, columnNumber,
-        fileName, className);
-      spec.Enabled = enabled && spec.Parent.Enabled;
-      Registry.CurrentSuite.AddChild(spec);
-    }
   }
 }
