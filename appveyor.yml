@@ -9,3 +9,6 @@ build:
   project: src\spec.sln
   parallel: false
   verbosity: minimal
+  
+configuration: Release
+platform: Any CPU
