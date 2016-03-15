@@ -222,7 +222,7 @@ namespace spec.tests
             i.Should().Be(0);
         }
 
-        //[TestMethod] // Dynamic specs have some issues
+        [TestMethod] // Dynamic specs have some issues
         public void suite_shouldAddDYnamicSpecs()
         {
             var dynamicSpecCount = 10;

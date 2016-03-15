@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DynamicSpec.cs" />
     <Compile Include="tests.cs" />
     <Compile Include="pivotal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,10 +1,11 @@
 ﻿using FluentAssertions;
 using spec;
 using spec.core;
+using System.Collections.Generic;
 
 namespace SampleSpecLibrary
 {
-  public class pivotal : Spec
+   public class pivotal : Spec
   {
     public pivotal()
     {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using spec.core.Model;
 
 namespace spec.core
@@ -66,6 +67,14 @@ namespace spec.core
         ClassName = className
       };
 
+        if(_executableLookupTable.Any(x=>x.Id == spec.Id))
+        {
+            var t = (from p in _executableLookupTable
+                where p.Id.StartsWith(spec.Id)
+                select p).Count();
+            spec.Id = spec.Id + string.Format("({0})", t);
+        }
+    
       _executableLookupTable.Add(spec);
       return spec;
     }

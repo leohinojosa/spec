@@ -23,7 +23,7 @@ namespace spec.console.Adapter
     public static IEnumerable<TestCase>  Discover(IEnumerable<string> sources, ITestCaseDiscoverySink discoverySink)
     {
       List<TestCase> result = new List<TestCase>();
-      //System.Diagnostics.Debugger.Launch();
+     // System.Diagnostics.Debugger.Launch();
       var specList = new List<dynamic>();
       foreach (var source in sources)
       {
@@ -52,7 +52,7 @@ namespace spec.console.Adapter
     public static TestCase AddToSink(string source, DefinitionSource definitionSources, ITestCaseDiscoverySink discoverySink)
     {
       var it = definitionSources;
-      var testCase = new TestCase(it.ParentDescription + ".spec" + it.LineNumber, specTestExecutor.ExecutorUri, source);
+      var testCase = new TestCase(it.ParentDescription + " " + it.Description + ".spec" + it.LineNumber, specTestExecutor.ExecutorUri, source);
       testCase.CodeFilePath = it.CodeBase;
       testCase.LineNumber = it.LineNumber;
       testCase.DisplayName = it.Description;
