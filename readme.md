@@ -171,7 +171,7 @@ Async/Await methods can be tested by making the it lamba async, and awaiting on 
     });
 ```
 
-In async/await, exceptions are a bit harder to catch because they run in a separate application pool. In order to catch them you must wrap them in a Func and then execute it, otherwise the test runner fails and exits.
+In async/await, exceptions are a bit harder to catch because they run in a separate application thread. In order to catch them you must wrap them in a Func and then execute it, otherwise the test runner fails and exits.
 ```csharp
     it("An async exception has to be catched with a special idiom", () =>
     {
