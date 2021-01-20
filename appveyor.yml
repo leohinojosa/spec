@@ -3,7 +3,7 @@
 #---------------------------------#
 
 before_build:
-  - nuget restore src\spec.sln
+  - dotnet restore src/spec.sln
 
 build:
   project: src\spec.sln
