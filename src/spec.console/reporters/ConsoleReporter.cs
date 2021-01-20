@@ -35,8 +35,8 @@ namespace spec.console.reporters
       {
         Console.SetCursorPosition(1, Console.CursorTop - 1);
         var result = _execresult.FirstOrDefault(x => x.Id == def.Id);
-        PrintSpecStatus(result.RanSuccesfully, result.Enabled);
-        if (result.Enabled && !result.RanSuccesfully)
+        PrintSpecStatus(result.RanSuccessfully, result.Enabled);
+        if (result.Enabled && !result.RanSuccessfully)
         {
           Console.WriteLine("{0}{1}", new String(' ', level), CleanUpForConsole(Truncate(result.ExecutionResult.Trim(), 120)));
         }

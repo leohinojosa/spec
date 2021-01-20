@@ -9,7 +9,7 @@ namespace spec.core.Model
     public string Description { get; set; }
     public bool Enabled { get; set; }
 
-    public bool RanSuccesfully { get; set; }
+    public bool RanSuccessfully { get; set; }
     public string ExecutionResult { get; set; }
     public DateTime EndTime { get; set; }
     public DateTime StartTime { get; set; }
@@ -30,7 +30,7 @@ namespace spec.core.Model
       result.ParentDescription = Specification.Parent.Description;
       result.Description = Specification.Description;
       result.Enabled = Specification.Enabled;
-      result.RanSuccesfully = Specification.RanSuccesfully;
+      result.RanSuccessfully = Specification.RanSuccessfully;
       result.ExecutionResult = Specification.ExecutionResult;
       result.EndTime = Specification.EndTime;
       result.StartTime = Specification.StartTime;

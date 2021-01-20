@@ -1,5 +1,5 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using spec.core;
+using Xunit;
 
 namespace SampleSpecs
 {
@@ -43,7 +43,7 @@ namespace SampleSpecs
             it("Should check correct value", () =>
             {
               calc.Add(0, 10);
-              Assert.AreEqual(calc.Value, 10, "Should be greater than zero");
+              Assert.Equal(calc.Value, 10);
             });
           });
 
@@ -54,14 +54,14 @@ namespace SampleSpecs
             it("Should check correct value", () =>
             {
               calc.Subtract(0, 10);
-              Assert.AreEqual(calc.Value, -10, "Should be zero");
+              Assert.Equal(calc.Value, -10);
             });
 
             afterEach(() => { calc.reset(); });
           });
 
           describe("at the end the calculator",
-            () => { it("should be re-set", (() => { Assert.AreEqual(calc.Value, 0, "Should be reset"); })); });
+            () => { it("should be re-set", (() => { Assert.Equal(calc.Value, 0); })); });
 
           afterAll(() => { calc = null; });
         });

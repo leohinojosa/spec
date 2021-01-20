@@ -20,7 +20,7 @@ namespace spec.core.Model
     public bool Enabled { get; set; }
 
     public ExecStatus ExecutionStatus { get; set; }
-    public bool RanSuccesfully { get; set; }
+    public bool RanSuccessfully { get; set; }
     public string ExecutionResult { get; set; }
     public DateTime EndTime { get; set; }
     public DateTime StartTime { get; set; }

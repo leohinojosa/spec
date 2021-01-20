@@ -1,19 +1,18 @@
 ﻿using System.Linq;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using spec.console;
+using Xunit;
 
 namespace spec.tests
 {
-  [TestClass]
   public class DiscoveryTest
   {
-    [TestMethod]
+    [Fact]
     public void Discover_LoadSpecs()
     {
         string sampleDll = "";
 #if DEBUG
-            sampleDll = @"..\..\..\SampleSpecs\bin\debug\SampleSpecs.dll";
+            sampleDll = @"/Users/leo.hinojosa/code/leohinojosa/github/spec/src/SampleSpecs/bin/Debug/netstandard2.1/SampleSpecs.dll";
 #else
             sampleDll = @"..\..\..\SampleSpecs\bin\Release\SampleSpecs.dll";
 #endif
