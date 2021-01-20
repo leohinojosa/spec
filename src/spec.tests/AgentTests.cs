@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using spec.core;
-using spec.core.Model;
+using Xunit;
 
 namespace spec.tests
 {
-    [TestClass]
     public class AgentTests
     {
         private spec_double _suite;
 
-        [TestInitialize]
-        public void Setup()
+        public AgentTests()
         {
             _suite = new spec_double();
         }
@@ -28,12 +24,12 @@ namespace spec.tests
 
             Agent agent = new Agent();
             agent.RunSuite(_suite);
-            _suite.Registry.ExecutableLookupTable.Any(x => x.RanSuccesfully)
+            _suite.Registry.ExecutableLookupTable.Any(x => x.RanSuccessfully)
                 .Should()
                 .BeFalse("describes should not be in specs");
         }
 
-        [TestMethod]
+        [Fact]
         public void agent_executesASpecAndRunsSuccesfully()
         {
             var i = 0;
@@ -58,7 +54,7 @@ namespace spec.tests
             i.Should().Be(8);
         }
 
-        [TestMethod]
+        [Fact]
         public void agent_executesASpecHooksEvenAfterErrors()
         {
             int i = 0,
@@ -92,7 +88,7 @@ namespace spec.tests
             j.Should().Be(2);
         }
 
-        [TestMethod]
+        [Fact]
         public void agent_executesASpecAnd()
         {
             var i = 0;
@@ -110,7 +106,7 @@ namespace spec.tests
             i.Should().Be(1);
         }
 
-        [TestMethod]
+        [Fact]
         public void agent_executesASpecAndRunsSuccesfullyWithHooks()
         {
             var i = 0;
@@ -139,7 +135,7 @@ namespace spec.tests
             i.Should().Be(0);
         }
 
-        [TestMethod]
+        [Fact]
         public void agent_executesASpecAndRunsSuccesfullyWithHooksSiblingDescribes()
         {
             var i = 0;
@@ -179,7 +175,7 @@ namespace spec.tests
             i.Should().Be(0);
         }
 
-        [TestMethod]
+        [Fact]
         public void agent_executesASpecAndRunsSuccesfullyWithHooksNestedDescribes()
         {
             var i = 0;
@@ -222,7 +218,7 @@ namespace spec.tests
             i.Should().Be(0);
         }
 
-        [TestMethod] // Dynamic specs have some issues
+        [Fact] // Dynamic specs have some issues
         public void suite_shouldAddDYnamicSpecs()
         {
             var dynamicSpecCount = 10;
@@ -237,7 +233,7 @@ namespace spec.tests
             _suite.Registry.ExecutableLookupTable.Count.Should().Be(dynamicSpecCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void agent_executes()
         {
             var i = new AllHookDouble();

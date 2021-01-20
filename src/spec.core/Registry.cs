@@ -38,7 +38,7 @@ namespace spec.core
       }
       catch (Exception ex)
       {
-        throw new Exception(String.Format("Cannot build specification\n {0}",ex.Message) );
+        throw new Exception($"Cannot build specification\n {ex.Message}");
       }
     }
 
@@ -55,7 +55,7 @@ namespace spec.core
     {
       var spec = new Specification()
       {
-        Id = String.Format("spec://{0}/{1}:{2}", className, lineNumber, column),
+        Id = $"spec://{className}/{lineNumber}:{column}",
        // Id = suite.Parent.Description + ".spec" + string.Format("{0}x{1}", lineNumber, column),  /* it.Id*/
         Description = description,
         Fn = function,

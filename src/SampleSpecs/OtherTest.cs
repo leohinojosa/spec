@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using spec;
+using spec.core;
 
 namespace SampleSpecs
 {

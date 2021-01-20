@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Net.NetworkInformation;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using FluentAssertions;
 using spec.core;
 using Shouldly;
 

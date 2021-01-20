@@ -14,31 +14,22 @@ namespace spec.console
     private static void Main(string[] args)
     {
       Console.WriteLine(" Spec runner.\n Running Specs ...");
-      string[] sources = args;
-#if DEBUG
-      sources = new[]
-      {
-        @"E:\Personal\proyectos\spec\src\SampleSpecs\bin\debug\SampleSpecs.dll"
-      };
-#endif
+      var sources = args;
+
       var specList = new Dictionary<string, IEnumerable<DefinitionSource>>();
 
       foreach (var source in sources)
       {
-        using (var sandbox = new Sandbox<Discover>(source))
-        {
-          var discoveredDefinitions = sandbox.Content.DiscoverSpecsFromCurrentAssembly();
-          specList.Add(source, discoveredDefinitions.Select(x => x));
-        }
+        using var sandbox = new Sandbox<Discover>(source);
+        var discoveredDefinitions = sandbox.Content.DiscoverSpecsFromCurrentAssembly();
+        specList.Add(source, discoveredDefinitions.Select(x => x));
       }
 
       var executionResult = new List<DefinitionSource>();
       Task.WaitAll(specList.ToList().Select(item => Task.Factory.StartNew(() =>
       {
-        using (var sandbox = new Sandbox<Executor>(item.Key))
-        {
-          executionResult.AddRange(sandbox.Content.Execute(item.Value.ToList()));
-        }
+        using var sandbox = new Sandbox<Executor>(item.Key);
+        executionResult.AddRange(sandbox.Content.Execute(item.Value.ToList()));
       })).ToArray());
 
 
@@ -46,22 +37,18 @@ namespace spec.console
 
       var reporters = new List<ITestReporter>() {new ConsoleReporter(), new SummaryReporter()};
       reporters.ForEach(r => { r.Execute(registries, executionResult); });
-      
-#if DEBUG
-      Console.ReadLine();
-#endif
     }
 
-    public static List<Registry> GetRegistriesFromSources(string[] sources)
+    private static List<Registry> GetRegistriesFromSources(string[] sources)
     {
-      List<Registry> result = new List<Registry>();
+      var result = new List<Registry>();
       foreach (var source in sources)
       {
         var assembly = Assembly.LoadFile(source);
         var typeIndex = TypeIndex.TargetTypesToRun(assembly.GetTypes());
         typeIndex.ToList().ForEach(x =>
         {
-          Spec t = CreateInstance(x);
+          var t = CreateInstance(x);
           result.Add(t.Registry);
         });
       }

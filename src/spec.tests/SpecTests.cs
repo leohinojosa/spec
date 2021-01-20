@@ -1,22 +1,21 @@
 using System;
 using System.Linq;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Shouldly;
+using Xunit;
 
 namespace spec.tests
 {
-  [TestClass]
   public class SpecTests
   {
     private spec_double _suite;
 
-    [TestInitialize]
-    public void setup()
+    public SpecTests()
     {
       _suite = new spec_double();
     }
 
-    [TestMethod]
+    [Fact]
     public void Registry_InitialState()
     {
       _suite.Registry.Should().NotBe(null, "because all suites should have a Registry class");
@@ -25,22 +24,21 @@ namespace spec.tests
       _suite.Registry.ExecutableLookupTable.Should().BeEmpty();
     }
 
-    [TestMethod]
+    [Fact]
     public void describe_registerSuite()
     {
       _suite.describe("new Describe", () => { });
       _suite.Registry.CurrentSuite.Children.Should().NotBeEmpty();
     }
 
-    [TestMethod]
+    [Fact]
     public void describe_registerContext()
     {
       _suite.context("new Context", () => { });
       _suite.Registry.CurrentSuite.Children.Should().NotBeEmpty();
     }
 
-
-    [TestMethod]
+    [Fact]
     public void describe_registerChildSuite()
     {
       _suite.describe("new Describe", () => { _suite.describe("new child", () => { }); });
@@ -48,7 +46,7 @@ namespace spec.tests
       _suite.Registry.CurrentSuite.Children.First().Children.Should().NotBeEmpty();
     }
 
-    [TestMethod]
+    [Fact]
     public void hooks_beforeAndAfterHooksShouldBeRegistered()
     {
       _suite.Registry.CurrentSuite.BeforeAll.Should().BeEmpty();
@@ -67,7 +65,7 @@ namespace spec.tests
       _suite.Registry.CurrentSuite.AfterAll.Should().NotBeEmpty();
     }
 
-    [TestMethod]
+    [Fact]
     public void it_specsShouldBeRegistered()
     {
       _suite.describe("new Describe", () => { _suite.it("spec", () => { }); });
@@ -76,7 +74,7 @@ namespace spec.tests
       _suite.Registry.CurrentSuite.Children.First().Children.First().Description.Should().Be("spec");
     }
 
-    [TestMethod]
+    [Fact]
     public void it_specsShouldHaveADescription()
     {
       Action action = () => { _suite.describe("new Describe", () => { _suite.it("", () => { }); });};

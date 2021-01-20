@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using spec.core.Model;
 
 namespace spec.core
@@ -13,7 +12,6 @@ namespace spec.core
         public void RunSuite(Spec suite)
         {
             var mainSuiteExecutionPlan = new SortedList<string, List<Definition>>();
-           // var mainSuiteExecutionPlan = new Dictionary<string, List<Definition>>();
             foreach (var spec in suite.Registry.ExecutableLookupTable)
             {
                 mainSuiteExecutionPlan.Add(spec.Id, new List<Definition>());
@@ -141,18 +139,18 @@ namespace spec.core
                     {
                         execute(child);
                     }
-                    child.RanSuccesfully = true;
+                    child.RanSuccessfully = true;
                 }
                 else
                 {
-                    child.RanSuccesfully = false;
+                    child.RanSuccessfully = false;
                 }
             }
             catch (Exception e)
             {
                 child.ExecutionResult = e.Message;
-                child.RanSuccesfully = false;
-                child.Parent.RanSuccesfully = false;
+                child.RanSuccessfully = false;
+                child.Parent.RanSuccessfully = false;
                 child.StackTrace = e.StackTrace;
             }
             finally

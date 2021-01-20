@@ -13,8 +13,8 @@ namespace spec.console.reporters
       var summary = new
       {
         TotalTests = executionResult.Count(),
-        TotalPassed = executionResult.Count(x => x.Enabled && x.RanSuccesfully),
-        TotalFailed = executionResult.Count(x => x.Enabled && !x.RanSuccesfully),
+        TotalPassed = executionResult.Count(x => x.Enabled && x.RanSuccessfully),
+        TotalFailed = executionResult.Count(x => x.Enabled && !x.RanSuccessfully),
         TotalPending = executionResult.Count(x => !x.Enabled),
         TotalSeconds = executionResult.Where(x => x.Enabled).Sum(x => (x.EndTime - x.StartTime).TotalSeconds)
       };
@@ -27,7 +27,7 @@ namespace spec.console.reporters
       }
 
       Console.WriteLine("");
-      executionResult.Where(x=>x.Enabled && !x.RanSuccesfully).Select((exception, index)=>new {exception=exception, index = index+1}).ToList().ForEach(x =>
+      executionResult.Where(x=>x.Enabled && !x.RanSuccessfully).Select((exception, index)=>new {exception=exception, index = index+1}).ToList().ForEach(x =>
       {
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine(" {0}) {1}, {2}",x.index, x.exception.Description, ConsoleReporter.CleanUpForConsole(x.exception.ExecutionResult.ToLower()));

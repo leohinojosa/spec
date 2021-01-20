@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using spec.console.Adapter;
 using spec.core;
 using spec.core.Model;
 
@@ -9,7 +7,7 @@ namespace spec.console
 {
   public class Discover : DomainProxy
   {
-    public List<DefinitionSource> DiscoverSpecsFromCurrentAssembly()
+    public IEnumerable<DefinitionSource> DiscoverSpecsFromCurrentAssembly()
     {
       var discoveredTypes = TypeIndex.TargetTypesToRun(SandboxedAssembly.GetTypes());
       

@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Linq;
 using ExpectBetter;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NFluent;
-using spec;
 using spec.core;
 using Shouldly;
+using Xunit;
 
 namespace SampleSpecs
 {
@@ -31,7 +28,7 @@ namespace SampleSpecs
                 {
                     it("the int " + x, () =>
                     {
-                        Assert.IsTrue(x > 0);
+                        Assert.True(x > 0);
                     });
                 });
             });
@@ -59,7 +56,7 @@ namespace SampleSpecs
                         it("Fluent Assertions",
                             () => { new[] {1, 5, 3}.Any(x => x == 1).Should().BeFalse("Because it should fail"); });
 
-                        it("Assert", () => { Assert.IsFalse(true, "this is the regular assert library - failing "); });
+                        it("Assert", () => { Assert.False(true, "this is the regular assert library - failing "); });
 
                         it("Expect", () => { Expect.The(true).ToBeFalse(); });
 
