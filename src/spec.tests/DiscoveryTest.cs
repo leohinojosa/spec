@@ -7,7 +7,7 @@ namespace spec.tests
 {
   public class DiscoveryTest
   {
-    [Fact]
+    [Fact(Skip = "Integration test")]
     public void Discover_LoadSpecs()
     {
         string sampleDll = "";
